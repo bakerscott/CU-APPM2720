@@ -1,0 +1,31 @@
+---
+title: "IA2"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Scott Baker
+
+1. photo
+2. one non-stats question that could be answered with data science
+3. i. 6 mo. after graduation
+   ii. 5 years after graduation
+   (excitement)
+4. greatest career accomplishment
+5. hopes and dreams for this course
+6. wild card

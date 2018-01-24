@@ -1,9 +1,8 @@
 module 0:
-ind. tests: 1/22
-team tests:
+tests: 1/22
 
+topics:
+TBL, RStudio, GitHub, RMarkdown, OSF
 
-IA2 work, part 1
-
-GitHub, R Markdown
-R Visualization
+included:
+IA2.txt

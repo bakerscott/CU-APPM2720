@@ -1,0 +1,41 @@
+Individual Assignment 2: Incorporate into your team's IA2 R Markdown document on OSF.io by 5:00PM January 26.
+
+Instructions:
+1.	Create a team Individual Assignment 2 document using R Markdown. Any format (HTML, PDF, or Word) is acceptable.
+
+2.	On that team document, there will be a team section and individual sections for each team member. The team section must include a team photo (all of you), your team name, and your team's main goal for this semester for this course (i.e., what does your team want to accomplish by the end of the semester?).
+
+3.	Each individual must complete the individual assignment, which consists of two parts:
+a.	Individual section Part 1: About you (see details below)
+b.	Individual section Part 2: Feedback to your teammates on their Parts 1.
+
+4. 	Collaboratively edit your R Markdown source document using GitHub/GitKraken to manage your team’s changes and to avoid or manage version conflicts.
+
+5.	Submit your team’s final IA2 document on OSF.io by 5:00PM, Friday, Jan 26.
+
+Details on what is expected from the IA2 document
+
+Part 1: Your individual "About Me" section must include:
+* A photo of yourself
+* At least one (non-statistics) question you would like to know the answer to that could be answered by analyzing data
+* What you would love to be doing six months after graduation and then five years after that (what would make you excited to be doing?)
+* What you hope your greatest career accomplishment will be
+* …and given these hopes and goals, what you are hoping to learn/accomplish/do in this course
+* You must also include something of your own choosing not described above. Anything. Be creative!
+
+Part 2:
+Give feedback 
+* You must give feedback to your teammates on their assignment. Give your feedback with the intention to help your teammate improve his or her IA2 contribution. Be specific. Provide feedback on specific items that your teammate did well and on specific things they could do to improve their IA2.
+* Everyone on your team must get feedback from every teammate.
+
+The intended audience for your team document is your teammates, the professor, and your future self.
+
+Some intended outcomes from this assignment:
+* You will learn how to create documents in RStudio using R Markdown
+* You and your team will learn how to effectively edit a file collaboratively on GitHub/GitKraken
+* You will think about what you want to accomplish in life and how this course relates to that
+* Your teammates and the professor will learn something more about you.
+* You get practice giving your teammates feedback.
+* You will get practice receiving feedback and using it to improve your work.
+* Your team gets practice submitting a document to OSF.
+* Your team gets practice working together so that everyone receives feedback before the assignment is due (one person can't wait to the last minute to complete the assignment, because then he or she won't have given their teammates time to give feedback)
