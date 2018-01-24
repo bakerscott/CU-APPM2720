@@ -21,7 +21,7 @@ summary(cars)
 
 ## Scott Baker
 
-1. photo
+![Photo of Scott:](//home/scott/CU-APPM2720/m0/ScottBaker.jpg)
 2. one non-stats question that could be answered with data science
 3. i. 6 mo. after graduation
    ii. 5 years after graduation
