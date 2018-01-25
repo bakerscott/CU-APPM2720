@@ -1,5 +1,6 @@
 ---
 title: "IA2"
+date: "2018/01/24"
 output:
   pdf_document: default
   html_document: default
@@ -8,17 +9,6 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
-```
-
 ## Scott Baker
 
 ![Photo of Scott:](//home/scott/CU-APPM2720/m0/ScottBaker.jpg)
@@ -29,3 +19,15 @@ summary(cars)
 4. greatest career accomplishment
 5. hopes and dreams for this course
 6. wild card
+
+
+
+## Lexie Marinelli
+![Photo of Lexie:](/Users/Lexie/Desktop/DATASCI/CU-APPM2720/m0/LexieM.JPEG)
+
+* I would like to know the relationship between the length of cell phone use at night and how many hours of sleep a person gets.
+* In six months after I graduate I would love to work for Lockheed Martin or Boeing. Five years after that, I would love to live abroad in Europe.
+* I hope my greatest career accomplishment would be getting the opportunity to work for NASA.
+* I hope to gain experience using R and methods in analyzing data.
+* I started skiing in 2nd grade and have loved it ever since.
+
