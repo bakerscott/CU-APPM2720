@@ -1,31 +1,74 @@
 ---
-title: "IA2"
+title: "IA2 -- FANTASTIC FOUR"
 output:
   pdf_document: default
-  html_document: default
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+#INSERT GROUP PIC HERE>>
 
-## R Markdown
+## Questions (delete when done)
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
-```
-
-## Scott Baker
-
-![Photo of Scott:](//home/scott/CU-APPM2720/m0/ScottBaker.jpg)
-2. one non-stats question that could be answered with data science
+1. picture
+2. one non-stats question you'd like to know the answer to based on data
 3. i. 6 mo. after graduation
    ii. 5 years after graduation
    (excitement)
 4. greatest career accomplishment
 5. hopes and dreams for this course
 6. wild card
+
+# Scott Baker
+```{r, out.width = "125px", echo=FALSE}
+knitr::include_graphics("/home/scott/CU-APPM2720/m0/ScottBaker.jpg")
+```
+
+## About Me:
+Using data, I would like to know where a certain basketball player is the most productive on the court based on play-by-play data. Six months after graduation I would love to be relaxing after 5pm instead of doing homework late into the night. Five years after graduation I hope that I have a stable job and that I'm starting to figure out what I want from my career. I hope my greatest career accomplishment is to have a "C" in my title someday. In this course, I hope to refresh my statistics knowledge, sharpen my skills in R, and apply a little of what I learned in Markov Chains to data science. Finally, I love playing basketball--I am on staff with the Women's Basketball team as a practice player. From my enjoyment of being a pracice player, an alternate career path for me would be coaching college basketball.
+
+## Evaluations:
+(scott's evals for other teammates)
+
+
+
+
+
+# Lindsay Gettel
+```{r, out.width = "125px", out.extra='angle=270', echo=FALSE}
+knitr::include_graphics("/home/scott/CU-APPM2720/m0/Lindsay.jpg")
+```
+
+## About Me:
+
+
+##Evaluations:
+
+
+
+
+
+
+# Lexie Marinelli
+
+
+## About Me:
+
+
+## Evaluations:
+
+
+
+
+
+
+# Zhenlong Li
+```{r, out.width = "125px", out.extra='angle=270', echo=FALSE}
+knitr::include_graphics("/home/scott/CU-APPM2720/m0/Zhenlong Li.jpg")
+```
+
+## About Me:
+
+
+## Evalutations:
