@@ -39,6 +39,7 @@ Using data, I would like to know where a certain basketball player is the most p
 * Lexie: Great job formatting the file, it's clean and easy to read and the headings for each section stand out. I'm not sure what the "C" in the job title represents (sounds good!), maybe add a little more detail about what that means?
 * Lindsay: You may want to consider adding transitions, between your disscussions of each prompt, for a better reading flow. Everything is is good, you use great language which makes your writing relatable and easy to understand. 
 
+* Li: Most powerful guy in our team! I am impressed by your different programming skills and it seems you know a lot of things. I hope I can learn something from you. BTW, I love playing basketball, too. Maybe we can play it together someday.
 
 
 
@@ -69,6 +70,7 @@ I would like to know the relationship between the length of cell phone use at ni
 
 ## Evaluations:
 * Lindsay: Your goals are specific and impressive! Maybe elaborate more about where you see yourself in five years. Is there any specific counrty in Europe you want to live? Do you have any specific sightseeing, jobs, or other traveling that you would like to do in Europe?
+*Li: Interesting! It seems that you are going to be a real engineer. Which part of Europe would you like to live? I am also interested in quant but I really want to know what makes you change your mind.
 
 
 
