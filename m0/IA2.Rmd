@@ -11,7 +11,10 @@ knitr::opts_chunk$set(echo = TRUE)
 insert photo here >>> 
 
 ## Main Goals:
-list here
+
+* Learn how to use GitHub effictively
+* Learn enough R to be applicable outside of class
+* Gain sufficient amount of statistical knowledge
 
 ## Questions (delete when done)
 
@@ -33,8 +36,7 @@ knitr::include_graphics("/home/scott/CU-APPM2720/m0/ScottBaker.jpg")
 Using data, I would like to know where a certain basketball player is the most productive on the court based on play-by-play data. Six months after graduation I would love to be relaxing after 5pm instead of doing homework late into the night. Five years after graduation I hope that I have a stable job and that I'm starting to figure out what I want from my career. I hope my greatest career accomplishment is to have a "C" in my title someday. In this course, I hope to refresh my statistics knowledge, sharpen my skills in R, and apply a little of what I learned in Markov Chains to data science. Finally, I love playing basketball--I am on staff with the Women's Basketball team as a practice player. From my enjoyment of being a pracice player, an alternate career path for me would be coaching college basketball.
 
 ## Evaluations:
-(scott's evals for other teammates)
-
+* Lexie: Great job formatting the file, it's clean and easy to read and the headings for each section stand out. I'm not sure what the "C" in the job title represents (sounds good!), maybe add a little more detail about what that means?
 
 
 
@@ -55,9 +57,13 @@ knitr::include_graphics("/home/scott/CU-APPM2720/m0/Lindsay.jpg")
 
 
 # Lexie Marinelli
-
+```{r, out.width = "125px", out.extra='angle=270', echo=FALSE}
+knitr::include_graphics("/home/scott/CU-APPM2720/m0/LexieM.jpg")
+```
 
 ## About Me:
+I would like to know the relationship between the length of cell phone use at night and how many hours of sleep a person gets. In six months after I graduate I would love to work for Lockheed Martin or Boeing (I recently switched my focus from quant finance to aerospace). Five years after that, I would love to live abroad in Europe. I hope my greatest career accomplishment would be getting the opportunity to work for NASA. I hope to gain experience using R and methods in analyzing data. Little fun fact, I started skiing in 2nd grade and have loved it ever since.
+
 
 
 ## Evaluations:
@@ -77,3 +83,4 @@ I would like to learn how to make decisions by analyzing data. After graduating 
 
 
 ## Evalutations:
+* Lexie: Sounds like you have some exciting plans coming up! Great job with your about me section, lots of good information in there. What made you decide to go into finance?
