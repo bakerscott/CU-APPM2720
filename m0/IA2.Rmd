@@ -73,6 +73,7 @@ knitr::include_graphics("/home/scott/CU-APPM2720/m0/Zhenlong Li.jpg")
 ```
 
 ## About Me:
+I would like to learn how to make decisions by analyzing data. After graduating this summer, I will travel to different places as two plans. One with my dad to Yellowstone and another with my girlfriend to Szechuan Province in China. Then, five years after that,I hope I can go back to my hometown with some experience as a financial/quantitative analyst. I hope my greatest career accomplishment will be finding a job that I enjoy, practically I'd like to learn how to communicate and collobrate with teammates and I think it will be helpful in my future work. What's more, I love signing and listening to music. My favorite soccer team is Tottenham Hotspur. 
 
 
 ## Evalutations:
