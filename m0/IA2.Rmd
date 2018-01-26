@@ -37,6 +37,7 @@ Using data, I would like to know where a certain basketball player is the most p
 
 ## Evaluations:
 * Lexie: Great job formatting the file, it's clean and easy to read and the headings for each section stand out. I'm not sure what the "C" in the job title represents (sounds good!), maybe add a little more detail about what that means?
+* Lindsay: You may want to consider adding transitions, between your disscussions of each prompt, for a better reading flow. Everything is is good, you use great language which makes your writing relatable and easy to understand. 
 
 
 
@@ -47,7 +48,10 @@ knitr::include_graphics("/home/scott/CU-APPM2720/m0/Lindsay.jpg")
 ```
 
 ## About Me:
-
+  I would like to know how information is processed within the stock market as well as businesses to determine which companies and what innovations will expand and aquire the most gains.   
+  Six months after graduation I would like to have a job, or paid internship, as a data analysist. I am currently unsureif this is a career path I would like to persue, but I hope this class provides insite and gives me a better idea of what I would like to do in the future. Five years later I hope to be in a steady career which I enjoy and continusouly learn from. I hope my greatest career accomplishment will be maintaining a passion and excitement about the work I will be doing.
+  Throughout this course I would like to obtain a better understanding of analysis, modeling and programming. I hope to take my knowledge and intrests from this course to be able to start better planning for my future and determine a more specific career path.    
+  Outside of school, I enjoy reading and horseback riding. For eight years I was apart of a horseback organization called Westernaires. We traveled and performed in many places, including the National Western Stock Show.
 
 ##Evaluations:
 
@@ -67,7 +71,7 @@ I would like to know the relationship between the length of cell phone use at ni
 
 
 ## Evaluations:
-
+* Lindsay: Your goals are specific and impressive! Maybe elaborate more about where you see yourself in five years. Is there any specific counrty in Europe you want to live? Do you have any specific sightseeing, jobs, or other traveling that you would like to do in Europe?
 
 
 
@@ -84,3 +88,4 @@ I would like to learn how to make decisions by analyzing data. After graduating 
 
 ## Evalutations:
 * Lexie: Sounds like you have some exciting plans coming up! Great job with your about me section, lots of good information in there. What made you decide to go into finance?
+* Lindsay: You mentioned that you would like to learn how data analysis afftects decisions, is there a specific topic or area of study, such as finance, that you are curious about?
