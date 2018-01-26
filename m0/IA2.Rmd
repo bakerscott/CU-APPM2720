@@ -1,18 +1,22 @@
 ---
-title: "IA2"
-date: "2018/01/24"
+title: "IA2 -- FANTASTIC FOUR"
 output:
   pdf_document: default
-  html_document: default
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-## Scott Baker
+#About the Fantasic Four:
+insert photo here >>> 
 
-![Photo of Scott:](//home/scott/CU-APPM2720/m0/ScottBaker.jpg)
-2. one non-stats question that could be answered with data science
+## Main Goals:
+list here
+
+## Questions (delete when done)
+
+1. picture
+2. one non-stats question you'd like to know the answer to based on data
 3. i. 6 mo. after graduation
    ii. 5 years after graduation
    (excitement)
@@ -20,14 +24,56 @@ knitr::opts_chunk$set(echo = TRUE)
 5. hopes and dreams for this course
 6. wild card
 
+# Scott Baker
+```{r, out.width = "125px", echo=FALSE}
+knitr::include_graphics("/home/scott/CU-APPM2720/m0/ScottBaker.jpg")
+```
+
+## About Me:
+Using data, I would like to know where a certain basketball player is the most productive on the court based on play-by-play data. Six months after graduation I would love to be relaxing after 5pm instead of doing homework late into the night. Five years after graduation I hope that I have a stable job and that I'm starting to figure out what I want from my career. I hope my greatest career accomplishment is to have a "C" in my title someday. In this course, I hope to refresh my statistics knowledge, sharpen my skills in R, and apply a little of what I learned in Markov Chains to data science. Finally, I love playing basketball--I am on staff with the Women's Basketball team as a practice player. From my enjoyment of being a pracice player, an alternate career path for me would be coaching college basketball.
+
+## Evaluations:
+(scott's evals for other teammates)
 
 
-## Lexie Marinelli
-![Photo of Lexie:](/Users/Lexie/Desktop/DATASCI/CU-APPM2720/m0/LexieM.JPEG)
 
-* I would like to know the relationship between the length of cell phone use at night and how many hours of sleep a person gets.
-* In six months after I graduate I would love to work for Lockheed Martin or Boeing. Five years after that, I would love to live abroad in Europe.
-* I hope my greatest career accomplishment would be getting the opportunity to work for NASA.
-* I hope to gain experience using R and methods in analyzing data.
-* I started skiing in 2nd grade and have loved it ever since.
 
+
+# Lindsay Gettel
+```{r, out.width = "125px", out.extra='angle=270', echo=FALSE}
+knitr::include_graphics("/home/scott/CU-APPM2720/m0/Lindsay.jpg")
+```
+
+## About Me:
+
+
+##Evaluations:
+
+
+
+
+
+
+# Lexie Marinelli
+
+
+## About Me:
+
+
+## Evaluations:
+
+
+
+
+
+
+# Zhenlong Li
+```{r, out.width = "125px", out.extra='angle=270', echo=FALSE}
+knitr::include_graphics("/home/scott/CU-APPM2720/m0/Zhenlong Li.jpg")
+```
+
+## About Me:
+I would like to learn how to make decisions by analyzing data. After graduating this summer, I will travel to different places as two plans. One with my dad to Yellowstone and another with my girlfriend to Szechuan Province in China. Then, five years after that,I hope I can go back to my hometown with some experience as a financial/quantitative analyst. I hope my greatest career accomplishment will be finding a job that I enjoy, practically I'd like to learn how to communicate and collobrate with teammates and I think it will be helpful in my future work. What's more, I love signing and listening to music. My favorite soccer team is Tottenham Hotspur. 
+
+
+## Evalutations:
