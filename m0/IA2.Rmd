@@ -11,7 +11,10 @@ knitr::opts_chunk$set(echo = TRUE)
 insert photo here >>> 
 
 ## Main Goals:
-list here
+
+* Learn how to use GitHub effictively
+* Learn enough R to be applicable outside of class
+* Gain sufficient amount of statistical knowledge
 
 ## Questions (delete when done)
 
