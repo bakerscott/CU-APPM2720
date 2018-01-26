@@ -8,24 +8,15 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 #About the Fantasic Four:
-insert photo here >>> 
+```{r, out.width = "125px", echo=FALSE}
+knitr::include_graphics("/home/scott/CU-APPM2720/m0/GroupPic.jpg")
+```
 
 ## Main Goals:
 
 * Learn how to use GitHub effictively
 * Learn enough R to be applicable outside of class
 * Gain sufficient amount of statistical knowledge
-
-## Questions (delete when done)
-
-1. picture
-2. one non-stats question you'd like to know the answer to based on data
-3. i. 6 mo. after graduation
-   ii. 5 years after graduation
-   (excitement)
-4. greatest career accomplishment
-5. hopes and dreams for this course
-6. wild card
 
 # Scott Baker
 ```{r, out.width = "125px", echo=FALSE}
@@ -37,7 +28,7 @@ Using data, I would like to know where a certain basketball player is the most p
 
 ## Evaluations:
 * Lexie: Great job formatting the file, it's clean and easy to read and the headings for each section stand out. I'm not sure what the "C" in the job title represents (sounds promising!), maybe add a little more detail about what that means?
-* Lindsay: You may want to consider adding transitions, between your disscussions of each prompt, for a better reading flow. Everything is is good, you use great language which makes your writing relatable and easy to understand. 
+* Lindsay: You may want to consider adding transitions, between your disscussions of each prompt, for a better reading flow. Everything is is good, you use great language which makes your writing relatable and easy to understand.
 
 * Li: Most powerful guy in our team! I am impressed by your different programming skills and it seems you know a lot of things. I hope I can learn something from you. BTW, I love playing basketball, too. Maybe we can play it together someday.
 
@@ -54,7 +45,7 @@ I would like to know how information is processed within the stock market as wel
 ## Evaluations:
 * Li: As a data analyst, there are several of possibilities and you don't have to be worried about which path you will persue. You can try as much as you want until you find a job that you are willing to commit your passion and hardwork. Horseback riding looks pretty elegent and I hope I can ride a horse one day.
 * Lexie: I definitely understand your uncertainty for future careers. I love the detail for this section, it helps people outside the group feel like they would know you too. Do you see yourself owning horses in the future?
-
+* Scott: The details that you included in your description of career goals were fantastic. However, the statement about passion in your career was a bit vague--it would be nice if you elaborated on specific things you are passionate about. I'm impressed with your ability to help our group come to decisions.
 
 # Lexie Marinelli
 ```{r, out.width = "125px", out.extra='angle=270', echo=FALSE}
@@ -67,7 +58,9 @@ I would like to know the relationship between the length of cell phone use at ni
 
 ## Evaluations:
 * Lindsay: Your goals are specific and impressive! Maybe elaborate more about where you see yourself in five years. Is there any specific counrty in Europe you want to live? Do you have any specific sightseeing, jobs, or other traveling that you would like to do in Europe?
-*Li: Interesting! It seems that you are going to be a real engineer. Which part of Europe would you like to live? I am also interested in quant but I really want to know what makes you change your mind.
+* Li: Interesting! It seems that you are going to be a real engineer. Which part of Europe would you like to live? I am also interested in quant but I really want to know what makes you change your mind.
+
+* Scott: I'm glad you were specific in what your interests are. However, it might be nice to elaborate on what specifically you'd like to do career-wise. I'm impressed with your willingness to ask questions about Git--and applaud you for starting to pick it up quickly.
 
 
 # Zhenlong Li
@@ -76,9 +69,10 @@ knitr::include_graphics("/home/scott/CU-APPM2720/m0/Zhenlong Li.jpg")
 ```
 
 ## About Me:
-I would like to learn how to make decisions by analyzing data. After graduating this summer, I will travel to different places as two plans. One with my dad to Yellowstone and another with my girlfriend to Szechuan Province in China. Then, five years after that,I hope I can go back to my hometown with some experience as a financial/quantitative analyst. I hope my greatest career accomplishment will be finding a job that I enjoy, practically I'd like to learn how to communicate and collobrate with teammates and I think it will be helpful in my future work. What's more, I love signing and listening to music. My favorite soccer team is Tottenham Hotspur. 
+I would like to learn how to make decisions by analyzing data. After graduating this summer, I will travel to different places as two plans. One with my dad to Yellowstone and another with my girlfriend to Szechuan Province in China. Then, five years after that,I hope I can go back to my hometown with some experience as a financial/quantitative analyst. I hope my greatest career accomplishment will be finding a job that I enjoy, practically I'd like to learn how to communicate and collobrate with teammates and I think it will be helpful in my future work. What's more, I love signing and listening to music. My favorite soccer team is Tottenham Hotspur.
 
 
 ## Evalutations:
 * Lexie: Sounds like you have some exciting plans coming up! Great job with your about me section, lots of detailed information in there that helps us get to know you. What made you decide to go into finance?
 * Lindsay: You mentioned that you would like to learn how data analysis affects decisions, is there a specific topic or area of study, such as finance, that you are curious about?
+* Scott: Your prompt communication skills are necessicary for our group to work. Also, I'm impressed with your learning of Git. You mentioned that you would like to learn decision-making skills associated with analyzing data. I found this to be broad--you might want to add to this.
