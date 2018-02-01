@@ -1,8 +1,32 @@
 ---
 title: "Lab_03"
+author: "Fantastic Four"
 output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
+# guiding question
+this is the section where we will put our guiding question and it's importance
+
+# answer to the guiding question
+including the plot
+
+# Recommendation
+letter to the CDC, or argument of similar nature
+
+# Individual Findings
+
+
+## Lexie Marinelli
+
+## Lindsay Gettel
+
+## Zhenlong Li
+
+## Scott Baker
+
+
+# Contributions
