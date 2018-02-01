@@ -25,11 +25,11 @@ letter to the CDC, or argument of similar nature
 
 ## Lexie Marinelli
 ```{r}
-ggplot(data= cdc, mapping =aes(x=age, y=hlthplan)) +geom_smooth()+ facet_wrap(~smoke100)
+# someone can take this part, I decided to adjust a little: ggplot(data= cdc, mapping =aes(x=age, y=hlthplan)) +geom_smooth()+ facet_wrap(~smoke100)
 
-ggplot(data= cdc)+ facet_grid(~smoke100) +geom_bar(mapping= aes(x=hlthplan, fill= genhlth))
+ggplot(data= cdc)+ facet_grid(~smoke100) +geom_bar(mapping= aes(x=hlthplan, fill= genhlth), position= "dodge") +theme(aspect.ratio=1) + ggtitle(label = "Smokers' health and health plan compared to nonsmokers ", subtitle = "Created by Lexie") +xlab(label= "Health Plan") +ylab(label= "Amount of people (out of 20,000)")
 ```
-
+  This graph portrays that nonsmokers (the 0 catergory) have a higher amount of people in excellent and very good health as well as having a lower amount of people with fair and poor health. This graph also shows that the majority of people, in general, have health insurance not depending on wether they smoke or not. Smokers do have a lower amount of people who have a health plan, but not by much. The main difference between the smokers and nonsmokers is the general health distribution among the individuals, nonsmokers having a higher amount in the upper quadrant and a lower amount of people in the lower quadrant compared to smokers. 
 ## Lindsay Gettel
 
 ## Zhenlong Li
