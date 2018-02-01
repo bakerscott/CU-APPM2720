@@ -6,6 +6,9 @@ output: pdf_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+source("http://www.openintro.org/stat/data/cdc.R")
+cdc <- as_tibble(cdc)
 ```
 
 # guiding question
@@ -21,6 +24,9 @@ letter to the CDC, or argument of similar nature
 
 
 ## Lexie Marinelli
+```{r}
+ggplot(data= cdc, mapping =aes(x=age, y=hlthplan)) +geom_smooth()+ facet_wrap(~smoke100)
+```
 
 ## Lindsay Gettel
 
