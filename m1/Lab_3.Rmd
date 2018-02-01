@@ -26,6 +26,8 @@ letter to the CDC, or argument of similar nature
 ## Lexie Marinelli
 ```{r}
 ggplot(data= cdc, mapping =aes(x=age, y=hlthplan)) +geom_smooth()+ facet_wrap(~smoke100)
+
+ggplot(data= cdc)+ facet_grid(~smoke100) +geom_bar(mapping= aes(x=hlthplan, fill= genhlth))
 ```
 
 ## Lindsay Gettel
