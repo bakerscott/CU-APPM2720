@@ -6,7 +6,7 @@ SPRING 2018, Dr. Eric Vance
 Group name: Fantastic Four
 
 Group Members:
-*Zhenlong Li
-*Lexie Marinelli
-*Lindsay Gettel
-*Scott Baker
+* Zhenlong Li
+* Lexie Marinelli
+* Lindsay Gettel
+* Scott Baker
