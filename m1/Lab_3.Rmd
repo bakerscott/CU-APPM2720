@@ -19,6 +19,9 @@ In this report we want to find the relationship between people who have smoked a
 # answer to the guiding question
 including the plot
 
+### Conclusion
+  Conducting this report, we have found that smoking leads to a lower quality of health.  People who have smoked at least 100 cigarettes have increased numbers in the lower quartile of the general health rating than the people who haven't smoked. This cascades into smokers weighing more than nonsmokers, which goes along with data that we found people who have exercised in the past month weigh less than the people who haven't. 
+ 
 # Recommendation
 letter to the CDC, or argument of similar nature
 
@@ -26,9 +29,7 @@ letter to the CDC, or argument of similar nature
 
 
 ## Lexie Marinelli
-```{r}
-# someone can take this part, I decided to adjust a little: ggplot(data= cdc, mapping =aes(x=age, y=hlthplan)) +geom_smooth()+ facet_wrap(~smoke100)
-
+```{r, echo=FALSE}
 ggplot(data= cdc)+ stat_count(mapping= aes(x=hlthplan)) + facet_grid(~smoke100) +geom_bar(mapping= aes(x=hlthplan, fill= genhlth), position= "dodge") +theme(aspect.ratio=1) + ggtitle(label = "             Smokers vs. Nonsmokers",subtitle= "        Group 0= Nonsmokers        |          Group 1= Smokers") +xlab(label= "Health Plan") +ylab(label= "Amount of people")
 ```
   
