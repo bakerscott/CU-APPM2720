@@ -29,7 +29,10 @@ Conducting this report, we have found that smoking leads to a lower quality of h
 
 
 # Recommendation
-letter to the CDC, or argument of similar nature
+Dear CDC: Based on our findings that negative quality of life has a correlation with smoking habits, the following are our recommedations:
+*Allocate resources to creating advertisements about the effects of smoking and how it can contribute to poor health
+*Encourage voters and politicians to introduce and lobby for stricter smoking laws
+*Reach out to insurance companies to make sure they warn their customers about the possible effects of smoking
 
 # Individual Findings
 
@@ -106,3 +109,5 @@ ggplot(data = cdc, mapping = aes(x = weight,y=genhlth,color=age)) + geom_jitter(
 *Lexie: Iniated the guiding question and the analysis of the data in regards to smoking habits, also wrote the conclusion. Created a nested bar graph, which on the basic level shows the amount of smokers and nonsmokers. Nested within is a bar graph which signifies how many peopled ranked their health in each of the categories. Using facet_grid, the bar graphs were split into smoker and nonsmoker, then other functions accounted for the labeling of the axis and title, and the color coding by health ranking.
 
 *Li: I made two barplots, one is showing the how people's general health conditions was affcted by using gemo_histogram to show amount of people, their weights and facet_grid to divide into smokers and non smokers. Another one is also showing the how people's general health conditions was affcted by using gemo_histogram show amount of people, their weights and facet_grid to divide into exercisers and non exercisers. I added title and set the binwith of histogram to 50 pounds.
+
+*Scott: First, I managed in the origanization of the git. Regarding the actual write up in individual section, I looked at quality of health with age, smoking, and heal plan. For the team part, I made the recommendation to the CDC. I did some editing and was responsible for knitting/submitting the final items to OSF.
