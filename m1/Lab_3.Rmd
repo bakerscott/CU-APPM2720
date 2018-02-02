@@ -12,7 +12,8 @@ cdc <- as_tibble(cdc)
 ```
 
 # guiding question
-this is the section where we will put our guiding question and it's importance
+
+  In this report we want to find the relationship between people who have smoked at least 100 cigarettes in their life and how it can affect their general health, their health plan coverage, their weight, and frequency of exercise. This report will also reveal the likelihood of people of different ages to have smoked at least 100 cigarettes.
 
 # answer to the guiding question
 including the plot
@@ -27,9 +28,11 @@ letter to the CDC, or argument of similar nature
 ```{r}
 # someone can take this part, I decided to adjust a little: ggplot(data= cdc, mapping =aes(x=age, y=hlthplan)) +geom_smooth()+ facet_wrap(~smoke100)
 
-ggplot(data= cdc)+ facet_grid(~smoke100) +geom_bar(mapping= aes(x=hlthplan, fill= genhlth), position= "dodge") +theme(aspect.ratio=1) + ggtitle(label = "Smokers' health and health plan compared to nonsmokers ", subtitle = "Created by Lexie") +xlab(label= "Health Plan") +ylab(label= "Amount of people (out of 20,000)")
+ggplot(data= cdc)+ stat_count(mapping= aes(x=hlthplan)) + facet_grid(~smoke100) +geom_bar(mapping= aes(x=hlthplan, fill= genhlth), position= "dodge") +theme(aspect.ratio=1) + ggtitle(label = "             Smokers vs. Nonsmokers",subtitle= "        Group 0= Nonsmokers        |          Group 1= Smokers") +xlab(label= "Health Plan") +ylab(label= "Amount of people")
 ```
-  This graph portrays that nonsmokers (the 0 catergory) have a higher amount of people in excellent and very good health as well as having a lower amount of people with fair and poor health. This graph also shows that the majority of people, in general, have health insurance not depending on wether they smoke or not. Smokers do have a lower amount of people who have a health plan, but not by much. The main difference between the smokers and nonsmokers is the general health distribution among the individuals, nonsmokers having a higher amount in the upper quadrant and a lower amount of people in the lower quadrant compared to smokers. 
+  
+  This graph portrays that nonsmokers have a higher amount of people in excellent and very good health as well as having a lower amount of people with fair and poor health. This graph also shows that the majority of people, in general, have health insurance not depending on whether they smoke or not. Smokers do have a lower amount of people who have a health plan, but not by a significant amount. The main difference between the smokers and nonsmokers is the general health distribution among the individuals, nonsmokers having a higher amount in the upper quadrant and a lower amount of people in the lower quadrant compared to people who have smoked at least 100 cigarettes.
+  
 ## Lindsay Gettel
 
 ## Zhenlong Li
