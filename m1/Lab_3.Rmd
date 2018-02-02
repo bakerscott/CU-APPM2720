@@ -45,14 +45,14 @@ In terms of weight, I found that people who weighed around 150 pounds without sm
 
 Additionaly, for people who exercised in the past month, majority of them has the health condtion above good. For people who did not exercised in the past month, majority of them has the health condtion below good.
 
-Thus, we can conclude that smoking and exercise did influence a person's health but weight may not be a strong factor to a person's health.
+Thus, we can conclude that smoking and exercise did influence a person's health but only frequency of exercises affect person's weight according to my findings. Also, weight may not be a strong factor to a person's general health condition.
 
-Hers's a plot:
+Hers's a plot about Smokers' health and weight compared to nonsmokers:
 ```{r}
 ggplot(cdc, aes(weight, fill = genhlth)) +
   geom_histogram(binwidth = 50) + facet_grid(~smoke100) + ggtitle(label = "Smokers' health and weight compared to nonsmokers ", subtitle = "Created by Li") +xlab(label= "weight") +ylab(label= "Amount of people (out of 20,000)")
 ```
-And another one:
+And another plot about Exercisers' health and weight compared to nonexercisers:
 ```{r}
 ggplot(cdc, aes(weight, fill = genhlth)) +
   geom_histogram(binwidth = 50) + facet_grid(~exerany) + ggtitle(label = "Exercisers' health and weight compared to nonexercisers ", subtitle = "Created by Li") +xlab(label= "weight") +ylab(label= "Amount of people (out of 20,000)")
