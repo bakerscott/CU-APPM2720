@@ -1,0 +1,30 @@
+---
+title: "plotting"
+author: "Lexie"
+date: "1/29/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+
+ggplot(data=mpg,mapping= aes(x=cty, y= hwy)) + geom_smooth(mapping= aes(x=cty, y=hwy), method="lm")+ facet_wrap(~drv) + geom_point()
+ggsave("Fantastic4plot.pdf", width = 6, height=6*0.618)
+```
+
+```{r}
+library(tidyverse)
+
+ggplot(data= mpg, mapping =aes(x=cty, y= hwy)) +geom_point(mapping= aes(color= class))+ geom_smooth(method= "lm", se= FALSE)+ facet_wrap(~class)
+
+ggsave("Fantastic4plot.pdf", width = 6, height=6*0.618)
+```
+
+```{r}
+ggplot (data= mpg, mapping= aes(x= cty, y= hwy, color= drv, asp=1) +geom_jitter() +geom_smooth(se= FALSE)
+```
+
+```{r}
+ggplot (data= mpg, mapping= aes(x=hwy)) + geom_histogram() +facet_wrap(~class)
+```
+
