@@ -37,6 +37,26 @@ ggplot(data= cdc)+ stat_count(mapping= aes(x=hlthplan)) + facet_grid(~smoke100) 
 ## Lindsay Gettel
 
 ## Zhenlong Li
+I made a barplot using amount of people versus weight by divding into smokers and non smokers and a barplot using amount of people versus weight by divding into exercisers and non exercisers.
+
+I found that people who smoked at least 100 cigars above good health condition are less than the people who did not. What's more, for condition below good, the amount of people who smoked are larger than people who did not. 
+
+In terms of weight, I found that people who weighed around 150 pounds without smoking are mojority of the people who have excellent health condition, while people who weighed around 150 pounds smoked at least 100 cigars are majority of the people who have poor health condition.
+
+Additionaly, for people who exercised in the past month, majority of them has the health condtion above good. For people who did not exercised in the past month, majority of them has the health condtion below good.
+
+Thus, we can conclude that smoking and exercise did influence a person's health but weight may not be a strong factor to a person's health.
+
+Hers's a plot:
+```{r}
+ggplot(cdc, aes(weight, fill = genhlth)) +
+  geom_histogram(binwidth = 50) + facet_grid(~smoke100) + ggtitle(label = "Smokers' health and weight compared to nonsmokers ", subtitle = "Created by Li") +xlab(label= "weight") +ylab(label= "Amount of people (out of 20,000)")
+```
+And another one:
+```{r}
+ggplot(cdc, aes(weight, fill = genhlth)) +
+  geom_histogram(binwidth = 50) + facet_grid(~exerany) + ggtitle(label = "Exercisers' health and weight compared to nonexercisers ", subtitle = "Created by Li") +xlab(label= "weight") +ylab(label= "Amount of people (out of 20,000)")
+```
 
 ## Scott Baker
 The three following graphs are similarly composed but I found them to be visually appealing to me using the jitter function and a color function with another variable.
