@@ -19,6 +19,9 @@ In this report we want to find the relationship between people who have smoked a
 # answer to the guiding question
 including the plot
 
+### Conclusion
+  Conducting this report, we have found that smoking leads to a lower quality of health.  People who have smoked at least 100 cigarettes have increased numbers in the lower quartile of the general health rating than the people who haven't smoked. This cascades into smokers weighing more than nonsmokers, which goes along with data that we found people who have exercised in the past month weigh less than the people who haven't. 
+ 
 # Recommendation
 letter to the CDC, or argument of similar nature
 
@@ -26,9 +29,7 @@ letter to the CDC, or argument of similar nature
 
 
 ## Lexie Marinelli
-```{r}
-# someone can take this part, I decided to adjust a little: ggplot(data= cdc, mapping =aes(x=age, y=hlthplan)) +geom_smooth()+ facet_wrap(~smoke100)
-
+```{r, echo=FALSE}
 ggplot(data= cdc)+ stat_count(mapping= aes(x=hlthplan)) + facet_grid(~smoke100) +geom_bar(mapping= aes(x=hlthplan, fill= genhlth), position= "dodge") +theme(aspect.ratio=1) + ggtitle(label = "             Smokers vs. Nonsmokers",subtitle= "        Group 0= Nonsmokers        |          Group 1= Smokers") +xlab(label= "Health Plan") +ylab(label= "Amount of people")
 ```
   
@@ -37,6 +38,26 @@ ggplot(data= cdc)+ stat_count(mapping= aes(x=hlthplan)) + facet_grid(~smoke100) 
 ## Lindsay Gettel
 
 ## Zhenlong Li
+I made a barplot using amount of people versus weight by divding into smokers and non smokers and a barplot using amount of people versus weight by divding into exercisers and non exercisers.
+
+I found that people who smoked at least 100 cigars above good health condition are less than the people who did not. What's more, for condition below good, the amount of people who smoked are larger than people who did not. 
+
+In terms of weight, I found that people who weighed around 150 pounds without smoking are mojority of the people who have excellent health condition, while people who weighed around 150 pounds smoked at least 100 cigars are majority of the people who have poor health condition.
+
+Additionaly, for people who exercised in the past month, majority of them has the health condtion above good. For people who did not exercised in the past month, majority of them has the health condtion below good.
+
+Thus, we can conclude that smoking and exercise did influence a person's health but only frequency of exercises affect person's weight according to my findings. Also, weight may not be a strong factor to a person's general health condition.
+
+Hers's a plot about Smokers' health and weight compared to nonsmokers:
+```{r}
+ggplot(cdc, aes(weight, fill = genhlth)) +
+  geom_histogram(binwidth = 50) + facet_grid(~smoke100) + ggtitle(label = "Smokers' health and weight compared to nonsmokers ", subtitle = "Created by Li") +xlab(label= "weight") +ylab(label= "Amount of people (out of 20,000)")
+```
+And another plot about Exercisers' health and weight compared to nonexercisers:
+```{r}
+ggplot(cdc, aes(weight, fill = genhlth)) +
+  geom_histogram(binwidth = 50) + facet_grid(~exerany) + ggtitle(label = "Exercisers' health and weight compared to nonexercisers ", subtitle = "Created by Li") +xlab(label= "weight") +ylab(label= "Amount of people (out of 20,000)")
+```
 
 ## Scott Baker
 The three following graphs are similarly composed but I found them to be visually appealing to me using the jitter function and a color function with another variable.
