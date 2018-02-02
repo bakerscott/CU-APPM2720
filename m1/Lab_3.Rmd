@@ -6,14 +6,15 @@ output: pdf_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-library(tidyverse)
+#library(tidyverse)
+library(ggplot2)
 source("http://www.openintro.org/stat/data/cdc.R")
-cdc <- as_tibble(cdc)
+#cdc <- as_tibble(cdc)
 ```
 
 # guiding question
 
-  In this report we want to find the relationship between people who have smoked at least 100 cigarettes in their life and how it can affect their general health, their health plan coverage, their weight, and frequency of exercise. This report will also reveal the likelihood of people of different ages to have smoked at least 100 cigarettes.
+In this report we want to find the relationship between people who have smoked at least 100 cigarettes in their life and how it can affect their general health, their health plan coverage, their weight, and frequency of exercise. This report will also reveal the likelihood of people of different ages to have smoked at least 100 cigarettes.
 
 # answer to the guiding question
 including the plot
@@ -38,6 +39,30 @@ ggplot(data= cdc)+ stat_count(mapping= aes(x=hlthplan)) + facet_grid(~smoke100) 
 ## Zhenlong Li
 
 ## Scott Baker
+The three following graphs are similarly composed but I found them to be visually appealing to me using the jitter function and a color function with another variable.
 
+Here are my general findings, which tend to follow intuition:
+
+* There is a larger density of people who smoke that result in 'poor' health
+* There is a smaller density of people who are in 'poor' health and have a health plan
+* It is more likely that older people have poor health compared to younger people
+* In general, there are more people who weight more in the 'poor' health category
+
+The following graph shows that there is a general increase in people who smoke and their general health exam--more light blue dots compared to dark blue dots where the person's health is considered 'poor':
+```{r, fig.width=10, fig.height=3,echo=FALSE}
+ggplot(data = cdc, mapping = aes(x = weight,y=genhlth,color=smoke100)) + geom_jitter() + ggtitle(label = "Comparing weight to general health with visualization of smoking") +xlab("Weight(lbs)") + ylab("General Health Exam Result")
+```
+
+The following plot shows that there is a slight decrease in dark blue dots (no health plan) as the general health exam result gets worse.
+
+```{r, fig.width=10, fig.height=3,echo=FALSE}
+ggplot(data = cdc, mapping = aes(x = weight,y=genhlth,color=hlthplan)) + geom_jitter() + ggtitle(label = "Comparing weight to general health with visualization of health plan") +xlab("Weight(lbs)") + ylab("General Health Exam Result")
+```
+The following graph shows that there is a decrease in health exam result as age goes up--fewer darker dots in the 'poor' catagory than in the 'excellent' catagory.
+
+```{r, fig.width=10,fig.height=3,echo=FALSE}
+ggplot(data = cdc, mapping = aes(x = weight,y=genhlth,color=age)) + geom_jitter() + ggtitle(label = "Comparing weight to general health with visualization of age") +xlab("Weight(lbs)") + ylab("General Health Exam Result")
+
+```
 
 # Contributions
