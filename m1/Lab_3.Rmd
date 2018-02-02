@@ -54,8 +54,6 @@ The bar graph demonstrates how many people rated their health given the chocie o
 The second graph reprents the same information but is based on density, rather than count, which illustrates the distribution of indiviuals based on how they rated their health. It is still evident that smokers generally rated their health lower.
 
 ## Zhenlong Li
-I made a barplot using amount of people versus weight by divding into smokers and non smokers and a barplot using amount of people versus weight by divding into exercisers and non exercisers.
-
 I found that people who smoked at least 100 cigars above good health condition are less than the people who did not. What's more, for condition below good, the amount of people who smoked are larger than people who did not. 
 
 In terms of weight, I found that people who weighed around 150 pounds without smoking are mojority of the people who have excellent health condition, while people who weighed around 150 pounds smoked at least 100 cigars are majority of the people who have poor health condition.
@@ -104,4 +102,7 @@ ggplot(data = cdc, mapping = aes(x = weight,y=genhlth,color=age)) + geom_jitter(
 
 # Contributions
 *Lindsay: Constructed the basic graph for the response to the question. I also created a bar graph showing how many people responded to each general health category. I utilized a geom_bar plot as well as facet_wrap to seperate the data by smokers and non-smokers. I also used a few astetic functions in order to change the title, the color of each bar for rating, the orientation of the x-axis, and the grid seperation titles. The data showed a trend that more lower health ratings correlated to smokers. These adjustments make the graph easy to read and understand as well as compare between smokers and non-smokers.
+
 *Lexie: Iniated the guiding question and the analysis of the data in regards to smoking habits, also wrote the conclusion. Created a nested bar graph, which on the basic level shows the amount of smokers and nonsmokers. Nested within is a bar graph which signifies how many peopled ranked their health in each of the categories. Using facet_grid, the bar graphs were split into smoker and nonsmoker, then other functions accounted for the labeling of the axis and title, and the color coding by health ranking.
+
+*Li: I made two barplots, one is showing the how people's general health conditions was affcted by using gemo_histogram to show amount of people, their weights and facet_grid to divide into smokers and non smokers. Another one is also showing the how people's general health conditions was affcted by using gemo_histogram show amount of people, their weights and facet_grid to divide into exercisers and non exercisers. I added title and set the binwith of histogram to 50 pounds.
