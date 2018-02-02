@@ -6,7 +6,8 @@ output: pdf_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-library(tidyverse)
+#library(tidyverse)
+library(ggplot2)
 source("http://www.openintro.org/stat/data/cdc.R")
 cdc <- as_tibble(cdc)
 ```
@@ -35,6 +36,9 @@ ggplot(data= cdc)+ facet_grid(~smoke100) +geom_bar(mapping= aes(x=hlthplan, fill
 ## Zhenlong Li
 
 ## Scott Baker
+```{r}
+ggplot(data = cdc, mapping = aes(x = weight,y=genhlth)) + geom_jitter()
 
+```
 
 # Contributions
