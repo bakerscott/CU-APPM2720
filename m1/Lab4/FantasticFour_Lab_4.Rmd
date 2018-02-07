@@ -1,0 +1,56 @@
+---
+title: "Lab_04"
+author: "Fantastic Four"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+#library(tidyverse)
+library(ggplot2)
+source("http://www.openintro.org/stat/data/cdc.R")
+#cdc <- as_tibble(cdc)
+```
+
+# Does smoking lead to babies born prematurely?
+
+## Overall Findings
+
+## Conclusion  
+
+# Does smoking lead to babies with low birth weight?
+
+## Overall Findings
+
+## Conclusion  
+
+
+
+
+# Recommendation
+
+
+
+
+
+# Individual Findings
+
+## Lexie Marinelli
+  
+## Lindsay Gettel
+
+## Zhenlong Li
+
+## Scott Baker
+
+
+
+
+# Contributions
+*Lindsay: 
+
+*Lexie: 
+
+*Li:
+
+*Scott: 
