@@ -36,7 +36,21 @@ source("http://www.openintro.org/stat/data/cdc.R")
 # Individual Findings
 
 ## Lexie Marinelli
-  
+
+```{r, echo= FALSE}
+newLabel<-c('0'="Nonsmokers",'1'="Smokers")
+ggplot(data= babies)+ geom_boxplot(mapping= aes(x=mage, y=gestation)) +facet_wrap(~smoke, labeller= labeller(smoke=newLabel)) +ggtitle(label="Age of Woman vs. Gestational age of Smokers and Nonsmokers") +xlab(label="Woman's Age")+ ylab(label= "Gestational Age")
+```
+
+This graph shows that on average the most women who smoke are younger than those who don't, with an average gestational age slightly below women who do not smoke. On paper this doesn't seem as important, but as the gestational age of the baby gets younger, the chance for survival is decreased. 
+
+
+```{r, echo= FALSE}
+ggplot( data= babies) + geom_violin(mapping= aes(x= gestation, y=number), scale= "area") +ggtitle(label= "Gestational Age vs. Frequency of Smoking")+ xlab(label= "Gestational Age") +ylab(label="Frequency of Smoking")
+```
+
+The second graph accounts for women who have smoked more frequently. It shows that women who have smoked more than 15+ cigarettes a day (past or present) increase their chances significantly of having a premature baby at the gestational age of 250. As the number of cigarettes smoked in a day increases, the chance of not getting a premature baby largely decreases. 
+
 ## Lindsay Gettel
 
 ## Zhenlong Li
