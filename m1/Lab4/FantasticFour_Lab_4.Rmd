@@ -13,7 +13,16 @@ babies <- rename(babies, bwtoz = `bwt/oz`)
 
 # Does smoking lead to babies born prematurely?
 This is significant because premature babies are at risk to many health issuess at birth as well as throughtout their childhood and lives. If there is a correlation between a mother's smoking habits and the probablility of their child being born prematurely in order to prevent newborn health issues mothers should be educated about smoking while pregnant.
-## Overall Findings 
+
+## Overall Findings
+
+
+## Conclusion 
+```{r, echo= FALSE}
+PLabel<-c('0'="Not Premature",'1'="Premature")
+ggplot(data= babies,mapping= aes(x=gestation, y= bwtoz)) + geom_point(aes(color= smoke))+facet_wrap(~Premature, labeller= labeller(Premature=PLabel)) +ggtitle(label= "Gestational age for Premature and Not Premature births") + xlab(label= "Gestational age") + ylab(label= "Birth Weight")
+```
+This graph shows more smokers give birth to premature babies than non smokers. This prematurity leads to a lower weight for the baby, creating health issues down the road for the babies. Nonsmokers who carry their baby the full term record a higher weight at birth. This goes along with the other data we have found in the individual sections below. 
 
 # Does smoking lead to babies with low birth weight?
 Similarly to prematurely born babies, babies born at lower weights are also more likely to face general health, growth and development. Analysis of a mother's smoking habits and their baby's birthweight could reveal if smoking causes low birthweight. Any findings can then be used to encourage mothers not to smoke during pregnancy and increase the likelyhood of havign a healthy child.
@@ -29,7 +38,7 @@ ggplot(data=babies) + geom_jitter(mapping=aes(x=bwtoz, y=gestation, color=smoke)
 
 
 # Recommendation
-In order to decrease the amount of premature and under weight babies, mother's should be discouraged from somking durning pregnancy and even before becoming pregnant. Expectant mothers need to be educated on the negative consequences of smoking throughout a pregnancy.
+In order to decrease the amount of premature and under weight babies, mother's should be discouraged from smoking during pregnancy and even before becoming pregnant. Expecting mothers need to be educated on the negative consequences of smoking throughout a pregnancy, such as an increased risk of delievering prematurly and with a lower birth weight.
 
 
 
@@ -49,7 +58,7 @@ This graph shows that on average the most women who smoke are younger than those
 ggplot( data= babies) + geom_violin(mapping= aes(x= gestation, y=number), scale= "area") +ggtitle(label= "Gestational Age vs. Frequency of Smoking")+ xlab(label= "Gestational Age") +ylab(label="Frequency of Smoking")
 ```
 
-The second graph accounts for women who have smoked more frequently. It shows that women who have smoked more than 15+ cigarettes a day (past or present) increase their chances significantly of having a premature baby at the gestational age of 250. As the number of cigarettes smoked in a day increases, the chance of not getting a premature baby largely decreases. 
+The second graph accounts for women who have smoked more frequently. It shows that women who have smoked more than 15+ cigarettes a day (past or present) increase their chances significantly of having a premature baby at the gestational age of 250. As the number of cigarettes smoked in a day increases, the chance of getting a premature baby largely increases. 
 
 ## Lindsay Gettel
 ```{r, echo= FALSE}
@@ -62,7 +71,7 @@ ggplot(data=babies) +geom_density(mapping=aes(x=bwtoz)) +facet_wrap(~smoke, labe
 ## Zhenlong Li
 For the first plot, I found that smokers' babies have more chances to be premature than nonsmokers', but there are some outliers in nonsmokers' babies. I think it may related to other factors and there is barely nothing relation between pre-pregnancy weight and gestational age.
 
-```{r}
+```{r, echo= FALSE}
 ggplot(data= babies,mapping= aes(x= parity , y= gestation))+ geom_jitter() +facet_wrap(~smoke, labeller= labeller(smoke=newLabel))
 ```
 
@@ -78,8 +87,10 @@ ggplot( data = babies, mapping= aes(x= parity , y= gestation)) + geom_violin(sca
 The first two plots here just show distributions of baby weight and gestation. These were mostly to see if the data was generally about normal when looking at the relationship between smoking and birth weight.
 
 ```{r,r, fig.width=4, fig.height=3,echo=FALSE}
-ggplot(data=babies, aes(bwt.oz)) + geom_histogram(color = "blue",binwidth = 2) + geom_vline(aes(xintercept=mean(bwt.oz))) + ggtitle(label = "Distribution of weight") +xlab(label= "weight") +ylab(label= "frequency")
+ggplot(data=babies, aes(bwtoz)) + geom_histogram(color = "blue",binwidth = 2) + geom_vline(aes(xintercept=mean(bwtoz))) + ggtitle(label = "Distribution of weight") +xlab(label= "weight") +ylab(label= "frequency")
+```
 
+```{r,r, fig.width=4, fig.height=3,echo=FALSE}
 ggplot(data=babies, aes(gestation)) + geom_histogram(color = "blue",binwidth = 2) + geom_vline(aes(xintercept=mean(gestation))) + ggtitle(label = "Distribution of gestation") +xlab(label= "Time") +ylab(label= "frequency")
 
 ```
@@ -87,15 +98,15 @@ ggplot(data=babies, aes(gestation)) + geom_histogram(color = "blue",binwidth = 2
 This next plot is used to help explain that there is no apparent relationship between the mother smoking and both birth weight and gestation:
 
 ```{r,r, fig.width=6, fig.height=5,echo=FALSE}
-ggplot(data = babies, mapping = aes(x = bwt.oz,y=gestation,color=smoke)) + geom_jitter() + ggtitle(label = "Comparing weight to gestation with visualization of smoking") +xlab("Weight(oz.)") + ylab("gestation")
-
+ggplot(data = babies, mapping = aes(x = bwtoz,y=gestation,color=smoke)) + geom_jitter() + ggtitle(label = "Comparing weight to gestation with visualization of smoking") +xlab("Weight(oz.)") + ylab("gestation")
+```
 
 
 
 # Contributions
 * Lindsay: I created a density graph to analyze the freqency of weights of newborns, using geom_density. I then used facet_grid to diplay the data according to smokers and nonsmokers in order to see a side by side comparison. I also contributed to the question significance, general findings, conlusion write up and graph.
 
-* Lexie:
+* Lexie: I created my individual plots along with the conclusion graph and description. I contributed to the recommendation as well.  
 
 * Li:
 
