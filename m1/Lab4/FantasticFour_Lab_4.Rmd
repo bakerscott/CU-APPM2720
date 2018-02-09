@@ -55,6 +55,20 @@ The second graph accounts for women who have smoked more frequently. It shows th
 
 ## Zhenlong Li
 
+For the first plot, I found that smokers' babies have more chances to be premature than nonsmokers' according to the mean of two boxplots, but there are some outliers in nonsmokers' babies and I think it may relate to other factors. What's more,there is barely nothing relation between pre-pregnancy weight and gestational age.
+
+```{r}
+newLabel<-c('0'="Nonsmokers",'1'="Smokers")
+ggplot(data= babies,mapping= aes(x= parity , y= gestation))+ geom_boxplot() +facet_wrap(~smoke, labeller= labeller(smoke=newLabel)) +ggtitle(label="Pre-Pregnancy Weight vs. Baby's Gestation between Smokers and Nonsmokers") +xlab(label="Pre-Pregnancy Weight")+ ylab(label= "Gestation Days")
+```
+
+For second one, I found that sthere are more skmokers' babies were born before gestational age of 270 according to the two violin plots, while the gestation I think it may related to the total numbers of previous pregnancies including fetal deaths and still births. The more parity, the more premature babies.
+
+```{r}
+newLabel<-c('0'="Nonsmokers",'1'="Smokers")
+ggplot( data = babies, mapping= aes(x= parity , y= gestation)) + geom_violin(scale = "area") +facet_wrap(~smoke, labeller= labeller(smoke = newLabel)) + ggtitle(label="Parity vs. Baby's Gestation between Smokers and Nonsmokers") + ylab(label="Gestation Days")+ xlab(label= "Number of previous pregnancies")
+```
+
 ## Scott Baker
 
 
