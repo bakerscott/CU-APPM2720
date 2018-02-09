@@ -59,10 +59,10 @@ ggplot(data=babies) +geom_density(mapping=aes(x=bwtoz)) +facet_wrap(~smoke, labe
   The graph above demonstrates the correlation between smoker, and nonsmoker mothers with the birth weight of their babies. The graphs illustrate that smoker mothers on average had children born lighter, in a range of 110-125oz. In contrast, nonsmoking mothers gave birth to children weighing between 125-130oz.The "N/A" plot is representative of mothers which quit smoking, and there is a wider distribution of birth weights, however, most children were born around 130oz, this could account for mothers which smoked until pregnancy or quit durning pregnancy, so the chld was still affected and born weighing less than average.
 
 ## Zhenlong Li
-For the first plot, I found that smokers' babies have more chances to be premature than nonsmokers', but there are some outliers in nonsmokers' babies. I think it may related to other confounding factors such as age, race and etc. There is barely nothing relation between pre-pregnancy weight and gestational age.
+For the first plot, I found that smokers' babies have more chances to be premature than nonsmokers', but there are some outliers in nonsmokers' babies. I think it may related to other factors and there is barely nothing relation between pre-pregnancy weight and gestational age.
 
 ```{r}
-ggplot(data= babies,mapping= aes(x= mpregwt , y= gestation))+ geom_jitter() +facet_wrap(~smoke, labeller= labeller(smoke=newLabel))
+ggplot(data= babies,mapping= aes(x= parity , y= gestation))+ geom_jitter() +facet_wrap(~smoke, labeller= labeller(smoke=newLabel))
 ```
 
 For second one, I found that there are more smokers' babies were born before gestational age of 270 according to the two violin plots, while the gestation I think it may related to the total numbers of previous pregnancies including fetal deaths and still births. The more parity, the more premature babies.
@@ -87,7 +87,7 @@ This next plot is used to help explain that there is no apparent relationship be
 
 ```{r,r, fig.width=6, fig.height=5,echo=FALSE}
 ggplot(data = babies, mapping = aes(x = bwt.oz,y=gestation,color=smoke)) + geom_jitter() + ggtitle(label = "Comparing weight to gestation with visualization of smoking") +xlab("Weight(oz.)") + ylab("gestation")
-```
+
 
 
 
@@ -97,7 +97,5 @@ ggplot(data = babies, mapping = aes(x = bwt.oz,y=gestation,color=smoke)) + geom_
 * Lexie:
 
 * Li:
-
-I made two plots, one is showing the how mothers' pre-pregnancy weights affcted premature by using gemo_point to show the relationship and facet_grid to divide into smokers and non smokers. Another plot is showing how parity affcted premature by using gemo_violin to show mean of gestational age and facet_grid to divide into smokers and non smokers.
 
 * Scott: 
