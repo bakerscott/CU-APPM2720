@@ -4,12 +4,11 @@ author: "Fantastic Four"
 output: pdf_document
 ---
 
-```{r setup, include=FALSE}
+```{r setup, echo=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-#library(tidyverse)
-library(ggplot2)
-source("http://www.openintro.org/stat/data/cdc.R")
-#cdc <- as_tibble(cdc)
+library(tidyverse)
+babies <- read_csv("https://raw.githubusercontent.com/ervance1/Sp2018-Data-Science-repo/master/babies2a.dat")
+babies <- rename(babies, bwtoz = `bwt/oz`)
 ```
 
 # Does smoking lead to babies born prematurely?
@@ -62,9 +61,9 @@ newLabel<-c('0'="Nonsmokers",'1'="Smokers")
 ggplot(data= babies,mapping= aes(x= parity , y= gestation))+ geom_boxplot() +facet_wrap(~smoke, labeller= labeller(smoke=newLabel)) +ggtitle(label="Pre-Pregnancy Weight vs. Baby's Gestation between Smokers and Nonsmokers") +xlab(label="Pre-Pregnancy Weight")+ ylab(label= "Gestation Days")
 ```
 
-For second one, I found that sthere are more skmokers' babies were born before gestational age of 270 according to the two violin plots, while the gestation I think it may related to the total numbers of previous pregnancies including fetal deaths and still births. The more parity, the more premature babies.
+For second one, I found that there are more smokers' babies were born before gestational age of 270 according to the two violin plots, while the gestation I think it may related to the total numbers of previous pregnancies including fetal deaths and still births. The more parity, the more premature babies.
 
-```{r}
+```{r, echo= FALSE}
 newLabel<-c('0'="Nonsmokers",'1'="Smokers")
 ggplot( data = babies, mapping= aes(x= parity , y= gestation)) + geom_violin(scale = "area") +facet_wrap(~smoke, labeller= labeller(smoke = newLabel)) + ggtitle(label="Parity vs. Baby's Gestation between Smokers and Nonsmokers") + ylab(label="Gestation Days")+ xlab(label= "Number of previous pregnancies")
 ```
@@ -75,10 +74,10 @@ ggplot( data = babies, mapping= aes(x= parity , y= gestation)) + geom_violin(sca
 
 
 # Contributions
-*Lindsay: 
+* Lindsay: 
 
-*Lexie: 
+* Lexie:
 
-*Li:
+* Li:
 
-*Scott: 
+* Scott: 
