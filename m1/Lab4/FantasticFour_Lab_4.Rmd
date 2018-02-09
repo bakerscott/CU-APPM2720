@@ -12,13 +12,13 @@ babies <- rename(babies, bwtoz = `bwt/oz`)
 ```
 
 # Does smoking lead to babies born prematurely?
-
+This is significant because premature babies are at risk to many health issuess at birth as well as throughtout their childhood and lives. If there is a correlation between a mother's smoking habits and the probablility of their child being born prematurely in order to prevent newborn health issues mothers should be educated about smoking while pregnant.
 ## Overall Findings
 
 ## Conclusion  
 
 # Does smoking lead to babies with low birth weight?
-
+Similarly to prematurely born babies, babies born at lower weights are also more likely to face general health, growth and development. Analysis of a mother's smoking habits and their baby's birthweight could reveal if smoking causes low birthweight. Any findings can then be used to  
 ## Overall Findings
 
 ## Conclusion  
@@ -51,6 +51,12 @@ ggplot( data= babies) + geom_violin(mapping= aes(x= gestation, y=number), scale=
 The second graph accounts for women who have smoked more frequently. It shows that women who have smoked more than 15+ cigarettes a day (past or present) increase their chances significantly of having a premature baby at the gestational age of 250. As the number of cigarettes smoked in a day increases, the chance of not getting a premature baby largely decreases. 
 
 ## Lindsay Gettel
+```{r, echo= FALSE}
+slabel<-c('0'="Nonsmoker", '1'="Smoker", 'N/A'="Previous Smoker")
+ggplot(data=babies) +geom_density(mapping=aes(x=bwtoz)) +facet_wrap(~smoke, labeller=labeller(smoke=slabel)) + ggtitle("Baby's birthweight comparison of smoker and nonsmoker mothers") + labs(x="Baby's birthweight (oz)", y="Density of babies born at a given weight")
+
+```
+  The graph above demonstrates the correlation between smoker, and nonsmoker mothers with the birthweight of their babies. The graphs illustrate that smoker mothers on average had children born lighter, in a range of 100-125oz. In contrast, nonsmoking mothers gave birth to children weighing between 125-130oz.The "N/A" plot is representative of mothers which quit smoking, and there is a wider distribution of birthweights, however, most childern were born around 130oz.
 
 ## Zhenlong Li
 
