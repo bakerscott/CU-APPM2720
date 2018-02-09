@@ -21,8 +21,13 @@ This is significant because premature babies are at risk to many health issuess 
 Similarly to prematurely born babies, babies born at lower weights are also more likely to face general health, growth and development. Analysis of a mother's smoking habits and their baby's birthweight could reveal if smoking causes low birthweight. Any findings can then be used to encourage mothers not to smoke during pregnancy and increase the likelyhood of havign a healthy child.
 ## Overall Findings
 There is a negative relationship between smoking and newborn birth weight. Mothers that smoked during pregnancy had children which weighed less than mothers that did not. Newborns born from smoking mothers were born with an average weight from 115-120 onces, whereas, newborns with nonsmoking mothers were born weighing an average of 125-130 onces. There was also a wider distribution of weights, with most babies weight less than the average, for mothers which smoked. this demonstrates the connection between a mother's smoking haits during gestation and the weight of their newborn.
-## Conclusion  
-The data illustrates that smoking does lead to premature and low birth weight of newborns. Children born to mothers which smoked were more frequently born premature and at a below averag weight. Therefore, smoking during pregnancy has negative effects on the developing fetus and can cause difficulties at birth, which in turn can also cause health issues in the child's life later on. There could be s few variables whcih also affect premature and underweight births, such as the mother's health and age, the father's heath, however, the data presents a strong correlation between smoking and childbirth.
+## Conclusion 
+```{r, echo=FALSE, fig.with=7}
+newLabel<-c('0'="Nonsmoker", '1'="Smoker")
+ggplot(data=babies) + geom_jitter(mapping=aes(x=bwtoz, y=gestation, color=smoke)) + facet_wrap(~smoke, labeller=labeller(smoke=newLabel)) + geom_smooth(mapping=aes(x=bwtoz, y=gestation), method="lm", se=FALSE) + labs(x="Newborn Birthweight(oz)", y="Duration of Gestation(days)")
+```
+  The graph above plots the newborn birth weight and the gestation period before birth, the multiple plots seperate the data according to smoking and nonsmoking mothers. There is a wider distribution of newborn weights and gestation for children of smokers, but, there is a higher density corresponding to lighter weights and shorter pregnancy.Therfore, most premature and low weight babies are born from mothers whoch smoked.
+  The data illustrates that smoking does lead to premature and low birth weight of newborns. Children born to mothers which smoked were more frequently born premature and at a below averag weight. Therefore, smoking during pregnancy has negative effects on the developing fetus and can cause difficulties at birth, which in turn can also cause health issues in the child's life later on. There could be s few variables whcih also affect premature and underweight births, such as the mother's health and age, the father's heath, however, the data presents a strong correlation between smoking and childbirth.
 
 
 
