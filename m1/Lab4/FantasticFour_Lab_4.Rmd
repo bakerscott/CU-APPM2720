@@ -56,7 +56,7 @@ slabel<-c('0'="Nonsmoker", '1'="Smoker", 'N/A'="Previous Smoker")
 ggplot(data=babies) +geom_density(mapping=aes(x=bwtoz)) +facet_wrap(~smoke, labeller=labeller(smoke=slabel)) + ggtitle("Baby's birthweight comparison of smoker and nonsmoker mothers") + labs(x="Baby's birthweight (oz)", y="Density of babies born at a given weight")
 
 ```
-  The graph above demonstrates the correlation between smoker, and nonsmoker mothers with the birth weight of their babies. The graphs illustrate that smoker mothers on average had children born lighter, in a range of 100-125oz. In contrast, nonsmoking mothers gave birth to children weighing between 125-130oz.The "N/A" plot is representative of mothers which quit smoking, and there is a wider distribution of birth weights, however, most children were born around 130oz.
+  The graph above demonstrates the correlation between smoker, and nonsmoker mothers with the birth weight of their babies. The graphs illustrate that smoker mothers on average had children born lighter, in a range of 110-125oz. In contrast, nonsmoking mothers gave birth to children weighing between 125-130oz.The "N/A" plot is representative of mothers which quit smoking, and there is a wider distribution of birth weights, however, most children were born around 130oz, this could account for mothers which smoked until pregnancy or quit durning pregnancy, so the chld was still affected and born weighing less than average.
 
 ## Zhenlong Li
 
