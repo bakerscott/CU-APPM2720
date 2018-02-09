@@ -70,6 +70,20 @@ ggplot( data = babies, mapping= aes(x= parity , y= gestation)) + geom_violin(sca
 
 ## Scott Baker
 
+The first two plots here just show distributions of baby weight and gestation. These were mostly to see if the data was generally about normal when looking at the relationship between smoking and birth weight.
+
+```{r,r, fig.width=4, fig.height=3,echo=FALSE}
+ggplot(data=babies, aes(bwt.oz)) + geom_histogram(color = "blue",binwidth = 2) + geom_vline(aes(xintercept=mean(bwt.oz))) + ggtitle(label = "Distribution of weight") +xlab(label= "weight") +ylab(label= "frequency")
+
+ggplot(data=babies, aes(gestation)) + geom_histogram(color = "blue",binwidth = 2) + geom_vline(aes(xintercept=mean(gestation))) + ggtitle(label = "Distribution of gestation") +xlab(label= "Time") +ylab(label= "frequency")
+
+```
+
+This next plot is used to help explain that there is no apparent relationship between the mother smoking and both birth weight and gestation:
+
+```{r,r, fig.width=6, fig.height=5,echo=FALSE}
+ggplot(data = babies, mapping = aes(x = bwt.oz,y=gestation,color=smoke)) + geom_jitter() + ggtitle(label = "Comparing weight to gestation with visualization of smoking") +xlab("Weight(oz.)") + ylab("gestation")
+
 
 
 
