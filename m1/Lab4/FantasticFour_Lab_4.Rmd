@@ -99,4 +99,5 @@ ggplot(data = babies, mapping = aes(x = bwt.oz,y=gestation,color=smoke)) + geom_
 
 * Li:
 
-* Scott: 
+* Scott: I added info on the correlation between smoking and weight. Also, organized the git.
+
