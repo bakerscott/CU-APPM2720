@@ -8,8 +8,14 @@ output: pdf_document
 knitr::opts_chunk$set(warning = FALSE, echo = TRUE)
 library(tidyverse)
 library(ggplot2)
+<<<<<<< Updated upstream
 babies <- read_csv("https://raw.githubusercontent.com/ervance1/Sp2018-Data-Science-repo/master/babies2a.dat")
 babies <- rename(babies, bwtoz = `bwt/oz`)
+=======
+babies <- read.csv("babies2a.csv")
+#babies <- rename(babies, bwtoz = `bwt/oz`)
+#cdc <- as_tibble(cdc)
+>>>>>>> Stashed changes
 ```
 
 # Does smoking lead to babies born prematurely?
@@ -86,7 +92,9 @@ ggplot( data = babies, mapping= aes(x= parity , y= gestation)) + geom_violin(sca
 ```
 
 ## Scott Baker
+The first two plots here just show distributions of baby weight and gestation. These were mostly to see if the data was generally about normal when looking at the relationship between smoking and birth weight.
 
+<<<<<<< Updated upstream
 The first two plots here just show distributions of baby weight and gestation. These were mostly to see if the data was generally about normal when looking at the relationship between smoking and birth weight.
 
 ```{r, fig.width=4, fig.height=3}
@@ -94,14 +102,25 @@ ggplot(data=babies, aes(bwtoz)) + geom_histogram(color = "blue",binwidth = 2) + 
 ```
 
 ```{r, fig.width=4, fig.height=3}
+=======
+```{r,r, fig.width=4, fig.height=3,echo=FALSE}
+ggplot(data=babies, aes(bwt.oz)) + geom_histogram(color = "blue",binwidth = 2) + geom_vline(aes(xintercept=mean(bwt.oz))) + ggtitle(label = "Distribution of weight") +xlab(label= "weight") +ylab(label= "frequency")
+
+>>>>>>> Stashed changes
 ggplot(data=babies, aes(gestation)) + geom_histogram(color = "blue",binwidth = 2) + geom_vline(aes(xintercept=mean(gestation))) + ggtitle(label = "Distribution of gestation") +xlab(label= "Time") +ylab(label= "frequency")
 
 ```
 
 This next plot is used to help explain that there is no apparent relationship between the mother smoking and both birth weight and gestation:
 
+<<<<<<< Updated upstream
 ```{r, fig.width=6, fig.height=5}
 ggplot(data = babies, mapping = aes(x = bwtoz,y=gestation,color=smoke)) + geom_jitter() + ggtitle(label = "Comparing weight to gestation with visualization of smoking") +xlab("Weight(oz.)") + ylab("gestation")
+=======
+```{r,r, fig.width=6, fig.height=5,echo=FALSE}
+ggplot(data = babies, mapping = aes(x = bwt.oz,y=gestation,color=smoke)) + geom_jitter() + ggtitle(label = "Comparing weight to gestation with visualization of smoking") +xlab("Weight(oz.)") + ylab("gestation")
+
+>>>>>>> Stashed changes
 ```
 
 
