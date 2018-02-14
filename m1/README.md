@@ -1,11 +1,12 @@
-module 1: 
+### module 1: 
 
-tests: 1/29
+#### tests: 
+1/29
 
-topics:
+#### topics:
 
 Data Visualization, ggplot
 
-included:
+#### included:
 * Lab3 - Smoking and Health
 * Lab4 - Smoking and Babies
