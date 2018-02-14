@@ -21,14 +21,14 @@ babies <- read.csv("babies2a.csv")
 # Does smoking lead to babies born prematurely?
 This is significant because premature babies are at risk to many health issuess at birth as well as throughtout their childhood and lives. If there is a correlation between a mother's smoking habits and the probablility of their child being born prematurely in order to prevent newborn health issues mothers should be educated about smoking while pregnant.
 
-## Overall Findings 
+## Overall Findings
 ```{r}
 PLabel<-c('0'="Not Premature",'1'="Premature")
 ggplot(data= babies,mapping= aes(x=gestation, y= bwtoz)) + geom_point(aes(color= smoke))+facet_wrap(~Premature, labeller= labeller(Premature=PLabel)) +ggtitle(label= "Gestational age for Premature and Not Premature births") + xlab(label= "Gestational age") + ylab(label= "Birth Weight")
 ```
 This graph shows more smokers give birth to premature babies than non smokers. This prematurity leads to a lower weight for the baby, creating health issues down the road for the babies. Nonsmokers who carry their baby the full term record a higher weight at birth. This goes along with the other data we have found in the individual sections below.
 
-## Conclusion 
+## Conclusion
 Our overall plots shows that smoking will cause premature. Babies were born to mothers who smoked have more chances to be premature. Therefore, we can supprot the view cited in the Surgeon General???s Report (1989) that is "Mothers who smoke have increased rates of premature delivery (before 270 days). There could be a few variables whcih also affect premature, such as the mother's age, smoking frequency, and number of previous pregnancies. While there are some confounding variable such as pre-pregnancy weight, the plot indeed shows a correlation between whether smoke or not and rates of premature delivery.
 
 # Does smoking lead to babies with low birth weight?
@@ -37,7 +37,7 @@ Similarly to prematurely born babies, babies born at lower weights are also more
 ## Overall Findings
 There is a negative relationship between smoking and newborn birth weight. Mothers that smoked during pregnancy had children which weighed less than mothers that did not. Newborns born from smoking mothers were born with an average weight from 115-120 ounces, whereas, newborns with nonsmoking mothers were born weighing an average of 125-130 ounces. There was also a wider distribution of weights, with most babies weight less than the average, for mothers which smoked. this demonstrates the connection between a mother's smoking habits during gestation and the weight of their newborn.
 
-## Conclusion 
+## Conclusion
 ```{r, fig.with=7}
 newLabel<-c('0'="Nonsmoker", '1'="Smoker")
 ggplot(data=babies) + geom_jitter(mapping=aes(x=bwtoz, y=gestation, color=smoke)) + facet_wrap(~smoke, labeller=labeller(smoke=newLabel)) + geom_smooth(mapping=aes(x=bwtoz, y=gestation), method="lm", se=FALSE) + labs(x="Newborn Birthweight(oz)", y="Duration of Gestation(days)")
@@ -60,14 +60,14 @@ newLabel<-c('0'="Nonsmokers",'1'="Smokers")
 ggplot(data= babies)+ geom_boxplot(mapping= aes(x=mage, y=gestation)) +facet_wrap(~smoke, labeller= labeller(smoke=newLabel)) +ggtitle(label="Age of Woman vs. Gestational age of Smokers and Nonsmokers") +xlab(label="Woman's Age")+ ylab(label= "Gestational Age")
 ```
 
-This graph shows that on average the most women who smoke are younger than those who don't, with an average gestational age slightly below women who do not smoke. On paper this doesn't seem as important, but as the gestational age of the baby gets younger, the chance for survival is decreased. 
+This graph shows that on average the most women who smoke are younger than those who don't, with an average gestational age slightly below women who do not smoke. On paper this doesn't seem as important, but as the gestational age of the baby gets younger, the chance for survival is decreased.
 
 
 ```{r}
 ggplot( data= babies) + geom_violin(mapping= aes(x= gestation, y=number), scale= "area") +ggtitle(label= "Gestational Age vs. Frequency of Smoking")+ xlab(label= "Gestational Age") +ylab(label="Frequency of Smoking")
 ```
 
-The second graph accounts for women who have smoked more frequently. It shows that women who have smoked more than 15+ cigarettes a day (past or present) increase their chances significantly of having a premature baby at the gestational age of 250. As the number of cigarettes smoked in a day increases, the chance of getting a premature baby largely increases. 
+The second graph accounts for women who have smoked more frequently. It shows that women who have smoked more than 15+ cigarettes a day (past or present) increase their chances significantly of having a premature baby at the gestational age of 250. As the number of cigarettes smoked in a day increases, the chance of getting a premature baby largely increases.
 
 ## Lindsay Gettel
 ```{r}
@@ -94,33 +94,22 @@ ggplot( data = babies, mapping= aes(x= parity , y= gestation)) + geom_violin(sca
 ## Scott Baker
 The first two plots here just show distributions of baby weight and gestation. These were mostly to see if the data was generally about normal when looking at the relationship between smoking and birth weight.
 
-<<<<<<< Updated upstream
-The first two plots here just show distributions of baby weight and gestation. These were mostly to see if the data was generally about normal when looking at the relationship between smoking and birth weight.
 
-```{r, fig.width=4, fig.height=3}
+```{r, fig.width=4, fig.height=3,echo=false}
 ggplot(data=babies, aes(bwtoz)) + geom_histogram(color = "blue",binwidth = 2) + geom_vline(aes(xintercept=mean(bwtoz))) + ggtitle(label = "Distribution of weight") +xlab(label= "weight") +ylab(label= "frequency")
 ```
 
-```{r, fig.width=4, fig.height=3}
-=======
 ```{r,r, fig.width=4, fig.height=3,echo=FALSE}
 ggplot(data=babies, aes(bwt.oz)) + geom_histogram(color = "blue",binwidth = 2) + geom_vline(aes(xintercept=mean(bwt.oz))) + ggtitle(label = "Distribution of weight") +xlab(label= "weight") +ylab(label= "frequency")
 
->>>>>>> Stashed changes
-ggplot(data=babies, aes(gestation)) + geom_histogram(color = "blue",binwidth = 2) + geom_vline(aes(xintercept=mean(gestation))) + ggtitle(label = "Distribution of gestation") +xlab(label= "Time") +ylab(label= "frequency")
 
 ```
 
 This next plot is used to help explain that there is no apparent relationship between the mother smoking and both birth weight and gestation:
 
-<<<<<<< Updated upstream
-```{r, fig.width=6, fig.height=5}
+```{r, fig.width=6, fig.height=5,echo=FALSE}
 ggplot(data = babies, mapping = aes(x = bwtoz,y=gestation,color=smoke)) + geom_jitter() + ggtitle(label = "Comparing weight to gestation with visualization of smoking") +xlab("Weight(oz.)") + ylab("gestation")
-=======
-```{r,r, fig.width=6, fig.height=5,echo=FALSE}
-ggplot(data = babies, mapping = aes(x = bwt.oz,y=gestation,color=smoke)) + geom_jitter() + ggtitle(label = "Comparing weight to gestation with visualization of smoking") +xlab("Weight(oz.)") + ylab("gestation")
 
->>>>>>> Stashed changes
 ```
 
 
@@ -133,4 +122,3 @@ ggplot(data = babies, mapping = aes(x = bwt.oz,y=gestation,color=smoke)) + geom_
 * Li: I made two plots, one is showing the how mothers' pre-pregnancy weights affcted premature by using gemo_point and geom_smooth to show the relationship between pre-pregnancy weights and getational ages.Then, I used facet_grid to divide into smokers and non smokers. Another plot is showing how parity affcted premature by using gemo_violin to show mean of gestational age and facet_grid to divide into smokers and non smokers. I wrote conclusion of our first guding questions.
 
 * Scott: I added info on the correlation between smoking and weight. Also, organized the git.
-
