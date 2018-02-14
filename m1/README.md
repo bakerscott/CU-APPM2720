@@ -1,9 +1,11 @@
-module 1: Data Visualization, ggplot
+module 1: 
 
 tests: 1/29
 
 topics:
 
+Data Visualization, ggplot
+
 included:
-Lab_3.Html
-Lab_3.Rmd
+* Lab3 - Smoking and Health
+* Lab4 - Smoking and Babies
