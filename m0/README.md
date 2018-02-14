@@ -1,10 +1,11 @@
-module 0:
+### module 0:
 
-tests: 1/22
+#### tests: 
+1/22
 
-topics:
+#### topics:
 
 TBL, RStudio, GitHub, RMarkdown, OSF
 
-included:
+#### included:
 * IA2.txt
