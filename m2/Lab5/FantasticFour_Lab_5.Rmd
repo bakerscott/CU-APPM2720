@@ -56,26 +56,29 @@ ms %>%
 ms%>%
   filter(spec10>0)%>%
   ggplot(mapping=aes(x=mass, y=spec10))+ geom_jitter()
+ms%>%
+  filter(spec10>0 & spec10<25)%>%
+  ggplot(mapping=aes(x=spec10)) +geom_histogram(binwidth=0.5)
 
-#ggplot(data=ms, mapping=aes(x=spec10)) +geom_histogram(binwidth=0.1)
-"
 #histogram of difference between spec10 and spec5(for team)
 ms%>%
-  filter(spec5>0, spec10>0)%>%
-  summarize(spec5AVG=mean(spec5), spec10AVG=mean(spec10))%>%
+  filter(spec5>0 & spec5<25, spec10>0 & spec10<25)%>%
+  #summarize(spec5AVG=mean(spec5), spec10AVG=mean(spec10))%>%
   mutate(diff=spec10-spec5)%>%
-  ggplot(mapping=aes(x=diff))+ geom_histogram(binwidth = 0.1)
-  ggplot(mapping=aes(x=mass, y=diff))+ geom_jitter()"
+  ggplot(mapping=aes(x=diff))+ geom_histogram(binwidth = 0.5)
 
 #individual graphs, variation of spec10 and covaration
 ms%>%
-  filter(spec10>0)%>%
-  ggplot()+ geom_histogram(mapping=aes(x=spec10),binwidth=0.1)
-  ggplot(mapping=aes(x=mass, y=spec10))+ geom_jitter()+ geom_smooth(se=FALSE)
+  filter(spec10>0 & spec10<30)%>%
+  ggplot(mapping=aes(x=spec10))+ geom_histogram(binwidth=0.5)
+
+ms%>%
+  filter(spec10>0 & spec10<75)%>%
+  ggplot(mapping=aes(x=mass, y=spec10))+ geom_jitter()+ geom_smooth(se=FALSE)+ ylim(0,50)
   
 ms%>%
-  filter(spec10>0 & spec5>0)%>%
-  ggplot()+ geom_density(mapping=aes(x=spec5))+ geom_density(mapping=aes(x=spec10))
+  filter(spec10>0 & spec10<50, spec5>0 & spec5<50)%>%
+  ggplot()+ geom_density(mapping=aes(x=spec5), color="red")+ geom_density(mapping=aes(x=spec10), color="blue")#+ theme(legend=c("spec5", "spec10"), col=c("red", "blue"))
 ```
 
 
