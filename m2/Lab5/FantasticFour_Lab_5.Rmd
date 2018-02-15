@@ -35,22 +35,26 @@ ms <- read_csv("https://raw.githubusercontent.com/ervance1/Sp2018-Data-Science-r
 
 ## Lexie Marinelli
 Here is a plot of spec5 raw data and of the difference between spec5 and spec10 compared to spec5.
-```{r}
+```{r, echo=FALSE}
 #variation between spec5
 ms %>%
-  filter(spec5>0 & spec5< 1.9) %>%
+  filter(spec5>0 & spec5< 10) %>%
   ggplot(ms, mapping=aes(x=spec5)) +geom_histogram(binwidth= 0.05, color= "blue") 
+```
+The first graph shows the relationship for spec5 as it gets larger, the occurance of those values faces an exponential decrease. 
 
+```{r, echo=FALSE}
 #covariation bt spec5 and spec10
 ms %>%
   mutate(difference= spec5-spec10) %>%
   filter(spec5 > 0 & spec5< 25000 ) %>%
   ggplot(ms, mapping= aes(x=spec5, y=difference)) +geom_line()
 ```
+The second graph tells us that as the value for spec5 increases, the difference between the values of spec5 and spec10 increase and oscillates to form a v shape. 
 
 
 ## Lindsay Gettel
-```{r, echo=false}
+```{r, echo=FALSE}
 
 #raw spec10 data(for team)
 ms%>%
