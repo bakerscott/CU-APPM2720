@@ -34,6 +34,19 @@ ms <- read_csv("https://raw.githubusercontent.com/ervance1/Sp2018-Data-Science-r
 
 
 ## Lexie Marinelli
+Here is a plot of spec5 raw data and of the difference between spec5 and spec10 compared to spec5.
+```{r}
+#variation between spec5
+ms %>%
+  filter(spec5>0 & spec5< 1.9) %>%
+  ggplot(ms, mapping=aes(x=spec5)) +geom_histogram(binwidth= 0.05, color= "blue") 
+
+#covariation bt spec5 and spec10
+ms %>%
+  mutate(difference= spec5-spec10) %>%
+  filter(spec5 > 0 & spec5< 25000 ) %>%
+  ggplot(ms, mapping= aes(x=spec5, y=difference)) +geom_line()
+```
 
 
 ## Lindsay Gettel
@@ -55,10 +68,10 @@ ggplot(data=ms, mapping=aes(x = spec5, y = spec10)) + geom_point() + scale_x_log
 currently cant decide what shows the log data the best... will updated later
 
 # Contributions
-*Lindsay: 
+* Lindsay: 
 
-*Lexie: 
+* Lexie: 
 
-*Li: 
+* Li: 
 
-*Scott:
+* Scott:
