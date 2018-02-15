@@ -50,6 +50,35 @@ ms %>%
 
 
 ## Lindsay Gettel
+```{r, echo=false}
+
+#raw spec10 data(for team)
+ms%>%
+  filter(spec10>0)%>%
+  ggplot(mapping=aes(x=mass, y=spec10))+ geom_jitter()
+
+#ggplot(data=ms, mapping=aes(x=spec10)) +geom_histogram(binwidth=0.1)
+"
+#histogram of difference between spec10 and spec5(for team)
+ms%>%
+  filter(spec5>0, spec10>0)%>%
+  summarize(spec5AVG=mean(spec5), spec10AVG=mean(spec10))%>%
+  mutate(diff=spec10-spec5)%>%
+  ggplot(mapping=aes(x=diff))+ geom_histogram(binwidth = 0.1)
+  ggplot(mapping=aes(x=mass, y=diff))+ geom_jitter()"
+
+#individual graphs, variation of spec10 and covaration
+ms%>%
+  filter(spec10>0)%>%
+  ggplot()+ geom_histogram(mapping=aes(x=spec10),binwidth=0.1)
+  ggplot(mapping=aes(x=mass, y=spec10))+ geom_jitter()+ geom_smooth(se=FALSE)
+  
+ms%>%
+  filter(spec10>0 & spec5>0)%>%
+  ggplot()+ geom_density(mapping=aes(x=spec5))+ geom_density(mapping=aes(x=spec10))
+```
+
+
 
 
 ## Zhenlong Li
