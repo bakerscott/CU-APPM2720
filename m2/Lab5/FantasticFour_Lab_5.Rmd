@@ -6,10 +6,13 @@ output: pdf_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-#library(tidyverse)
-library(ggplot2)
-source("http://www.openintro.org/stat/data/cdc.R")
-#cdc <- as_tibble(cdc)
+#taken straight from Lab_5.html provided:
+rm(list=ls()) # clears your environment variables
+cat('\014')   # clears the console
+suppressPackageStartupMessages(library(tidyverse) )
+
+ms <- read_csv("https://raw.githubusercontent.com/ervance1/Sp2018-Data-Science-repo/master/ms.csv") # load the data
+# ls(as_tibble(ms))
 ```
 
 # Guiding Question
@@ -26,6 +29,9 @@ source("http://www.openintro.org/stat/data/cdc.R")
 
 
 # Individual Findings
+<!-- gist: plot variation in one of the spec variables -->
+      <!-- plot covariation in the two -->
+
 
 ## Lexie Marinelli
 
@@ -37,7 +43,16 @@ source("http://www.openintro.org/stat/data/cdc.R")
 
 
 ## Scott Baker
+Here is a plot of the relationship between the spec5 and spec10 variables on a logarithmic scale 
+```{r, echo=FALSE}
+ggplot(data=ms, mapping=aes(x = mass, y = spec10)) + geom_point() + scale_x_log10() + scale_y_log10() + ggtitle(label = "Log Plot of spec10 vs. mass")
 
+ggplot(data=ms, mapping=aes(x = mass, y = spec5)) + geom_point() + scale_x_log10() + scale_y_log10() + ggtitle(label = "Log Plot of spec5 vs. mass")
+
+ggplot(data=ms, mapping=aes(x = spec5, y = spec10)) + geom_point() + scale_x_log10() + scale_y_log10() + ggtitle(label = "Log Plot of spec5 vs. spec10")
+
+```
+currently cant decide what shows the log data the best... will updated later
 
 # Contributions
 *Lindsay: 
