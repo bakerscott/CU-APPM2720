@@ -30,10 +30,6 @@ ms <- read_csv("https://raw.githubusercontent.com/ervance1/Sp2018-Data-Science-r
 ## Conclusion  
 
 
-# Recommendation
-
-
-
 # Individual Findings
 
 ## Lexie Marinelli
