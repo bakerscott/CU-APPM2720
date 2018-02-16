@@ -6,7 +6,7 @@ output: pdf_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-suppressMessages(library(memisc, warn.conflicts = FALSE, quietly=TRUE))
+#suppressMessages(library(memisc, warn.conflicts = FALSE, quietly=TRUE))
 
 #taken straight from Lab_5.html provided:
 rm(list=ls()) # clears your environment variables
@@ -21,14 +21,10 @@ ms <- read_csv("https://raw.githubusercontent.com/ervance1/Sp2018-Data-Science-r
 ## What is the relationship between the resulting spectra after the ionization of partices? What variation occurs for each spectra, spec5 and spec10? What covaritation occurs?
 
 # Overall Findings
-*most frequent occurances for low mass/charge ratios
-*spec5 is slighlty more common
-*wide range of resulting spectra values (0,400) and negative values (broad span of data)
-  **need to filter and isoltate data in order to draw meaningful analysis
-
-
-## Conclusion  
-
+* most frequent occurances for low mass/charge ratios
+* spec5 is slighlty more common
+* wide range of resulting spectra values (0,400) and negative values (broad span of data)
+  ** need to filter and isoltate data in order to draw meaningful analysis
 
 # Individual Findings
 
@@ -56,9 +52,6 @@ The second graph tells us that as the value for spec5 increases, the difference 
 ```{r, echo=FALSE}
 #raw spec10 data(for team)
 ms%>%
-  filter(spec10>0)%>%
-  ggplot(mapping=aes(x=mass, y=spec10))+ geom_jitter()+ggtitle("Positive spec10 measurments by mass")
-ms%>%
   filter(spec10>0 & spec10<25)%>%
   ggplot(mapping=aes(x=spec10)) +geom_histogram(binwidth=0.5)+ ggtitle("Distribution of spec10")
 
@@ -68,7 +61,7 @@ ms%>%
   #summarize(spec5AVG=mean(spec5), spec10AVG=mean(spec10))%>%
   mutate(diff=spec10-spec5)%>%
   filter(mass<200)%>%
-  ggplot(mapping=aes(x=mass, y=diff))+ geom_jitter() # geom_histogram(binwidth = 0.5)
+  ggplot(mapping=aes(x=diff))+ geom_histogram(binwidth = 0.5)
 
 ```
 The first graph illustrates the mass charge ratio of the particles which produced a spectra of spec10. The graph illustrates that there were a variety of paticle masses which resulted in low output spectra. There were a few high valued outputs, that seem to be only from low mass.
@@ -80,17 +73,13 @@ The third graph models the differences between the spec5 and spec10. This shows 
 ms%>%
   filter(spec10>0 & spec10<30)%>%
   ggplot(mapping=aes(x=spec10))+ geom_histogram(binwidth=0.5) + ggtitle("Frequency of spec10 measurements")
-
-ms%>%
-  filter(spec10>0 & spec10<75)%>%
-  ggplot(mapping=aes(x=mass, y=spec10))+ geom_jitter()+ geom_smooth(se=FALSE)+ ylim(0,50)+ ggtitle("Mass vs. spec10")
   
 ms%>%
   filter(spec10>0 & spec10<50, spec5>0 & spec5<50)%>%
   ggplot()+ geom_density(mapping=aes(x=spec5), color="red")+ geom_density(mapping=aes(x=spec10), color="blue")+ ggtitle("spec10 and spec5 comparison")+ xlab("spectra range")#+ legend(legend = c("spec5", "spec10"), col = c("red", "blue"))
 ```
-The next(first and second) graph depicts the range of spec10 values, limited by 30, and the number of occurances of that value within the data set. Similar to the spec5, most of the measurments of spec10 were for lower values, around 5, the number of vlaues greately decreases and spec10 values above 30 are very sparce, and therefore were not included in the graph.
-The final graph shows the frqencey of measurements for both spec5 and spec10. They have similar trends, a higher concentration of low spectra values, but spec5 occurs silghtly more often for low spectra values.
+The next graph depicts the range of spec10 values, limited by 30, and the number of occurances of that value within the data set. Similar to the spec5, most of the measurments of spec10 were for lower values, around 5, the number of vlaues greately decreases and spec10 values above 30 are very sparce, and therefore were not included in the graph.
+The final graph shows the frqencey of measurements for both spec5 (red) and spec10(blue). They have similar trends, a higher concentration of low spectra values, but spec5 occurs silghtly more often for low spectra values.
 
 ## Zhenlong Li
 ```{r,echo=FALSE}
