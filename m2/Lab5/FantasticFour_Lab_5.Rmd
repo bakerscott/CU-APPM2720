@@ -38,7 +38,7 @@ Here is a plot of spec5 raw data and of the difference between spec5 and spec10 
 #variation between spec5
 ms %>%
   filter(spec5>0 & spec5< 10) %>%
-  ggplot(ms, mapping=aes(x=spec5)) +geom_histogram(binwidth= 0.05, color= "blue") 
+  ggplot(ms, mapping=aes(x=spec5)) +geom_histogram(binwidth= 0.05, color= "blue") + ggtitle("Frequency of spec5")
 ```
 The first graph shows the relationship for spec5 as it gets larger, the occurance of those values faces an exponential decrease. 
 
@@ -47,7 +47,7 @@ The first graph shows the relationship for spec5 as it gets larger, the occuranc
 ms %>%
   mutate(difference= spec5-spec10) %>%
   filter(spec5 > 0 & spec5< 25000 ) %>%
-  ggplot(ms, mapping= aes(x=spec5, y=difference)) +geom_line()
+  ggplot(ms, mapping= aes(x=spec5, y=difference)) +geom_line() +ggtitle("Difference between spec5 and spec10 vs. spec5")
 ```
 The second graph tells us that as the value for spec5 increases, the difference between the values of spec5 and spec10 increase and oscillates to form a v shape. 
 
@@ -137,7 +137,7 @@ ggplot(data=ms, mapping=aes(x = spec5, y = spec10)) + geom_point() + scale_x_log
 # Contributions
 * Lindsay: Created a histogram plot to see significant values of spec10, as well as to get a sense of the distribution of the data. For comparing spec5 to spec10, made a density plot to see how frequently each occured and to determine if one spectra was more common than the other. To narrow the data filtered it all by positve values less than 50, it seemed to be the best range where majority of the data existed. 
 
-* Lexie: 
+* Lexie: Created a histogram from raw spec5 data and a graph comparing the difference in spec5 and spec10 compared to spec5.
 
 * Li: 
 
