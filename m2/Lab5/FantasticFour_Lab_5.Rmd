@@ -6,6 +6,8 @@ output: pdf_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+suppressMessages(library(memisc, warn.conflicts = FALSE, quietly=TRUE))
+
 #taken straight from Lab_5.html provided:
 rm(list=ls()) # clears your environment variables
 cat('\014')   # clears the console
@@ -33,9 +35,6 @@ ms <- read_csv("https://raw.githubusercontent.com/ervance1/Sp2018-Data-Science-r
 
 
 # Individual Findings
-<!-- gist: plot variation in one of the spec variables -->
-      <!-- plot covariation in the two -->
-
 
 ## Lexie Marinelli
 Here is a plot of spec5 raw data and of the difference between spec5 and spec10 compared to spec5.
@@ -106,16 +105,38 @@ ggplot(data = ms, aes(x=spec5,y=spec10))+geom_bin2d(binwidth = c(10000,10000))
 The two different plots shows the correlation between spec5 and spec10. They are in a linear relationship but there are two different regression line, so I plot bin2d plot which shows that the relation between them also depends on the number of data points. Overall, spec5 and spec10 are in strong correlation according to the calculated covariance.
 
 ## Scott Baker
-Here is a plot of the relationship between the spec5 and spec10 variables on a logarithmic scale 
-```{r, echo=FALSE}
-ggplot(data=ms, mapping=aes(x = mass, y = spec10)) + geom_point() + scale_x_log10() + scale_y_log10() + ggtitle(label = "Log Plot of spec10 vs. mass")
+The first two plots show the variation on a logarithmic scale for the spec5 and spec10 variables.
+```{r}
+var(ms$spec5)
+var(ms$spec10)
+```
 
+Here is a plot of the relationship between the spec10 and mass variables on a logarithmic scale: 
+
+```{r, echo=FALSE,fig.width=4,fig.height=3,message=FALSE}
+ms %>%
+  filter(mass > 0) %>%
+   ggplot(data=ms, mapping=aes(x = mass, y = spec10)) + geom_point() + scale_x_log10() + scale_y_log10() + ggtitle(label = "Log Plot of spec10 vs. mass")
+```
+
+Here is a plot of the relationship between the spec5 and mass variables on a logarithmic scale: 
+
+```{r,echo=FALSE,fig.width=4,fig.height=3}
 ggplot(data=ms, mapping=aes(x = mass, y = spec5)) + geom_point() + scale_x_log10() + scale_y_log10() + ggtitle(label = "Log Plot of spec5 vs. mass")
+```
 
+The covariance between the spec5 and spec10 is:
+
+```{r}
+cor(ms$spec5,ms$spec10)
+```
+
+Here is a plot of the relationship between the spec5 and spec10 variables on a logarithmic scale: 
+
+```{r,echo=FALSE,fig.width=4,fig.height=3}
 ggplot(data=ms, mapping=aes(x = spec5, y = spec10)) + geom_point() + scale_x_log10() + scale_y_log10() + ggtitle(label = "Log Plot of spec5 vs. spec10")
 
 ```
-currently cant decide what shows the log data the best... will updated later
 
 # Contributions
 * Lindsay: Created a histogram plot to see significant values of spec10, as well as to get a sense of the distribution of the data. For comparing spec5 to spec10, made a density plot to see how frequently each occured and to determine if one spectra was more common than the other. To narrow the data filtered it all by positve values less than 50, it seemed to be the best range where majority of the data existed. 
@@ -124,4 +145,4 @@ currently cant decide what shows the log data the best... will updated later
 
 * Li: 
 
-* Scott:
+* Scott: Created graphs on a logarithmic scale, since there is data on lots of orders of magnitude. Responsible for knitting this document and submitting to OSF. Finally, dealt with git organization and management.
