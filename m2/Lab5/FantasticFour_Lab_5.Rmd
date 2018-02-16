@@ -30,11 +30,13 @@ ms%>%
   filter(mass<200)%>%
   ggplot(mapping=aes(x=diff))+ geom_histogram(binwidth = 0.5)
 ```
+This graph shows the difference between the spec5 and spec10 variables. As seen, the average difference is about zero. This means that spec10 and spec5 are equally produced when ionized. Additionall through individual findings:
 
-* most frequent occurrences for low mass/charge ratios
+* Most frequent occurrences for low mass/charge ratios
 * spec5 is slightly more common
-* wide range of resulting spectra values (0,400) and negative values (broad span of data)
-  ** need to filter and isolate data in order to draw meaningful analysis
+* Wide range of resulting spectra values (0,400) and negative values (broad span of data)
+* Significant readings for mass/charge around 30 and 50
+* Lots of noise (possible detection of other ions)
 
 # Individual Findings
 
