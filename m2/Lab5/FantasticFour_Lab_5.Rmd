@@ -21,10 +21,20 @@ ms <- read_csv("https://raw.githubusercontent.com/ervance1/Sp2018-Data-Science-r
 ## What is the relationship between the resulting spectra after the ionization of partices? What variation occurs for each spectra, spec5 and spec10? What covaritation occurs?
 
 # Overall Findings
-* most frequent occurances for low mass/charge ratios
-* spec5 is slighlty more common
+```{r}
+#histogram of difference between spec10 and spec5(for team)
+ms%>%
+  filter(spec5>0 & spec5<25, spec10>0 & spec10<25)%>%
+  #summarize(spec5AVG=mean(spec5), spec10AVG=mean(spec10))%>%
+  mutate(diff=spec10-spec5)%>%
+  filter(mass<200)%>%
+  ggplot(mapping=aes(x=diff))+ geom_histogram(binwidth = 0.5)
+```
+
+* most frequent occurrences for low mass/charge ratios
+* spec5 is slightly more common
 * wide range of resulting spectra values (0,400) and negative values (broad span of data)
-  ** need to filter and isoltate data in order to draw meaningful analysis
+  ** need to filter and isolate data in order to draw meaningful analysis
 
 # Individual Findings
 
@@ -36,7 +46,7 @@ ms %>%
   filter(spec5>0 & spec5< 10) %>%
   ggplot(ms, mapping=aes(x=spec5)) +geom_histogram(binwidth= 0.05, color= "blue") + ggtitle("Frequency of spec5")
 ```
-The first graph shows the relationship for spec5 as it gets larger, the occurance of those values faces an exponential decrease. 
+The first graph shows the relationship for spec5 as it gets larger, the occurrence of those values faces an exponential decrease. 
 
 ```{r, echo=FALSE}
 #covariation bt spec5 and spec10
@@ -50,11 +60,6 @@ The second graph tells us that as the value for spec5 increases, the difference 
 
 ## Lindsay Gettel
 ```{r, echo=FALSE}
-#raw spec10 data(for team)
-ms%>%
-  filter(spec10>0 & spec10<25)%>%
-  ggplot(mapping=aes(x=spec10)) +geom_histogram(binwidth=0.5)+ ggtitle("Distribution of spec10")
-
 #histogram of difference between spec10 and spec5(for team)
 ms%>%
   filter(spec5>0 & spec5<25, spec10>0 & spec10<25)%>%
@@ -64,22 +69,21 @@ ms%>%
   ggplot(mapping=aes(x=diff))+ geom_histogram(binwidth = 0.5)
 
 ```
-The first graph illustrates the mass charge ratio of the particles which produced a spectra of spec10. The graph illustrates that there were a variety of paticle masses which resulted in low output spectra. There were a few high valued outputs, that seem to be only from low mass.
-The second graph portrays the number of particles that were measured for a given spectra output.The values ranged from 0 to roughly 400, however, the most data was isolated in the range 0 to 25. The most prominate measurements occured for spec10 at values less than5.
-The third graph models the differences between the spec5 and spec10. This shows that between the two spectra outputs, are most frequent for smaller masses. At smaller masses there is also a greater difference in the values of spec5 and spec10.
+The first graph models the differences between the spec5 and spec10. This shows that between the two spectra outputs, are most frequent for smaller masses. At smaller masses there is also a greater difference in the values of spec5 and spec10.
 
 ```{r, echo=FALSE}
+ms%>%
+  filter(spec10>0 & spec10<50, spec5>0 & spec5<50)%>%
+  ggplot()+ geom_density(mapping=aes(x=spec5), color="red")+ geom_density(mapping=aes(x=spec10), color="blue")+ ggtitle("spec10 and spec5 comparison")+ xlab("spectra range")#+ legend(legend = c("spec5", "spec10"), col = c("red", "blue"))
+
 #individual graphs, variation of spec10 and covaration
 ms%>%
   filter(spec10>0 & spec10<30)%>%
   ggplot(mapping=aes(x=spec10))+ geom_histogram(binwidth=0.5) + ggtitle("Frequency of spec10 measurements")
   
-ms%>%
-  filter(spec10>0 & spec10<50, spec5>0 & spec5<50)%>%
-  ggplot()+ geom_density(mapping=aes(x=spec5), color="red")+ geom_density(mapping=aes(x=spec10), color="blue")+ ggtitle("spec10 and spec5 comparison")+ xlab("spectra range")#+ legend(legend = c("spec5", "spec10"), col = c("red", "blue"))
 ```
-The next graph depicts the range of spec10 values, limited by 30, and the number of occurances of that value within the data set. Similar to the spec5, most of the measurments of spec10 were for lower values, around 5, the number of vlaues greately decreases and spec10 values above 30 are very sparce, and therefore were not included in the graph.
-The final graph shows the frqencey of measurements for both spec5 (red) and spec10(blue). They have similar trends, a higher concentration of low spectra values, but spec5 occurs silghtly more often for low spectra values.
+The second graph shows the frequency of measurements for both spec5 (red) and spec10(blue). They have similar trends, a higher concentration of low spectra values, but spec5 occurs slightly more often for low spectra values.
+The final graph depicts the range of spec10 values, limited by 30, and the number of occurrences of that value within the data set. Similar to the spec5, most of the measurements of spec10 were for lower values, around 5, the number of values greatly decreases and spec10 values above 30 are very minimal, and therefore were not included in the graph.
 
 ## Zhenlong Li
 ```{r,echo=FALSE}
@@ -124,7 +128,7 @@ ggplot(data=ms, mapping=aes(x = spec5, y = spec10)) + geom_point() + scale_x_log
 ```
 
 # Contributions
-* Lindsay: Created a histogram plot to see significant values of spec10, as well as to get a sense of the distribution of the data. For comparing spec5 to spec10, made a density plot to see how frequently each occured and to determine if one spectra was more common than the other. To narrow the data filtered it all by positve values less than 50, it seemed to be the best range where majority of the data existed. 
+* Lindsay: Created a histogram plot to see significant values of spec10, as well as to get a sense of the distribution of the data. For comparing spec5 to spec10, made a density plot to see how frequently each occured and to determine if one spectra was more common than the other. To narrow the data filtered it all by positive values less than 50, it seemed to be the best range where majority of the data existed. 
 
 * Lexie: Created a histogram from raw spec5 data and a graph comparing the difference in spec5 and spec10 compared to spec5.
 
