@@ -90,7 +90,7 @@ The final graph depicts the range of spec10 values, limited by 30, and the numbe
 ## Zhenlong Li
 ```{r,echo=FALSE}
 cor(ms$spec5, ms$spec10)
-ggplot(data = ms, aes(x=spec5,y=spec10))+geom_jitter()+geom_smooth(method='lm')
+ggplot(data = ms, aes(x=spec5,y=spec10))+geom_jitter()+geom_smooth(method='lm')+geom_abline(slope = 0.25,intersect = 0)
 ggplot(data = ms, aes(x=spec5,y=spec10))+geom_bin2d(binwidth = c(10000,10000))
 ```
 The two different plots shows the correlation between spec5 and spec10. They are in a linear relationship but there are two different regression line, so I plot bin2d plot which shows that the relation between them also depends on the number of data points. Overall, spec5 and spec10 are in strong correlation according to the calculated covariance.
@@ -134,6 +134,6 @@ ggplot(data=ms, mapping=aes(x = spec5, y = spec10)) + geom_point() + scale_x_log
 
 * Lexie: Created a histogram from raw spec5 data and a graph comparing the difference in spec5 and spec10 compared to spec5.
 
-* Li: 
+* Li: Created graphs about the correlation between spec5 and spec10 and improved the correlation with a bin2d plot.
 
 * Scott: Created graphs on a logarithmic scale, since there is data on lots of orders of magnitude. Responsible for knitting this document and submitting to OSF. Finally, dealt with git organization and management.
