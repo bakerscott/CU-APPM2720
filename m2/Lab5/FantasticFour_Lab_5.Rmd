@@ -129,6 +129,7 @@ ggplot(data=ms, mapping=aes(x = spec5, y = spec10)) + geom_point() + scale_x_log
 
 ```
 
+It can be seen that there are highlights around 30 and fifty for mass.
 # Contributions
 * Lindsay: Created a histogram plot to see significant values of spec10, as well as to get a sense of the distribution of the data. For comparing spec5 to spec10, made a density plot to see how frequently each occured and to determine if one spectra was more common than the other. To narrow the data filtered it all by positive values less than 50, it seemed to be the best range where majority of the data existed. 
 
