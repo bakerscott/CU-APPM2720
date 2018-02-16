@@ -98,7 +98,12 @@ The next(first and second) graph depicts the range of spec10 values, limited by 
 The final graph shows the frqencey of measurements for both spec5 and spec10. They have similar trends, a higher concentration of low spectra values, but spec5 occurs silghtly more often for low spectra values.
 
 ## Zhenlong Li
-
+```{r,echo=FALSE}
+cor(ms$spec5, ms$spec10)
+ggplot(data = ms, aes(x=spec5,y=spec10))+geom_jitter()+geom_smooth(method='lm')
+ggplot(data = ms, aes(x=spec5,y=spec10))+geom_bin2d(binwidth = c(10000,10000))
+```
+The two different plots shows the correlation between spec5 and spec10. They are in a linear relationship but there are two different regression line, so I plot bin2d plot which shows that the relation between them also depends on the number of data points. Overall, spec5 and spec10 are in strong correlation according to the calculated covariance.
 
 ## Scott Baker
 Here is a plot of the relationship between the spec5 and spec10 variables on a logarithmic scale 
