@@ -8,4 +8,5 @@
 Data manipulation
 
 #### included:
-* Lab5 -
+* Lab5 - Aerosol Mass Spectrometry
+* Lab6 - Airport Data Science
