@@ -13,10 +13,10 @@ COflights <- read_csv("https://files.osf.io/v1/resources/3z5as4pej8/providers/os
 
 # Guiding Question
 ##What factors lead to on time arrivals? What factors cause flight delays?
-It is important to isolate the different events which result in delayed flights and prompt flights in order to improve procedures to make them more effective and give a better assurance that flights will remain on schedule. This information could also help schedule future flights as well as preserve all assets which go into operating airports and flights.
+It is important to isolate the different events which result in delayed flights and prompt flights in order to improve procedures to make them more effective and give a better assurance that flights will remain on schedule. This information could also help schedule future flights as well as preserve all assets which go into operating airports and flights. The factors we examined were: time, airline, weather, flight time, and length of flight. Although it can be difficult to completely isolate each of these factors (as, in the real world factors are compound), we tried to isolate these elements the best we could. 
 
 # Conclusion
-This graph best shows that the main factor of the longest flight delays are caused by weather. The chart below contains the top 10 longest delays in 2017, most of whihc occur in December through Feburary. This information goes along with what we have found below in the individual findings section about the months relating to amount of delays. There are still points that lie outside of the linear trend which tells us that weather is not the only factor contributing to the delay time. 
+This graph best shows that the main factor of the longest flight delays are caused by weather. The chart below contains the top 10 longest delays in 2017, most of which occur in December through Feburary. This information goes along with what we have found below in the individual findings section about the months relating to amount of delays. There are still points that lie outside of the linear trend which tells us that weather is not the only factor contributing to the delay time.  Furthermore, there seems to be a strong correlation (.957) between the departure delay of a flight and the tardiness at DIA--which means that DIA might not be the problem with late flights.
 
 ```{r, echo=FALSE}
 modified_data <-COflights %>%
@@ -25,19 +25,24 @@ modified_data <-COflights %>%
 
 ggplot(data= modified_data, mapping=aes(x= WEATHER_DELAY, y= total_delay)) +geom_point()
 
-modified_data%>% 
+modified_data%>%
   filter(total_delay>=2222) %>%
   select(MONTH, DAY_OF_MONTH, total_delay)%>%
   print(MONTH, total_delay)
 ```
 
 # Overall Findings
-There seems to be many factors which all contribute to delayed flights. There are the mesured delays such as weather, security, mechanics, and air traffic. There is also a correlation between the month of the year and the amount of flight delays. January seems to have the most delays, and then the delays decrese until April which then begin to increse until August, followed by incresing delays until December. There is also relevant that the origin and destination of flights impacted the delays, for example, flights from Denver are more likely to be delayed than flights into Denver. There is also a relationship between flight length and how much the flight is delayed. On average two hour flights had the most amount of delays. 
+There seems to be many factors which all contribute to delayed flights. There are the mesured delays such as weather, security, mechanics, and air traffic. There is also a correlation between the month of the year and the amount of flight delays. January seems to have the most delays, and then the delays decrese until April which then begin to increse until August, followed by incresing delays until December. There is also relevant that the origin and destination of flights impacted the delays, for example, flights from Denver are more likely to be delayed than flights into Denver. There is also a relationship between flight length and how much the flight is delayed. On average two hour flights had the most amount of delays. Additionally, JetBlue and Virgin Airlines had the worst proportion of late flights (~27% and ~25% respectively) into Denver.
 
 #Recommendations
-* weather is not controlable, helps to be more prepared in cases of snow, etc.
-* can improve other factors to decrease delay time, such as effictive crowd management during busy travel times.
-* solve the domino effect by controlling departure delays at the origin, therefore preventing more arrival delays.
+Dear DIA Administraion,
+The following observations were made through our analysis:
+
+* Weather is not controlable but is a large factor in flight delays--helps to be more prepared in cases of snow, etc. to make sure you minimize financial loss in operations.
+* Effective crowd management could improve your delay time at busy times of the year because there seems to be more late flights at those times (summer and the holidays)
+* Solve the domino effect by controlling departure delays at the origin, therefore preventing more arrival delays.
+* Examine your contracts (so you do not lose money) with JetBlue, Virgin, and Spirit since they have the highest proportions of late flights.
+* Think about examining your contracts with Southwest and United since they have a large mass of late flights.
 
 # Individual Findings
 
@@ -112,7 +117,7 @@ First, I take a look at the number of flights that arrived late (more than 15 mi
 stuff <- filter(COflights,ARR_DELAY >= 15, DEST == "DEN") %>%
   select(CARRIER)
 ggplot(stuff,mapping = aes(x = CARRIER)) + geom_bar() + geom_text(stat='count',aes(label=..count..),vjust = -0.5) + ggtitle("Number of ARR_DELAY >= 15 flights into Denver per Airline")
-``` 
+```
 
 The first major observation is that airlines "WN", "UA", and "OO" have the most flights delayed landing.
 * Southwest (WN): 12577
@@ -147,7 +152,7 @@ ggplot(arrdepdelay,mapping=aes(x=ARR_DELAY,y=DEP_DELAY)) + geom_point()+ ggtitle
 cor(arrdepdelay$ARR_DELAY,arrdepdelay$DEP_DELAY)
 ```
 
-From this we have two results. First, the correlation value between arrival delay (in Denver) and departure delay is .957, which is a strong correlation. Second, the implication of this is that there sometimes might not be anything DIA can do better to ensure more flights are on time--it could all be a product of the departure airport and their inability to get planes off in time. Although, this observation is generic and more specifics would be needed to confirm. 
+From this we have two results. First, the correlation value between arrival delay (in Denver) and departure delay is .957, which is a strong correlation. Second, the implication of this is that there sometimes might not be anything DIA can do better to ensure more flights are on time--it could all be a product of the departure airport and their inability to get planes off in time. Although, this observation is generic and more specifics would be needed to confirm.
 
 # Contributions
 * Lindsay: Created density plots to see how flight delays were impacted given that flights were either into or out of Denver. Calculated conditional probabilities that a flight was late given the destination or origin of a flight was DEN.
@@ -156,4 +161,4 @@ From this we have two results. First, the correlation value between arrival dela
 
 * Li: Creted two plots to see how distance and actual elapsed time affected whether a flight is delayed or on-time. Checking my findings by using calcluating the probability of each event.
 
-* Scott:
+* Scott: Besides the normal organization of the git and knitting/submitting the final file, I took care of the recommendation to DIA officials. I also examined airline-by-airline arrival delay.
