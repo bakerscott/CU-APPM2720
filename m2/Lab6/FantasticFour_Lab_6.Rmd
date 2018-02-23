@@ -12,7 +12,7 @@ COflights <- read_csv("https://files.osf.io/v1/resources/3z5as4pej8/providers/os
 ```
 
 # Guiding Question
-##
+##What factors lead to on time arrivals? What factors cause flight delays?
 
 # Overall Findings
 
@@ -30,7 +30,27 @@ COflights %>%
 ```
 I was working on this for close to 3 hrs and this is the best I can do
 ## Lindsay Gettel
-
+```{r}
+#Is a flight more likely to be delayed when leaving DEN or arriving in DEN?
+COflights%>%
+  filter(ORIGIN=="DEN", DEP_DELAY>=15, !CANCELLED=="1")%>%
+  ggplot()+ geom_density(mapping=aes(x=DEP_DELAY), color="blue")+ xlim(0, 180)+ ggtitle("Departure delay for flight leaving DEN")+ ylim(0, 0.03)
+COflights%>%
+  filter(DEST=="DEN", ARR_DELAY>=15, !CANCELLED=="1")%>%
+  ggplot()+ geom_density(mapping=aes(x=ARR_DELAY), color="red")+ xlim(0,180)+ ggtitle("Arrival delay for flight into DEN")
+#probability late given the destination was DEN\
+allFlights<-filter(COflights, !CANCELLED=="1" & !is.na(CANCELLED))
+lateDen<-allFlights%>% filter(DEST=="DEN" & ARR_DELAY>=15)%>% count()
+den<-allFlights%>% filter(DEST=="DEN")%>% count()
+P_late_toDEN<-lateDen/den
+#probability late given orgin was DEN
+late_from_DEN<-allFlights%>% filter(ORIGIN=="DEN" & ARR_DELAY>=15)%>% count()
+fromDen<-allFlights%>% filter(ORIGIN=="DEN")%>% count()
+P_late_fromDen<- late_from_DEN/fromDen
+message("Conditional probability a flight is late given the destiation is DEN: ", P_late_toDEN)
+message("conditional probability a flight is late given it is leaving DEN: ", P_late_fromDen)
+```
+The two plots show, respectively, how fequently flights are delayed a given amount of time when a flight is leaving orlanding at the Denver airport. Both graphs have a similar distribution, however, flights into DEN have many more flights with a 20minute delay or greater. Calculated condtional probabilitys demonstrate the probability of late arrival given the destiantion is Denver is 16%, and the probabilty of a late departure given a flight is leaving Denver is 19%. 
 ## Zhenlong Li
 
 ```{r, echo=FALSE}
@@ -50,7 +70,7 @@ filter(COflights,ARR_DELAY >=15)%>%
 ## Scott Baker
 
 # Contributions
-* Lindsay: 
+* Lindsay: Created density plots to see how flight delays were impacted given that flights were either into or out of Denver. Calculated conditional probabilities that a flight was late given the destination or origin of a flight was DEN.
 
 * Lexie: 
 
