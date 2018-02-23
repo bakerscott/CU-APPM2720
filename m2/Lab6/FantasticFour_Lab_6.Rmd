@@ -52,21 +52,33 @@ message("Conditional probability a flight is late given the destiation is DEN: "
 message("conditional probability a flight is late given it is leaving DEN: ", P_late_fromDen)
 ```
 The two plots show, respectively, how frequently flights are delayed a given amount of time when a flight is leaving or landing at the Denver airport. Both graphs have a similar distribution, however, flights into DEN have many more flights with a 20minute delay or greater. Calculated conditional probability demonstrate the probability of late arrival given the destination is Denver is 16%, and the probability of a late departure given a flight is leaving Denver is 19%. 
-## Zhenlong Li
 
+## Zhenlong Li
+Here's a plot showing that most delayed flights occured where flying distance is between 750 mile to 1000 miles:
 ```{r, echo=FALSE}
 filter(COflights,ARR_DELAY >=15)%>% 
   select(DISTANCE)%>%
   count (DISTANCE) %>%
-  ggplot()+ geom_jitter( mapping = aes(x= DISTANCE, y= n))+ geom_smooth(mapping = aes(x= DISTANCE, y= n), method = 'loess', se = FALSE) + ylab(label= "Number of Delayed Flights")
+  ggplot()+ geom_jitter(mapping = aes(x= DISTANCE, y = n)) + geom_smooth(mapping = aes(x= DISTANCE, y= n), method = 'loess', se = FALSE) + ylab(label= "Number of Delayed Flights")
+dis<-COflights%>% filter(DISTANCE>=750 & DISTANCE<=1000)%>% count()
+all<-COflights%>% count()
+p1 = dis / all
+p1
 ```
+And the probability of that flying distance between 750 mile to 1000 miles will have 35% to be delayed.
 
+Here's a plot showing that the actual air time greater than 300 mins will have less on-time flights:
 ```{r, echo=FALSE}
-filter(COflights,ARR_DELAY >=15)%>% 
-  select(AIR_TIME)%>%
-  count (AIR_TIME) %>%
-  ggplot()+ geom_col( mapping = aes(x= AIR_TIME, y= n), width = 1) + geom_smooth(mapping = aes(x= AIR_TIME, y= n), method = 'loess', se = FALSE) +xlab(label="AIR TIME")+ ylab(label= "Number of Delayed Flights")
+filter(COflights,ARR_DELAY <= 14)%>% 
+  select(ACTUAL_ELAPSED_TIME)%>%
+  count (ACTUAL_ELAPSED_TIME) %>%
+  ggplot()+ geom_col( mapping = aes(x= ACTUAL_ELAPSED_TIME, y= n), width = 1)+ geom_smooth(mapping = aes(x= ACTUAL_ELAPSED_TIME, y= n), method = 'loess', se = FALSE) +xlab(label="Elapsed Time")+ ylab(label= "Number of On-time Flights")
+time<-COflights%>% filter(ACTUAL_ELAPSED_TIME>=300)%>% count()
+all<-COflights%>% count()
+p2 = time / all
+p2
 ```
+And the probability of that the actual air time greater than 300 mins will have 0.65% to be on-time.
 
 ## Scott Baker
 
@@ -75,6 +87,6 @@ filter(COflights,ARR_DELAY >=15)%>%
 
 * Lexie: 
 
-* Li:
+* Li: Creted two plots to see how distance and actual elapsed time affected whether a flight is delayed or on-time. Checking my findings by using calcluating the probability of each event.
 
 * Scott: 
