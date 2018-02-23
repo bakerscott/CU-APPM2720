@@ -20,7 +20,15 @@ COflights <- read_csv("https://files.osf.io/v1/resources/3z5as4pej8/providers/os
 # Individual Findings
 
 ## Lexie Marinelli
+```{r, echo=FALSE}
+COflights %>%
+  filter (MONTH, ARR_DELAY >=15) %>%
+  count (MONTH) %>%
+  mutate("Number of delayed flights"= n)%>%
+  ggplot() + geom_smooth(mapping= aes(x= MONTH, y= n), se=FALSE)+geom_point(mapping=aes(x=MONTH, y=n))+ ggtitle(label="Trend of delayed flights throughout the year") +xlab(label="Month")+ ylab(label= "Number of Delayed Flights")
 
+```
+I was working on this for close to 3 hrs and this is the best I can do
 ## Lindsay Gettel
 
 ## Zhenlong Li
