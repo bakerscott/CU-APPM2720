@@ -103,12 +103,24 @@ p2
 ```
 And the probability of that the actual air time greater than 300 mins will have 0.65% to be on-time.
 
+
 ## Scott Baker
+
+First, I take a look at the number of flights that arrived late (more than 15 minutes) into Denver based on airline. Here is the graph:
+
 ```{r,echo=FALSE}
 stuff <- filter(COflights,ARR_DELAY >= 15, DEST == "DEN") %>%
   select(CARRIER)
 ggplot(stuff,mapping = aes(x = CARRIER)) + geom_bar() + geom_text(stat='count',aes(label=..count..),vjust = -0.5) + ggtitle("Number of ARR_DELAY >= 15 flights into Denver per Airline")
-```  
+``` 
+
+The first major observation is that airlines "WN", "UA", and "OO" have the most flights delayed landing.
+* Southwest (WN): 12577
+* United (UA): 6889
+* SkyWest (OO): 6070
+
+Although this confirms personal experience that some United and Southwest flights I've been on have been delayed, this does not provide any insight into the probabilities that a certain airline will have a delayed arrival. Furthermore, let us look at the actual proportion that a certain airline's flight to Denver is late. Observe the following table:
+
 ```{r,echo=FALSE}
 allflights <- filter(COflights,DEST == "DEN") %>%
   select(CARRIER)
@@ -118,12 +130,24 @@ tb2 <- stuff %>% table()
 tb2/tb1
 
 ```
+
+Here, we can see that "B6", "VX", and "NK" have the highest rate of late flights.
+* JetBlue (B6): 27.31%
+* Virgin (VX): 25.36%
+* Spirit (NK): 20.24%
+
+From this, we find that actually JetBlue, Virgin, and Spirit have the most delayed arrivals with respect to total flights--NOT United, Southwest, and SkyWest.
+
+The second part of my analysis is to show that there is a strong correlation between the departure delay and the tardiness of their arrival:
+
 ```{r,echo=FALSE}
 arrdepdelay <- filter(COflights,DEST=="DEN"&!is.na(ARR_DELAY)&!is.na(DEP_DELAY)) %>% select(ARR_DELAY,DEP_DELAY)
 
 ggplot(arrdepdelay,mapping=aes(x=ARR_DELAY,y=DEP_DELAY)) + geom_point()+ ggtitle("Arrival Delay vs. Departure Delay")
 cor(arrdepdelay$ARR_DELAY,arrdepdelay$DEP_DELAY)
 ```
+
+From this we have two results. First, the correlation value between arrival delay (in Denver) and departure delay is .957, which is a strong correlation. Second, the implication of this is that there sometimes might not be anything DIA can do better to ensure more flights are on time--it could all be a product of the departure airport and their inability to get planes off in time. Although, this observation is generic and more specifics would be needed to confirm. 
 
 # Contributions
 * Lindsay: Created density plots to see how flight delays were impacted given that flights were either into or out of Denver. Calculated conditional probabilities that a flight was late given the destination or origin of a flight was DEN.
