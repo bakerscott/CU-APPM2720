@@ -13,9 +13,10 @@ COflights <- read_csv("https://files.osf.io/v1/resources/3z5as4pej8/providers/os
 
 # Guiding Question
 ##What factors lead to on time arrivals? What factors cause flight delays?
+It is important to isolate the different events which result in delayed flights and prompt flights in order to improve procedures to make them more effective and give a better assurance that flights will remain on schedule. This information could also help schedule future flights as well as preserve all assets which go into operating airports and flights.
 
 # Overall Findings
-
+There seems to be many factors which all contribute to delayed flights. There are the mesured delays such as weather, security, mechanics, and air traffic. There is also a correlation between the month of the year and the amount of flight delays. January seems to have the most delays, and then the delays decrese until April which then begin to increse until August, followed by incresing delays until December. There is also relevant that the origin and destination of flights impacted the delays, for example, flights from Denver are more likely to be delayed than flights into Denver. There is also a relationship between flight length and how much the flight is delayed. On average two hour flights had the most amount of delays. 
 
 # Individual Findings
 
@@ -50,7 +51,7 @@ P_late_fromDen<- late_from_DEN/fromDen
 message("Conditional probability a flight is late given the destiation is DEN: ", P_late_toDEN)
 message("conditional probability a flight is late given it is leaving DEN: ", P_late_fromDen)
 ```
-The two plots show, respectively, how fequently flights are delayed a given amount of time when a flight is leaving orlanding at the Denver airport. Both graphs have a similar distribution, however, flights into DEN have many more flights with a 20minute delay or greater. Calculated condtional probabilitys demonstrate the probability of late arrival given the destiantion is Denver is 16%, and the probabilty of a late departure given a flight is leaving Denver is 19%. 
+The two plots show, respectively, how frequently flights are delayed a given amount of time when a flight is leaving or landing at the Denver airport. Both graphs have a similar distribution, however, flights into DEN have many more flights with a 20minute delay or greater. Calculated conditional probability demonstrate the probability of late arrival given the destination is Denver is 16%, and the probability of a late departure given a flight is leaving Denver is 19%. 
 ## Zhenlong Li
 
 ```{r, echo=FALSE}
