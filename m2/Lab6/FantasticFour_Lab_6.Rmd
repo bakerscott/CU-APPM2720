@@ -33,6 +33,19 @@ I was working on this for close to 3 hrs and this is the best I can do
 
 ## Zhenlong Li
 
+```{r, echo=FALSE}
+filter(COflights,ARR_DELAY >=15)%>% 
+  select(DISTANCE)%>%
+  count (DISTANCE) %>%
+  ggplot()+ geom_jitter( mapping = aes(x= DISTANCE, y= n))+ geom_smooth(mapping = aes(x= DISTANCE, y= n), method = 'loess', se = FALSE) + ylab(label= "Number of Delayed Flights")
+```
+
+```{r, echo=FALSE}
+filter(COflights,ARR_DELAY >=15)%>% 
+  select(AIR_TIME)%>%
+  count (AIR_TIME) %>%
+  ggplot()+ geom_col( mapping = aes(x= AIR_TIME, y= n), width = 1) + geom_smooth(mapping = aes(x= AIR_TIME, y= n), method = 'loess', se = FALSE) +xlab(label="AIR TIME")+ ylab(label= "Number of Delayed Flights")
+```
 
 ## Scott Baker
 
