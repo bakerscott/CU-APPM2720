@@ -1,0 +1,33 @@
+---
+title: "Lab_07"
+author: "Fantastic Four"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+A couple of quick thoughts on dataset:
+* Lahman or Retrosheet baseball stats-- some of these are not "tidy" based on experience
+* Weather data from somewhere-- could also find data with "holes"
+* Google public datasets-- lots of them out there
+* Use an API to snag our own data? (scott could run this)
+
+
+# "Who is Hiring us?"
+
+# "Overall team question, why it is important, and why those reasons are important" 
+
+# "A breif description of the dataset you wish to analyze next week"
+
+# "A series of individual questions and why they are important"
+
+# Contributions
+* Lindsay:
+
+* Lexie:
+
+* Li:
+
+* Scott: 
