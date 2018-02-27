@@ -1,6 +1,11 @@
-module 3:
-tests:
+### module 3:
 
-topics:
+#### tests:
+2/26
 
-included:
+#### topics:
+
+Tibbles, Tidy Data, Data import
+
+#### included:
+* Lab7 - Data Science to Solve Problems and Answer Questions, part 1
