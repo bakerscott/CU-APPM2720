@@ -13,6 +13,9 @@ A couple of quick thoughts on dataset:
 * Weather data from somewhere-- could also find data with "holes"
 * Google public datasets-- lots of them out there
 * Use an API to snag our own data? (scott could run this)
+* Go check out catalog.data.gov
+* scott's favorite so far: https://www.kaggle.com/noaa/seismic-waves/data
+* airline fleet data, might need some tidying https://www.kaggle.com/traceyvanp/airlinefleet/data
 
 
 # "Who is Hiring us?"
