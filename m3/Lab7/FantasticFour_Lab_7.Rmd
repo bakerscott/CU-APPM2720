@@ -31,6 +31,7 @@ The second question to look at is:\
 This question is important because by being able to see relationships between waves in Hawaii and other places in the Pacific, we can put together our resources in order to better prepare and educate society in order to minimize impact.
 
 
+
 # "A breif description of the dataset you wish to analyze next week"
 The dataset Fantastic Four will be using will be a tsunami dataset from\ \begin{center}\texttt{https://www.kaggle.com/noaa/seismic-waves/data}\end{center}\ \
 This is an NOAA dataset of tsunami data for recordable history. A preview of the column headers of the raw data is the following:
