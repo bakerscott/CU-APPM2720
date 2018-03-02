@@ -39,16 +39,16 @@ This data contains date, magnitude, location, depth, time, and damage attributes
 # Subsequent Questions and Importance:
 * How has Tsunami affected an island? Fatalities, house damages, etc.
 
-* Where is the most common occurance of Tsunami's? Does maximum height have a correlation with how much damage occurs?
+* Where is the most common occurrence of Tsunami's? Does maximum height have a correlation with how much damage occurs?
 
 * Is there a relationship between time of year a tsunami occurs and how much damage is inflicted?
 
 # Rainfall Data
 
 ## Lindsay Gettel
-Indvidual Questions for Lab 7:
-What is the relationship between the tsunami source and the wave, and how does the distance affect the tsunami sevarity and amount of damage? 
-This is significant in analyzing where tsunamis cause the most damage, which could indicate areas that are at greater risk of being impacted by a tsunami. It could possibly lead to formulaing predictions of where future tsunamis may occur and how intense they will be.
+Individual Questions for Lab 7:
+What is the relationship between the tsunami source and the wave, and how does the distance affect the tsunami severity and amount of damage? 
+This is significant in analyzing where tsunamis cause the most damage, which could indicate areas that are at greater risk of being impacted by a tsunami. It could possibly lead to formulating predictions of where future tsunamis may occur and how intense they will be. This could help with pre-storm evacuations and safety preparation which would limit injuries, possible deaths, and destruction. Which in turn would limit resource and economical strain following tsunamis.
 
 Rainfall:
 ```{r, echo=FALSE}
@@ -70,7 +70,7 @@ malawi_2%>%
   ggplot(mapping=aes(x=Year, y=BSi))+ geom_jitter()+ geom_smooth(se=FALSE)
 
 ```
-This plot shows the measured amount of BSi, biogenic silica, in the soil at Lake Malawi for each year, dataing back over 2000 years ago. The graph demonstrates that at the amount of BSi present in the lake has been on an upward trend, but also seems to follow a rough sinusodial pattern.
+This plot shows the measured amount of BSi, biogenic silica, in the soil at Lake Malawi for each year, dating back over 2000 years ago. The graph demonstrates that at the amount of BSi present in the lake has been on an upward trend, but also seems to follow a rough sinusoidal pattern.
 
 ## Lexie Marinelli
 ```{r, echo= FALSE, include= FALSE}
