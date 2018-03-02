@@ -26,6 +26,36 @@ A couple of quick thoughts on dataset:
 
 # "A series of individual questions and why they are important"
 
+
+# Rainfall Data
+
+## Lindsay Gettel
+
+
+## Lexie Marinelli
+```{r, echo= FALSE}
+VOI <-read_csv("VOI_Rain.csv")
+VOI <-VOI %>% 
+  select(-X14,-X15) %>%
+  gather(Jan,Feb,Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec, key="Month", value= "Rainfall")
+```
+```{r, echo= FALSE}
+VOI %>%
+  filter(Year>=1960) %>%
+  ggplot(mapping=aes(x=Year,y=Rainfall)) +geom_point(aes(color=Month))  + facet_wrap(~Month)+ggtitle(label="Rain trend from 1960-1990") +xlab(label="Year")+ ylab(label= "Level of Rainfall")
+
+VOI %>%
+  filter(Year>=1930 & Year<=1960) %>%
+  ggplot(mapping=aes(x=Year,y=Rainfall)) +geom_point(aes(color=Month)) +facet_wrap(~Month)+ggtitle(label="Rain trend from 1930-1960") +xlab(label="Year")+ ylab(label= "Level of Rainfall (cm)")
+```
+This plot shows the months that it rains the most starting from 1960 and going until 1990 and another graph going from 1930 to 1960 to see if rain patterns have changed between the two time periods. From both graphs we can gather that f the rainiest months are winter and spring- November, December, January, February, March, and April. During the 1930-1960 time period, rain patterns were more consistant to previous years. On the other hand, the amount of rain in 1960-1990 is more scattered making it less predictable. 
+
+## Zhenlong Li
+
+
+## Scott Baker
+
+
 # Contributions
 * Lindsay:
 
