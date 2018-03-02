@@ -30,8 +30,6 @@ The second question to look at is:\
 \begin{center}\textbf{What are the patterns in tsunamis in the Pacific and how to they relate to ones recorded in Hawaii?}\end{center}\ \
 This question is important because by being able to see relationships between waves in Hawaii and other places in the Pacific, we can put together our resources in order to better prepare and educate society in order to minimize impact.
 
-# "Overall team question, why it is important, and why those reasons are important"  
-
 
 
 # "A breif description of the dataset you wish to analyze next week"
@@ -50,7 +48,6 @@ This data contains date, magnitude, location, depth, time, and damage attributes
 * For economic impacts, it would be important to look at more recent data, which would be more realistic\
 * Simplify columns (total damage, date/time, etc.)
 
-# "A series of individual questions and why they are important" 
 
 # Subsequent Questions and Importance:
 
