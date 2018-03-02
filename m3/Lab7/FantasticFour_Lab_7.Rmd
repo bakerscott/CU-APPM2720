@@ -8,28 +8,74 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 ```
-A couple of quick thoughts on dataset:
-* Lahman or Retrosheet baseball stats-- some of these are not "tidy" based on experience
-* Weather data from somewhere-- could also find data with "holes"
-* Google public datasets-- lots of them out there
-* Use an API to snag our own data? (scott could run this)
-* Go check out catalog.data.gov
-* scott's favorite so far: https://www.kaggle.com/noaa/seismic-waves/data
-* airline fleet data, might need some tidying https://www.kaggle.com/traceyvanp/airlinefleet/data
+# Who is Hiring us?
+Fantastic Four is being hired by the American Red Cross in Honolulu, Hawaii to look at tsunami data. There are two reasons that this organization is hiring the team. First, they would like to map out all the tsunamis in the Pacific in a creative way using the data we have. This could be economic impact of more recent tsunamis (since that part of the data is available) or the relationship between magnitude and source of the waves. Second, they would like to know if there is a better way to predict, educate, and minimize impact to society for islands in the Pacific. 
+
+# Questions and Importance 
+There are two questions we have set out to answer. The first is:\
+\begin{center}\textbf{What are the patterns in tsunamis that come to Hawaii?}\end{center}\ \
+The reason we are looking at this question is to find the patterns of tsunamis that come to Hawaii. This is important because it can help us better prepare the community for impact (via insurance, warning, education) and furthermore minimize the damage to our beloved Hawaiian Islands.\ \
+
+The second question to look at is:\
+\begin{center}\textbf{What are the patterns in tsunamis in the Pacific and how to they relate to ones recorded in Hawaii?}\end{center}\ \
+This question is important because by being able to see relationships between waves in Hawaii and other places in the Pacific, we can put together our resources in order to better prepare and educate society in order to minimize impact.
+
+# Dataset to Analyze
+The dataset Fantastic Four will be using will be a tsunami dataset from\ \begin{center}\texttt{https://www.kaggle.com/noaa/seismic-waves/data}\end{center}\ \
+This is an NOAA dataset of tsunami data for recordable history. A preview of the column headers of the raw data is the following:
+```{r,echo=FALSE}
+tsunami <- as_tibble(read_csv('noaa-tsunami.csv',col_types = cols(.default = col_character())))
+
+print(tsunami,n=0,width=40)
+```
+This data contains date, magnitude, location, depth, time, and damage attributes for tsunamis dating back to 2000 BC. This data set needs tidying for the following reasons:\
+
+* The region we are looking at is the Pacific\
+
+* There are a LOT of values are N/A and we need to evaluate/get rid of tsunamis that do not give significant data.\
+* For economic impacts, it would be important to look at more recent data, which would be more realistic\
+* Simplify columns (total damage, date/time, etc.)
+
+# Subsequent Questions and Importance:
+* How has Tsunami affected an island? Fatalities, house damages, etc.
+
+* Where is the most common occurance of Tsunami's? Does maximum height have a correlation with how much damage occurs?
+
+* Is there a relationship between time of year a tsunami occurs and how much damage is inflicted?
+
+# Rainfall Data
+
+## Lindsay Gettel
 
 
-# "Who is Hiring us?"
+## Lexie Marinelli
+```{r, echo= FALSE, include= FALSE}
+VOI <-read_csv("VOI_Rain.csv")
+VOI <-VOI %>% 
+  select(-X14,-X15) %>%
+  gather(Jan,Feb,Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec, key="Month", value= "Rainfall")
+```
+```{r, echo= FALSE}
+VOI %>%
+  filter(Year>=1960) %>%
+  ggplot(mapping=aes(x=Year,y=Rainfall)) +geom_point(aes(color=Month))  + facet_wrap(~Month)+ggtitle(label="Rain trend from 1960-1990") +xlab(label="Year")+ ylab(label= "Level of Rainfall")
 
-# "Overall team question, why it is important, and why those reasons are important" 
+VOI %>%
+  filter(Year>=1930 & Year<=1960) %>%
+  ggplot(mapping=aes(x=Year,y=Rainfall)) +geom_point(aes(color=Month)) +facet_wrap(~Month)+ggtitle(label="Rain trend from 1930-1960") +xlab(label="Year")+ ylab(label= "Level of Rainfall (cm)")
+```
+This plot shows the months that it rains the most starting from 1960 and going until 1990 and another graph going from 1930 to 1960 to see if rain patterns have changed between the two time periods. From both graphs we can gather that f the rainiest months are winter and spring- November, December, January, February, March, and April. During the 1930-1960 time period, rain patterns were more consistant to previous years. On the other hand, the amount of rain in 1960-1990 is more scattered making it less predictable. 
 
-# "A breif description of the dataset you wish to analyze next week"
+## Zhenlong Li
 
-# "A series of individual questions and why they are important"
+
+## Scott Baker
+
 
 # Contributions
 * Lindsay:
 
-* Lexie:
+* Lexie: Created individual plot with description. Also helped contribute to the overall question and importance along with who is hiring us. Also created some of the individual questions.
 
 * Li:
 
