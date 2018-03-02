@@ -92,7 +92,29 @@ VOI %>%
 This plot shows the months that it rains the most starting from 1960 and going until 1990 and another graph going from 1930 to 1960 to see if rain patterns have changed between the two time periods. From both graphs we can gather that f the rainiest months are winter and spring- November, December, January, February, March, and April. During the 1930-1960 time period, rain patterns were more consistent to previous years. On the other hand, the amount of rain in 1960-1990 is more scattered making it less predictable. 
 
 ## Zhenlong Li
+Indvidual Questions for Lab 7:
+How the warning status relate to the damage to people and environment?
 
+Importance:
+Predicting an catastrophe such as tsunami, earthquake and so on will be an cutting-edge technique for people to minimize their losses.
+
+Team apllication Exercise:
+```{r}
+tan1 = read.csv("~/Desktop/Tanganyika.csv") %>% select(-X, -X.1, -X.2, -X.3, -X.4, -X.5) %>% select(Year.AD, BSi..normalized.)
+bsi = rename(tan1, Year = Year.AD)
+
+tan2 = read.csv("~/Desktop/Tanganyika.csv") %>% select(-X, -X.1, -X.2, -X.3, -X.4, -X.5) %>% select(Year.AD.1, Charcoal..normalized.)
+
+char = rename(tan2, Year = Year.AD.1)
+
+tan3 = read.csv("~/Desktop/Tanganyika.csv") %>% select(-X, -X.1, -X.2, -X.3, -X.4, -X.5) %>% select(Year, TEX86)
+
+tan12 = merge(bsi, char)
+Tan = merge(tan12, tan3)
+ggplot(data = Tan, mapping = aes(x= Year, y = Charcoal..normalized.)) + geom_jitter() + geom_smooth(method = loess, se = FALSE)
+ggplot(data = Tan, mapping = aes(x= Year, y = BSi..normalized.)) + geom_jitter() + geom_smooth(method = loess, se = FALSE)
+ggplot(data = Tan, mapping = aes(x= Year, y = TEX86)) + geom_jitter() + geom_smooth(method = loess, se = FALSE)
+```
 
 ## Scott Baker
 
@@ -102,6 +124,6 @@ This plot shows the months that it rains the most starting from 1960 and going u
 
 * Lexie: Created individual plot with description. Also helped contribute to the overall question and importance along with who is hiring us. Also created some of the individual questions.
 
-* Li:
+* Li: Added individual question and found the problem that we need to use github link to read data rather than using the local file on each of our computer. Also, finished part of the team application exercise.
 
 * Scott: 
