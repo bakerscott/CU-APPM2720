@@ -21,8 +21,15 @@ A couple of quick thoughts on dataset:
 # "Who is Hiring us?"
 
 # "Overall team question, why it is important, and why those reasons are important" 
+some quesiton ideas:
+* How has Tsunami affected a country? Fatalities, house damages, etc.
+
+* Where is the most common occurance of Tsunami's? Does maximum height have a correlation with how much damage occurs?
+
+It's interesting because so many natural disasters have happened recently and we would like to find if there are any patterns within the data we have found.
 
 # "A breif description of the dataset you wish to analyze next week"
+
 
 # "A series of individual questions and why they are important"
 
