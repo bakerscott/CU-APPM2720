@@ -1,5 +1,5 @@
 ---
-title: "Lab_07"
+title: "Lab_08"
 author: "Fantastic Four"
 output: pdf_document
 ---
@@ -52,9 +52,9 @@ This is significant in analyzing where tsunamis cause the most damage, which cou
 
 Rainfall:
 ```{r, echo=FALSE}
-#https://raw.githubusercontent.com/bakerscott/CU-APPM2720/master/m3/Lab7/East_Africa.csv
+#https://raw.githubusercontent.com/bakerscott/CU-APPM2720/master/m3/Lab8/East_Africa.csv
 library(tidyverse)
-Malawi<-read_csv("East_Africa.csv")
+Malawi<-read_csv("https://raw.githubusercontent.com/bakerscott/CU-APPM2720/master/m3/Lab8/East_Africa.csv")
 
 m1<-Malawi%>%
   select(`Age (calender)`, `BSi MAR (mgSiO2/cm2y)`)%>%
@@ -74,8 +74,8 @@ This plot shows the measured amount of BSi, biogenic silica, in the soil at Lake
 
 ## Lexie Marinelli
 ```{r, echo= FALSE, include= FALSE}
-#https://raw.githubusercontent.com/bakerscott/CU-APPM2720/master/m3/Lab7/VOI_Rain.csv
-VOI <-read_csv("VOI_Rain.csv")
+#https://raw.githubusercontent.com/bakerscott/CU-APPM2720/master/m3/Lab8/VOI_Rain.csv
+VOI <-read_csv("https://raw.githubusercontent.com/bakerscott/CU-APPM2720/master/m3/Lab8/VOI_Rain.csv")
 VOI <-VOI %>% 
   select(-X14,-X15) %>%
   gather(Jan,Feb,Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec, key="Month", value= "Rainfall")
@@ -98,16 +98,16 @@ How the warning status relate to the damage to people and environment?
 Importance:
 Predicting an catastrophe such as tsunami, earthquake and so on will be an cutting-edge technique for people to minimize their losses.
 
-Team apllication Exercise:
+Team application Exercise:
 ```{r}
-tan1 = read.csv("~/Desktop/Tanganyika.csv") %>% select(-X, -X.1, -X.2, -X.3, -X.4, -X.5) %>% select(Year.AD, BSi..normalized.)
+tan1 = read.csv("https://raw.githubusercontent.com/bakerscott/CU-APPM2720/master/m3/Lab8/Tanganyika.csv") %>% select(-X, -X.1, -X.2, -X.3, -X.4, -X.5) %>% select(Year.AD, BSi..normalized.)
 bsi = rename(tan1, Year = Year.AD)
 
-tan2 = read.csv("~/Desktop/Tanganyika.csv") %>% select(-X, -X.1, -X.2, -X.3, -X.4, -X.5) %>% select(Year.AD.1, Charcoal..normalized.)
+tan2 = read.csv("https://raw.githubusercontent.com/bakerscott/CU-APPM2720/master/m3/Lab8/Tanganyika.csv") %>% select(-X, -X.1, -X.2, -X.3, -X.4, -X.5) %>% select(Year.AD.1, Charcoal..normalized.)
 
 char = rename(tan2, Year = Year.AD.1)
 
-tan3 = read.csv("~/Desktop/Tanganyika.csv") %>% select(-X, -X.1, -X.2, -X.3, -X.4, -X.5) %>% select(Year, TEX86)
+tan3 = read.csv("https://raw.githubusercontent.com/bakerscott/CU-APPM2720/master/m3/Lab8/Tanganyika.csv") %>% select(-X, -X.1, -X.2, -X.3, -X.4, -X.5) %>% select(Year, TEX86)
 
 tan12 = merge(bsi, char)
 Tan = merge(tan12, tan3)
