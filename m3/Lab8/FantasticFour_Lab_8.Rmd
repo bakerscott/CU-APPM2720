@@ -64,10 +64,13 @@ m2<-Malawi%>%
   select(`Age (calender)_1`, `BSi MAR (mgSiO2/cm2y)_1`)%>%
   rename(Year="Age (calender)_1", BSi="BSi MAR (mgSiO2/cm2y)_1")
 
-malawi_2<-left_join(m1, m2)
+malawi_2<-left_join(m1, m2)%>% 
+  filter(!is.na(Year))
 
 malawi_2%>%
   ggplot(mapping=aes(x=Year, y=BSi))+ geom_jitter()+ geom_smooth(se=FALSE)
+
+
 
 ```
 This plot shows the measured amount of BSi, biogenic silica, in the soil at Lake Malawi for each year, dating back over 2000 years ago. The graph demonstrates that at the amount of BSi present in the lake has been on an upward trend, but also seems to follow a rough sinusoidal pattern.
