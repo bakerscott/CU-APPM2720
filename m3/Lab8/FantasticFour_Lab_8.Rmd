@@ -81,7 +81,23 @@ This plot shows the measured amount of BSi, biogenic silica, in the soil at Lake
 VOI <-read_csv("https://raw.githubusercontent.com/bakerscott/CU-APPM2720/master/m3/Lab8/VOI_Rain.csv")
 VOI <-VOI %>% 
   select(-X14,-X15) %>%
-  gather(Jan,Feb,Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec, key="Month", value= "Rainfall")
+  gather(Jan,Feb,Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec, key="Month", value= "Rainfall") 
+
+#standardized values in VOIavg data
+VOIavg <- VOI %>%
+  group_by(Year)%>%
+  summarise(avgRainfall=mean(Rainfall, na.rm=TRUE))
+VOIavg
+totalAvgRain<- VOIavg %>%
+  summarise(totalAvg= mean(avgRainfall, na.rm=TRUE))
+totalAvgRain
+
+stdev <- VOIavg %>%
+  summarise(sd(avgRainfall))
+stdev
+VOIavg <- VOIavg %>%
+  mutate(standardizedRainfall= (avgRainfall- 461.5773)/164.5401)
+VOIavg
 ```
 ```{r, echo= FALSE}
 VOI %>%
