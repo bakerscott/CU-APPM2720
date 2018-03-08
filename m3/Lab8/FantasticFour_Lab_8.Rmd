@@ -30,6 +30,10 @@ This is an NOAA dataset of tsunami data for recordable history. A preview of the
 ```{r,echo=FALSE, message= FALSE}
 tsunami <- as_tibble(read_csv('noaa-tsunami.csv'))
 
+tsunami<- tsunami %>%
+  filter(YEAR>=1850)%>%
+  select(SOURCE_ID,YEAR, MONTH, CAUSE, VALIDITY, FOCAL_DEPTH, PRIMARY_MAGNITUDE, REGION_CODE, COUNTRY, `STATE/PROVINCE`, LOCATION, LATITUDE, LONGITUDE, MAXIMUM_HEIGHT, MAGNITUDE_ABE, MAGNITUDE_IIDA, INTENSITY_SOLOVIEV, MISSING, INJURIES, FATALITIES, DAMAGE_MILLIONS_DOLLARS, HOUSES_DAMAGED, HOUSES_DESTROYED, ALL_MISSING, ALL_INJURIES, ALL_FATALITIES, ALL_DAMAGE_MILLIONS,ALL_HOUSES_DESTROYED)
+
 print(tsunami,n=0,width=40)
 ```
 This data contains date, magnitude, location, depth, time, and damage attributes for tsunamis dating back to 2000 BC. This data set needs tidying for the following reasons:\
@@ -182,7 +186,7 @@ ggplot(data = Tan, mapping = aes(x= Year, y = TEX86)) + geom_jitter() + geom_smo
 # Contributions
 * Lindsay:
 
-* Lexie: Created individual plots of the rain data and tsunami data with descriptions. Also helped contribute to the overall question and importance along with who is hiring us. Also created some of the individual questions.
+* Lexie: Created individual plots of the rain data and tsunami data with descriptions. Also helped contribute to the overall question and importance along with who is hiring us. Also created some of the individual questions and helped tidy data.
 
 * Li: Added individual question and found the problem that we need to use github link to read data rather than using the local file on each of our computer. Also, finished part of the team application exercise.
 
