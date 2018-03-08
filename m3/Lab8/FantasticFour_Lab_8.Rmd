@@ -20,11 +20,15 @@ The second question to look at is:\
 \begin{center}\textbf{What are the patterns in tsunamis in the Pacific and how to they relate to ones recorded in Hawaii?}\end{center}\ \
 This question is important because by being able to see relationships between waves in Hawaii and other places in the Pacific, we can put together our resources in order to better prepare and educate society in order to minimize impact.
 
+# Conclusion
+
+# Recommendation
+
 # Dataset to Analyze
 The dataset Fantastic Four will be using will be a tsunami dataset from\ \begin{center}\texttt{https://www.kaggle.com/noaa/seismic-waves/data}\end{center}\ \
 This is an NOAA dataset of tsunami data for recordable history. A preview of the column headers of the raw data is the following:
-```{r,echo=FALSE}
-tsunami <- as_tibble(read_csv('noaa-tsunami.csv',col_types = cols(.default = col_character())))
+```{r,echo=FALSE, message= FALSE}
+tsunami <- as_tibble(read_csv('noaa-tsunami.csv'))
 
 print(tsunami,n=0,width=40)
 ```
@@ -36,12 +40,49 @@ This data contains date, magnitude, location, depth, time, and damage attributes
 * For economic impacts, it would be important to look at more recent data, which would be more realistic\
 * Simplify columns (total damage, date/time, etc.)
 
-# Subsequent Questions and Importance:
+# Subsequent Questions and Importance(delete after we have the individual plots w/ questions)
 * How has Tsunami affected an island? Fatalities, house damages, etc.
 
 * Where is the most common occurrence of Tsunami's? Does maximum height have a correlation with how much damage occurs?
 
 * Is there a relationship between time of year a tsunami occurs and how much damage is inflicted?
+
+# Individual Findings
+
+## Lindsay Gettel
+
+
+## Lexie Marinelli
+Question: What is the relationship between the maximum height of a tsunami, the number of fatalities caused by a tsunami, and the number of houses destroyed? How could this correlation help countries prepare for tsunamis in the future? 
+
+```{r,echo=FALSE, message=FALSE}
+tsunamiAvg<- tsunami %>%
+  filter(YEAR>=1850)%>%
+  select(YEAR, MONTH, `STATE/PROVINCE`, ALL_FATALITIES, FATALITIES, MAXIMUM_HEIGHT, INJURY_TOTAL, ALL_HOUSES_DAMAGED)%>%
+  group_by(YEAR)%>%
+  summarise(avgMaxHeight= mean(MAXIMUM_HEIGHT, na.rm=TRUE), avgFatalities= mean(ALL_FATALITIES,na.rm=TRUE), avgHouseDamage= mean(ALL_HOUSES_DAMAGED,na.rm=TRUE))
+
+tsunamiAvg <- tsunamiAvg%>%
+  filter(!is.na(avgMaxHeight), !is.na(avgFatalities), !is.na(avgHouseDamage))
+
+totalAvgHeightFatalHouse <- tsunamiAvg %>%
+  summarise(totalAvgHeight=mean(avgMaxHeight, na.rm=TRUE), totalAvgFatal= mean(avgFatalities, na.rm=TRUE), totalAvgDamage= mean(avgHouseDamage,na.rm=TRUE))
+
+sdWaveHeightFatalHouse <- tsunamiAvg %>%
+  summarise(standdevWave=sd(avgMaxHeight, na.rm=TRUE),standevFatal=sd(avgFatalities,na.rm=TRUE), standdevHouse= sd(avgHouseDamage, na.rm=TRUE))
+
+tsunamiAvg1 <- tsunamiAvg %>%
+  mutate(stdMaxHeight= (avgMaxHeight- 7.611372)/15.25048, stdFatalities= (avgFatalities-4027.23)/14346.33, stdHouseDamage= (avgHouseDamage- 27155.43)/ 66031.33)
+tsunamiAvg1 %>%
+  ggplot() +geom_smooth(mapping=aes(x=YEAR, y=stdFatalities),color= 'pink', se=FALSE)+geom_smooth(mapping=aes(x=YEAR, y=stdHouseDamage),color= 'green', se=FALSE) +geom_smooth(aes(x=YEAR, y=stdMaxHeight), se=FALSE)+ ggtitle(label="Comparison of Max Wave Height, Fatalities, and House Damage") + xlab(label="Year") +ylab(label= "Standardized Values of Max Height, Fatalities, and House Damage")
+```
+I chose to plot the relationship between the maximum wave height of a tsunami, the number of fatalities caused, and the number of houses damaged by a tsunami. I created this by standardizing the values for each data set for any time greater than 1850 and plotted the trends on the same axis with the pink being the standardized number of fatalities caused by a tsunami in a year, blue being the standardized value of maximum wave height in a year, and green being the standardized value of the number of houses damaged in result of the tsunami. This information is suprising because common sense would tell us that there would be a positive correlation between the wave height and the number of deaths from the tsunami but this graph shows us that there is in fact a negative correlation with the number of deaths and the wave height. This could be because larger tsunamis are easier to track and gives a country more time to prepare and evacuate, while small tsunamis can be more suprising and give a country less time to evacuate a region. The correlation between the number of houses damaged and the number of fatalities (green and pink respectively) is a positive correlation, which tells us that less people evacuated their houses for weaker tsunnamis. There is a negative correlation between the maximum wave height and the number of houses damaged, which means that people protect their houses with stronger tsunamis but not with the weak ones. This information tells us that overall, people are unprepared to protect themselves and their houses from weak tsunamis possibly because they don't have the right equipment to monitor small storms or a lack of a proper warning system/criteria. This lack of preparedness that can be resolved simply by warning residents nearby earlier by acquiring better equipment and changing the criteria that tells residents earlier when it is time to evacuate. 
+
+## Scott Baker
+
+
+## Zhenlong Li
+
 
 # Rainfall Data
 
@@ -141,7 +182,7 @@ ggplot(data = Tan, mapping = aes(x= Year, y = TEX86)) + geom_jitter() + geom_smo
 # Contributions
 * Lindsay:
 
-* Lexie: Created individual plot with description. Also helped contribute to the overall question and importance along with who is hiring us. Also created some of the individual questions.
+* Lexie: Created individual plots of the rain data and tsunami data with descriptions. Also helped contribute to the overall question and importance along with who is hiring us. Also created some of the individual questions.
 
 * Li: Added individual question and found the problem that we need to use github link to read data rather than using the local file on each of our computer. Also, finished part of the team application exercise.
 
