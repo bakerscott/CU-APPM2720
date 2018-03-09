@@ -86,7 +86,18 @@ I chose to plot the relationship between the maximum wave height of a tsunami, t
 
 
 ## Zhenlong Li
-
+Question:
+Is there a relationship between time of year a tsunami occurs and how much damage is inflicted?
+```{r,echo=FALSE, message=FALSE}
+damange_tsunami = tsunami %>%
+  filter(YEAR>=1900 & ALL_DAMAGE_MILLIONS != 'NA' )%>%
+  select(YEAR, ALL_DAMAGE_MILLIONS) %>%
+  mutate(damage = as.numeric(ALL_DAMAGE_MILLIONS))%>%
+  select(-ALL_DAMAGE_MILLIONS)
+  ggplot(warning_tsunami, mapping = aes(x = YEAR , y = damage)) + geom_jitter() + geom_smooth(se = FALSE) + ylab("All Damage (Million Dollars)")
+cor(damange_tsunami$YEAR, damange_tsunami$damage)
+```
+As we can see from the plot and calculated correlation, there is no strong relationship between the time of year a tsunami occurs and how much damage is inflicted but the reason why trend line is concave up after 1975 may be the increse of population and construction in the modern world.
 
 # Rainfall Data
 
@@ -156,13 +167,6 @@ VOI %>%
 This plot shows the months that it rains the most starting from 1960 and going until 1990 and another graph going from 1930 to 1960 to see if rain patterns have changed between the two time periods. From both graphs we can gather that f the rainiest months are winter and spring- November, December, January, February, March, and April. During the 1930-1960 time period, rain patterns were more consistent to previous years. On the other hand, the amount of rain in 1960-1990 is more scattered making it less predictable. 
 
 ## Zhenlong Li
-Indvidual Questions for Lab 7:
-How the warning status relate to the damage to people and environment?
-
-Importance:
-Predicting an catastrophe such as tsunami, earthquake and so on will be an cutting-edge technique for people to minimize their losses.
-
-Team application Exercise:
 ```{r}
 tan1 = read.csv("https://raw.githubusercontent.com/bakerscott/CU-APPM2720/master/m3/Lab8/Tanganyika.csv") %>% select(-X, -X.1, -X.2, -X.3, -X.4, -X.5) %>% select(Year.AD, BSi..normalized.)
 bsi = rename(tan1, Year = Year.AD)
@@ -175,9 +179,16 @@ tan3 = read.csv("https://raw.githubusercontent.com/bakerscott/CU-APPM2720/master
 
 tan12 = merge(bsi, char)
 Tan = merge(tan12, tan3)
-ggplot(data = Tan, mapping = aes(x= Year, y = Charcoal..normalized.)) + geom_jitter() + geom_smooth(method = loess, se = FALSE)
-ggplot(data = Tan, mapping = aes(x= Year, y = BSi..normalized.)) + geom_jitter() + geom_smooth(method = loess, se = FALSE)
-ggplot(data = Tan, mapping = aes(x= Year, y = TEX86)) + geom_jitter() + geom_smooth(method = loess, se = FALSE)
+
+summarise(Tan, Bsi_avg = mean(BSi..normalized., na.rm = TRUE))
+summarise(Tan, Char_avg = mean(Charcoal..normalized., na.rm = TRUE))
+summarise(Tan, TEX86_avg = mean(TEX86, na.rm = TRUE))
+sd1 = sd(Tan$BSi..normalized.)
+sd2 = sd(Tan$Charcoal..normalized.)
+sd3 = sd(Tan$TEX86)
+Tang = mutate(Tan, BSi_standard = (BSi..normalized.- (-0.01702703)/sd1), Charcoal_standard = (Charcoal..normalized.- (-0.1475676)/sd2) , TEX86_standard = (TEX86-0.6934865)/sd3 )
+Tanganyika = select(Tang , Year, BSi_standard, Charcoal_standard, TEX86_standard)
+Tanganyika %>% gather(BSi_standard, Charcoal_standard, TEX86_standard, key = "Type", value = "Measurement" ) %>% ggplot(Tan, mapping = aes(x= Year, y = Measurement, color = Type)) + geom_jitter() + geom_smooth(se = FALSE )
 ```
 
 ## Scott Baker
