@@ -200,7 +200,7 @@ Tanganyika %>% gather(BSi_standard, Charcoal_standard, TEX86_standard, key = "Ty
 
 ## Scott Baker
 ```{r}
-challa <- read_csv("/home/scott/CU-APPM2720/m3/Lab8/Challa.csv", col_types = cols(
+challa <- read_csv("https://raw.githubusercontent.com/bakerscott/CU-APPM2720/master/m3/Lab8/Challa.csv", col_types = cols(
                     year = col_integer(),
                      number = col_character(),
                      thickness = col_double(),
