@@ -32,6 +32,10 @@ This is an NOAA dataset of tsunami data for recordable history. A preview of the
 tsunami <- as_tibble(read_csv('https://raw.githubusercontent.com/bakerscott/CU-APPM2720/master/m3/Lab8/noaa-tsunami.csv'))
 
 print(tsunami,n=0,width=40)
+
+tsunami1<- tsunami %>%
+  filter(YEAR>=1850)%>%
+  select(SOURCE_ID,YEAR, MONTH, CAUSE, VALIDITY, FOCAL_DEPTH, PRIMARY_MAGNITUDE, REGION_CODE, COUNTRY, `STATE/PROVINCE`, LOCATION, LATITUDE, LONGITUDE, MAXIMUM_HEIGHT, MAGNITUDE_ABE, MAGNITUDE_IIDA, INTENSITY_SOLOVIEV, MISSING, INJURIES, FATALITIES, DAMAGE_MILLIONS_DOLLARS, HOUSES_DAMAGED, HOUSES_DESTROYED, ALL_MISSING, ALL_INJURIES, ALL_FATALITIES, ALL_DAMAGE_MILLIONS,ALL_HOUSES_DESTROYED)
 ```
 This data contains date, magnitude, location, depth, time, and damage attributes for tsunamis dating back to 2000 BC. This data set needs tidying for the following reasons:\
 
