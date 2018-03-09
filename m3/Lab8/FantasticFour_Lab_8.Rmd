@@ -105,15 +105,16 @@ ggmap(map) + geom_point(data = forMap, mapping = aes(x=LONGITUDE,y=LATITUDE))
 Question:
 Is there a relationship between time of year a tsunami occurs and how much damage is inflicted?
 ```{r,echo=FALSE, message=FALSE}
-damange_tsunami = tsunami %>%
+damage_tsunami = tsunami %>%
   filter(YEAR>=1900 & ALL_DAMAGE_MILLIONS != 'NA' )%>%
   select(YEAR, ALL_DAMAGE_MILLIONS) %>%
   mutate(damage = as.numeric(ALL_DAMAGE_MILLIONS))%>%
   select(-ALL_DAMAGE_MILLIONS)
-  ggplot(damange_tsunami, mapping = aes(x = YEAR , y = damage)) + geom_jitter() + geom_smooth(se = FALSE) + ylab("All Damage (Million Dollars)")
+
+  ggplot(damage_tsunami, mapping = aes(x = YEAR , y = damage)) + geom_jitter() + geom_smooth(se = FALSE) + ylab("All Damage (Million Dollars)")
 cor(damange_tsunami$YEAR, damange_tsunami$damage)
 ```
-As we can see from the plot and calculated correlation, there is no strong relationship between the time of year a tsunami occurs and how much damage is inflicted but the reason why trend line is concave up after 1975 may be the increase of population and construction in the modern world.
+As we can see from the plot and calculated correlation, there is no relationship between the time of year a tsunami occurs and how much damage is inflicted but the reason why trend line is concave up after 1975 may be the increase of population and construction in the modern world.
 
 # Rainfall Data
 
@@ -231,23 +232,34 @@ ggplot(data=challa) + geom_point(mapping=aes(x=year,y=normalized_thick))
 ```
 
 ## Team Plot
-```{r}
-Malawi_team = normMalawiBSi %>% select(-BSi)
+```{r, echo=FALSE, message= FALSE}
+Malawi_team = normMalawiBSi %>% select(-BSi) %>% filter(Year >= 1300)
 VOI_team = VOIavg %>% select(Year, standardizedRainfall)
 Tanganyika_team = Tanganyika %>% select(Year, Charcoal_standard)
 Challa_team = rename(challa, Year = year) %>%select(Year, normalized_thick)
-M_T = merge(Malawi_team, Tanganyika_team) %>% rename(MALAWI_standardized_BSi = normMalawiBsi, TANGANYIKA_standardized_charcoal = Charcoal_standard)
+
+
+M_T = full_join(Malawi_team, Tanganyika_team)%>% 
+  rename(MALAWI_standardized_BSi = normMalawiBsi, TANGANYIKA_standardized_charcoal = Charcoal_standard)
+
 V_C = merge(VOI_team, Challa_team) %>% rename(CHALLA_standardized_thick = normalized_thick, VOI_standardized_rainfall = standardizedRainfall)
 
-M_T %>% gather(MALAWI_standardized_BSi, TANGANYIKA_standardized_charcoal, key = "Type", value = "Measurement" ) %>% ggplot(Tan, mapping = aes(x= Year, y = Measurement, color = Type))  + geom_line()
-V_C %>% gather(CHALLA_standardized_thick, VOI_standardized_rainfall, key = "Type", value = "Measurement" ) %>% ggplot(Tan, mapping = aes(x= Year, y = Measurement, color = Type))  + geom_smooth(se = FALSE )
+teamdata1 = M_T %>% gather(MALAWI_standardized_BSi, TANGANYIKA_standardized_charcoal, key = "Type", value = "Measurement" )
+
+teamdata2 = V_C %>% gather(CHALLA_standardized_thick, VOI_standardized_rainfall, key = "Type", value = "Measurement" )
+
+p <- ggplot()  + geom_smooth(teamdata1, mapping = aes(x= Year, y = Measurement, color = Type), se = FALSE ) +
+ geom_smooth(teamdata2, mapping = aes(x= Year, y = Measurement, color = Type), se = FALSE )
+p + ggtitle("East Africa Lake Data Visualization")
 ```
+
+Our teamplot plots one of the standardized values from each data set vs. different year as four trendlines from 1300 to 2000.
 
 # Contributions
 * Lindsay: Created an individual plot of tsunami characteristics for a visual comparision to isolate any trends, also produced a graph for the Malawi rainfall data. For both, utilized standard deviation function to normalize values and plot, used gather and select to narrow the data.
 
 * Lexie: Created individual plots of the rain data and tsunami data with descriptions. Also helped contribute to the overall question and importance along with who is hiring us. Also created some of the individual questions.
 
-* Li: Added individual question and found the problem that we need to use github link to read data rather than using the local file on each of our computer. Also, finished part of the team application exercise.
+* Li: Created individual plot of the relationship between the time of year a tsunami occurs and the damage is inflicted. Found the problem that we need to use github link to read data rather than using the local file on each of our computer and the problem was solved by Scott. Also, tidied the Tanganyika dataset and created the team plot of East Africa Lake and Rainfall Data.
 
 * Scott: 
