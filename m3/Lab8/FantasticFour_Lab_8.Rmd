@@ -8,6 +8,8 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(ggmap)
+library(maps)
+
 ```
 # Who is Hiring us?
 Fantastic Four is being hired by the American Red Cross in Honolulu, Hawaii to look at tsunami data. There are two reasons that this organization is hiring the team. First, they would like to map out all the tsunamis in the Pacific in a creative way using the data we have. This could be economic impact of more recent tsunamis (since that part of the data is available) or the relationship between magnitude and source of the waves. Second, they would like to know if there is a better way to predict, educate, and minimize impact to society for islands in the Pacific. 
@@ -96,9 +98,20 @@ I chose to plot the relationship between the maximum wave height of a tsunami, t
 
 ## Scott Baker
 ```{r,echo=FALSE}
-forMap <- tsunami %>% select(SOURCE_ID, YEAR, LOCATION, LATITUDE, LONGITUDE) %>% filter(LONGITUDE < -60 | LONGITUDE > 105, LATITUDE > -60 & LATITUDE < 75)
-forMap
-ggmap(map) + geom_point(data = forMap, mapping = aes(x=LONGITUDE,y=LATITUDE))
+
+forMap <- tsunami %>% select(SOURCE_ID, YEAR, LOCATION, LATITUDE, LONGITUDE, PRIMARY_MAGNITUDE) %>% filter(LONGITUDE < -60 | LONGITUDE > 105, LATITUDE > -60 & LATITUDE < 75)
+# forMap
+myMap <- map("world")
+mp <- NULL
+mapWorld <- borders("world", colour="gray50", fill="gray50")
+                    
+mp <- ggplot() +  mapWorld 
+mp <- mp + geom_point(data = forMap, mapping = aes(x=LONGITUDE,y=LATITUDE,color = PRIMARY_MAGNITUDE),size = 0.3)
+mp
+
+qmap(location = "hawaii",zoom = 3) + geom_point(data = forMap, mapping = aes(x=LONGITUDE,y=LATITUDE,color = PRIMARY_MAGNITUDE),size = 0.5)
+
+qmap(location = "honolulu",zoom = 7) + geom_point(data = forMap, mapping = aes(x=LONGITUDE,y=LATITUDE,color = PRIMARY_MAGNITUDE),size = 3)
 ```
 
 ## Zhenlong Li
