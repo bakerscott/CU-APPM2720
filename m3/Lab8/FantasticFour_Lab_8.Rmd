@@ -199,6 +199,29 @@ Tanganyika %>% gather(BSi_standard, Charcoal_standard, TEX86_standard, key = "Ty
 ```
 
 ## Scott Baker
+```{r}
+challa <- read_csv("/home/scott/CU-APPM2720/m3/Lab8/Challa.csv", col_types = cols(
+                    year = col_integer(),
+                     number = col_character(),
+                     thickness = col_double(),
+                     dark_layer = col_double(),
+                     light_layer = col_double()
+                   ))
+
+# challa <- filter(challa,year>=1900)
+challa$number <- NULL
+
+std_thick <- sd(challa$thickness,na.rm = TRUE)
+
+mean_thick <- mean(challa$thickness,na.rm = TRUE)
+
+challa <- add_column(challa, normalized_thick = (challa$thickness - mean_thick)/std_thick)
+
+ggplot(data=challa) + geom_point(mapping=aes(x=year,y=normalized_thick))
+
+```
+
+## Team Plot
 
 
 # Contributions
