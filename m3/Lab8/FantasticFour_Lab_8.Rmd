@@ -231,7 +231,17 @@ ggplot(data=challa) + geom_point(mapping=aes(x=year,y=normalized_thick))
 ```
 
 ## Team Plot
+```{r}
+Malawi_team = normMalawiBSi %>% select(-BSi)
+VOI_team = VOIavg %>% select(Year, standardizedRainfall)
+Tanganyika_team = Tanganyika %>% select(Year, Charcoal_standard)
+Challa_team = rename(challa, Year = year) %>%select(Year, normalized_thick)
+M_T = merge(Malawi_team, Tanganyika_team) %>% rename(MALAWI_standardized_BSi = normMalawiBsi, TANGANYIKA_standardized_charcoal = Charcoal_standard)
+V_C = merge(VOI_team, Challa_team) %>% rename(CHALLA_standardized_thick = normalized_thick, VOI_standardized_rainfall = standardizedRainfall)
 
+M_T %>% gather(MALAWI_standardized_BSi, TANGANYIKA_standardized_charcoal, key = "Type", value = "Measurement" ) %>% ggplot(Tan, mapping = aes(x= Year, y = Measurement, color = Type))  + geom_line()
+V_C %>% gather(CHALLA_standardized_thick, VOI_standardized_rainfall, key = "Type", value = "Measurement" ) %>% ggplot(Tan, mapping = aes(x= Year, y = Measurement, color = Type))  + geom_smooth(se = FALSE )
+```
 
 # Contributions
 * Lindsay: Created an individual plot of tsunami characteristics for a visual comparision to isolate any trends, also produced a graph for the Malawi rainfall data. For both, utilized standard deviation function to normalize values and plot, used gather and select to narrow the data.
