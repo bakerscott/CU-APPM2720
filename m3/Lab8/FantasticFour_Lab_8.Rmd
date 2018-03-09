@@ -30,10 +30,6 @@ This is an NOAA dataset of tsunami data for recordable history. A preview of the
 ```{r,echo=FALSE, message= FALSE}
 tsunami <- as_tibble(read_csv('noaa-tsunami.csv'))
 
-tsunami<- tsunami %>%
-  filter(YEAR>=1850)%>%
-  select(SOURCE_ID,YEAR, MONTH, CAUSE, VALIDITY, FOCAL_DEPTH, PRIMARY_MAGNITUDE, REGION_CODE, COUNTRY, `STATE/PROVINCE`, LOCATION, LATITUDE, LONGITUDE, MAXIMUM_HEIGHT, MAGNITUDE_ABE, MAGNITUDE_IIDA, INTENSITY_SOLOVIEV, MISSING, INJURIES, FATALITIES, DAMAGE_MILLIONS_DOLLARS, HOUSES_DAMAGED, HOUSES_DESTROYED, ALL_MISSING, ALL_INJURIES, ALL_FATALITIES, ALL_DAMAGE_MILLIONS,ALL_HOUSES_DESTROYED)
-
 print(tsunami,n=0,width=40)
 ```
 This data contains date, magnitude, location, depth, time, and damage attributes for tsunamis dating back to 2000 BC. This data set needs tidying for the following reasons:\
@@ -54,7 +50,18 @@ This data contains date, magnitude, location, depth, time, and damage attributes
 # Individual Findings
 
 ## Lindsay Gettel
-
+Focus Question: What is the relationship between the strength of a tsunami, specifically the measured intensity and magnitude of the tsunami, and how much damage it causes? How does this lead to a better understanding of tsunamis and how does it allow for preemptive action?
+```{r, echo=FALSE, message=FALSE}
+tsunami_2<-tsunami%>%
+  select(YEAR, PRIMARY_MAGNITUDE, MAXIMUM_HEIGHT, DAMAGE_ESTIMATE, INTENSITY_SOLOVIEV)%>%
+  filter(YEAR>1500, !is.na(DAMAGE_ESTIMATE))%>% 
+  mutate(Height=(abs(MAXIMUM_HEIGHT-6.249))/27.707, Estimated_Damage=(abs(DAMAGE_ESTIMATE-0.209)/0.9905), Magnitude=(abs(PRIMARY_MAGNITUDE-7.039)/0.804), Intensity=(abs(INTENSITY_SOLOVIEV-1.405)/1.803))%>%
+  gather(Height, Estimated_Damage, Magnitude, Intensity, key="Statistics", value="Measurements")
+tsunami_2%>%
+  filter(Measurements<5)%>%
+  ggplot(mapping=aes(x=YEAR, y=Measurements, color=Statistics))+ geom_smooth(se=FALSE)+ ggtitle("Comparison of damage casused and tusnami characteristics since 1500")+ ylab("Standardized Measurments")+xlab("Year")
+```
+The graph above illustrates the normalized values of the estimated damage caused by a tsunami on a given year. Data for the tsunami is plotted to allow comparison between the tsunami's properties and the amount of resulting damage. There is a strong positive correlation between the height and the amount of damage, the two plots follow a very similar trend. The tsunami intensity and magnitude also demonstrate a positive correlation, however, it is not as strong as the height. It is significant to  note the decrease in intensity from 1650-1800 which contrasts the others as it decreases while the rest increase. This could be a result of the data being inaccurate as a result of improper measuring or estimating the values. Otherwise the four plots follow similar patterns. Due to the correlation, if the tsunami's intensity or magnitude could be measured at the origin, the waves maximum height could be predicted. This would allow a better understanding of how the tsunami will grow and how large it will be once it reaches land. Knowing how large the tsunami will be would aid in preventing damage as more precautions could be taken to withstand tsunamis of varying sizes.  
 
 ## Lexie Marinelli
 Question: What is the relationship between the maximum height of a tsunami, the number of fatalities caused by a tsunami, and the number of houses destroyed? How could this correlation help countries prepare for tsunamis in the future? 
@@ -80,7 +87,7 @@ tsunamiAvg1 <- tsunamiAvg %>%
 tsunamiAvg1 %>%
   ggplot() +geom_smooth(mapping=aes(x=YEAR, y=stdFatalities),color= 'pink', se=FALSE)+geom_smooth(mapping=aes(x=YEAR, y=stdHouseDamage),color= 'green', se=FALSE) +geom_smooth(aes(x=YEAR, y=stdMaxHeight), se=FALSE)+ ggtitle(label="Comparison of Max Wave Height, Fatalities, and House Damage") + xlab(label="Year") +ylab(label= "Standardized Values of Max Height, Fatalities, and House Damage")
 ```
-I chose to plot the relationship between the maximum wave height of a tsunami, the number of fatalities caused, and the number of houses damaged by a tsunami. I created this by standardizing the values for each data set for any time greater than 1850 and plotted the trends on the same axis with the pink being the standardized number of fatalities caused by a tsunami in a year, blue being the standardized value of maximum wave height in a year, and green being the standardized value of the number of houses damaged in result of the tsunami. This information is suprising because common sense would tell us that there would be a positive correlation between the wave height and the number of deaths from the tsunami but this graph shows us that there is in fact a negative correlation with the number of deaths and the wave height. This could be because larger tsunamis are easier to track and gives a country more time to prepare and evacuate, while small tsunamis can be more suprising and give a country less time to evacuate a region. The correlation between the number of houses damaged and the number of fatalities (green and pink respectively) is a positive correlation, which tells us that less people evacuated their houses for weaker tsunnamis. There is a negative correlation between the maximum wave height and the number of houses damaged, which means that people protect their houses with stronger tsunamis but not with the weak ones. This information tells us that overall, people are unprepared to protect themselves and their houses from weak tsunamis possibly because they don't have the right equipment to monitor small storms or a lack of a proper warning system/criteria. This lack of preparedness that can be resolved simply by warning residents nearby earlier by acquiring better equipment and changing the criteria that tells residents earlier when it is time to evacuate. 
+I chose to plot the relationship between the maximum wave height of a tsunami, the number of fatalities caused, and the number of houses damaged by a tsunami. I created this by standardizing the values for each data set for any time greater than 1850 and plotted the trends on the same axis with the pink being the standardized number of fatalities caused by a tsunami in a year, blue being the standardized value of maximum wave height in a year, and green being the standardized value of the number of houses damaged in result of the tsunami. This information is surprising because common sense would tell us that there would be a positive correlation between the wave height and the number of deaths from the tsunami but this graph shows us that there is in fact a negative correlation with the number of deaths and the wave height. This could be because larger tsunamis are easier to track and gives a country more time to prepare and evacuate, while small tsunamis can be more surprising and give a country less time to evacuate a region. The correlation between the number of houses damaged and the number of fatalities (green and pink respectively) is a positive correlation, which tells us that less people evacuated their houses for weaker tsunamis. There is a negative correlation between the maximum wave height and the number of houses damaged, which means that people protect their houses with stronger tsunamis but not with the weak ones. This information tells us that overall, people are unprepared to protect themselves and their houses from weak tsunamis possibly because they don't have the right equipment to monitor small storms or a lack of a proper warning system/criteria. This lack of preparedness that can be resolved simply by warning residents nearby earlier by acquiring better equipment and changing the criteria that tells residents earlier when it is time to evacuate. 
 
 ## Scott Baker
 
@@ -97,16 +104,11 @@ damange_tsunami = tsunami %>%
   ggplot(warning_tsunami, mapping = aes(x = YEAR , y = damage)) + geom_jitter() + geom_smooth(se = FALSE) + ylab("All Damage (Million Dollars)")
 cor(damange_tsunami$YEAR, damange_tsunami$damage)
 ```
-As we can see from the plot and calculated correlation, there is no strong relationship between the time of year a tsunami occurs and how much damage is inflicted but the reason why trend line is concave up after 1975 may be the increse of population and construction in the modern world.
+As we can see from the plot and calculated correlation, there is no strong relationship between the time of year a tsunami occurs and how much damage is inflicted but the reason why trend line is concave up after 1975 may be the increase of population and construction in the modern world.
 
 # Rainfall Data
 
 ## Lindsay Gettel
-Individual Questions for Lab 7:
-What is the relationship between the tsunami source and the wave, and how does the distance affect the tsunami severity and amount of damage? 
-This is significant in analyzing where tsunamis cause the most damage, which could indicate areas that are at greater risk of being impacted by a tsunami. It could possibly lead to formulating predictions of where future tsunamis may occur and how intense they will be. This could help with pre-storm evacuations and safety preparation which would limit injuries, possible deaths, and destruction. Which in turn would limit resource and economical strain following tsunamis.
-
-Rainfall:
 ```{r, echo=FALSE}
 #https://raw.githubusercontent.com/bakerscott/CU-APPM2720/master/m3/Lab8/East_Africa.csv
 library(tidyverse)
@@ -126,8 +128,13 @@ malawi_2<-left_join(m1, m2)%>%
 malawi_2%>%
   ggplot(mapping=aes(x=Year, y=BSi))+ geom_jitter()+ geom_smooth(se=FALSE)
 
+#standarddized for team plot
+averageBSi<-malawi_2%>%
+  summarise(averageBSi=mean(BSi))
+standardBsi<-sd(malawi_2$BSi)
 
-
+normMalawiBSi<-malawi_2%>%
+  mutate(normMalawiBsi=(BSi-5.435175)/2.249409)
 ```
 This plot shows the measured amount of BSi, biogenic silica, in the soil at Lake Malawi for each year, dating back over 2000 years ago. The graph demonstrates that at the amount of BSi present in the lake has been on an upward trend, but also seems to follow a rough sinusoidal pattern.
 
@@ -195,9 +202,9 @@ Tanganyika %>% gather(BSi_standard, Charcoal_standard, TEX86_standard, key = "Ty
 
 
 # Contributions
-* Lindsay:
+* Lindsay: Created an individual plot of tsunami characteristics for a visual comparision to isolate any trends, also produced a graph for the Malawi rainfall data. For both, utilized standard deviation function to normalize values and plot, used gather and select to narrow the data.
 
-* Lexie: Created individual plots of the rain data and tsunami data with descriptions. Also helped contribute to the overall question and importance along with who is hiring us. Also created some of the individual questions and helped tidy data.
+* Lexie: Created individual plots of the rain data and tsunami data with descriptions. Also helped contribute to the overall question and importance along with who is hiring us. Also created some of the individual questions.
 
 * Li: Added individual question and found the problem that we need to use github link to read data rather than using the local file on each of our computer. Also, finished part of the team application exercise.
 
