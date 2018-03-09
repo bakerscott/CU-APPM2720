@@ -7,6 +7,7 @@ output: pdf_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
+library(ggmap)
 ```
 # Who is Hiring us?
 Fantastic Four is being hired by the American Red Cross in Honolulu, Hawaii to look at tsunami data. There are two reasons that this organization is hiring the team. First, they would like to map out all the tsunamis in the Pacific in a creative way using the data we have. This could be economic impact of more recent tsunamis (since that part of the data is available) or the relationship between magnitude and source of the waves. Second, they would like to know if there is a better way to predict, educate, and minimize impact to society for islands in the Pacific. 
@@ -28,7 +29,7 @@ This question is important because by being able to see relationships between wa
 The dataset Fantastic Four will be using will be a tsunami dataset from\ \begin{center}\texttt{https://www.kaggle.com/noaa/seismic-waves/data}\end{center}\ \
 This is an NOAA dataset of tsunami data for recordable history. A preview of the column headers of the raw data is the following:
 ```{r,echo=FALSE, message= FALSE}
-tsunami <- as_tibble(read_csv('noaa-tsunami.csv'))
+tsunami <- as_tibble(read_csv('https://raw.githubusercontent.com/bakerscott/CU-APPM2720/master/m3/Lab8/noaa-tsunami.csv'))
 
 print(tsunami,n=0,width=40)
 ```
@@ -90,7 +91,11 @@ tsunamiAvg1 %>%
 I chose to plot the relationship between the maximum wave height of a tsunami, the number of fatalities caused, and the number of houses damaged by a tsunami. I created this by standardizing the values for each data set for any time greater than 1850 and plotted the trends on the same axis with the pink being the standardized number of fatalities caused by a tsunami in a year, blue being the standardized value of maximum wave height in a year, and green being the standardized value of the number of houses damaged in result of the tsunami. This information is surprising because common sense would tell us that there would be a positive correlation between the wave height and the number of deaths from the tsunami but this graph shows us that there is in fact a negative correlation with the number of deaths and the wave height. This could be because larger tsunamis are easier to track and gives a country more time to prepare and evacuate, while small tsunamis can be more surprising and give a country less time to evacuate a region. The correlation between the number of houses damaged and the number of fatalities (green and pink respectively) is a positive correlation, which tells us that less people evacuated their houses for weaker tsunamis. There is a negative correlation between the maximum wave height and the number of houses damaged, which means that people protect their houses with stronger tsunamis but not with the weak ones. This information tells us that overall, people are unprepared to protect themselves and their houses from weak tsunamis possibly because they don't have the right equipment to monitor small storms or a lack of a proper warning system/criteria. This lack of preparedness that can be resolved simply by warning residents nearby earlier by acquiring better equipment and changing the criteria that tells residents earlier when it is time to evacuate. 
 
 ## Scott Baker
-
+```{r,echo=FALSE}
+forMap <- tsunami %>% select(SOURCE_ID, YEAR, LOCATION, LATITUDE, LONGITUDE) %>% filter(LONGITUDE < -60 | LONGITUDE > 105, LATITUDE > -60 & LATITUDE < 75)
+forMap
+ggmap(map) + geom_point(data = forMap, mapping = aes(x=LONGITUDE,y=LATITUDE))
+```
 
 ## Zhenlong Li
 Question:
@@ -101,7 +106,7 @@ damange_tsunami = tsunami %>%
   select(YEAR, ALL_DAMAGE_MILLIONS) %>%
   mutate(damage = as.numeric(ALL_DAMAGE_MILLIONS))%>%
   select(-ALL_DAMAGE_MILLIONS)
-  ggplot(warning_tsunami, mapping = aes(x = YEAR , y = damage)) + geom_jitter() + geom_smooth(se = FALSE) + ylab("All Damage (Million Dollars)")
+  ggplot(damange_tsunami, mapping = aes(x = YEAR , y = damage)) + geom_jitter() + geom_smooth(se = FALSE) + ylab("All Damage (Million Dollars)")
 cor(damange_tsunami$YEAR, damange_tsunami$damage)
 ```
 As we can see from the plot and calculated correlation, there is no strong relationship between the time of year a tsunami occurs and how much damage is inflicted but the reason why trend line is concave up after 1975 may be the increase of population and construction in the modern world.
