@@ -9,29 +9,53 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(ggmap)
 library(maps)
-
+tsunami <- as_tibble(read_csv('https://raw.githubusercontent.com/bakerscott/CU-APPM2720/master/m3/Lab8/noaa-tsunami.csv'))
 ```
 # Who is Hiring us?
 Fantastic Four is being hired by the American Red Cross in Honolulu, Hawaii to look at tsunami data. There are two reasons that this organization is hiring the team. First, they would like to map out all the tsunamis in the Pacific in a creative way using the data we have. This could be economic impact of more recent tsunamis (since that part of the data is available) or the relationship between magnitude and source of the waves. Second, they would like to know if there is a better way to predict, educate, and minimize impact to society for islands in the Pacific. 
 
 # Questions and Importance 
 There are two questions we have set out to answer. The first is:\
-\begin{center}\textbf{What are the patterns in tsunamis that come to Hawaii?}\end{center}\ \
-The reason we are looking at this question is to find the patterns of tsunamis that come to Hawaii. This is important because it can help us better prepare the community for impact (via insurance, warning, education) and furthermore minimize the damage to our beloved Hawaiian Islands.\ \
+\begin{center}\textbf{What are the patterns in tsunamis that come to Hawaii?}\end{center}\ 
+The reason we are looking at this question is to find the patterns of tsunamis that come to Hawaii. This is important because it can help us better prepare the community for impact (via insurance, warning, education) and furthermore minimize the damage to our beloved Hawaiian Islands.\ 
 
-The second question to look at is:\
-\begin{center}\textbf{What are the patterns in tsunamis in the Pacific and how to they relate to ones recorded in Hawaii?}\end{center}\ \
+The second question to look at is:
+\begin{center}\textbf{What are the patterns in tsunamis in the Pacific and how to they relate to ones recorded in Hawaii?}\end{center}\ 
 This question is important because by being able to see relationships between waves in Hawaii and other places in the Pacific, we can put together our resources in order to better prepare and educate society in order to minimize impact.
 
 # Conclusion
+Visually, the following map shows the locations of all the tsunamis recorded.
+```{r,echo=FALSE}
+myMap <- map("world")
+mp <- NULL
+mapWorld <- borders("world", colour="gray50", fill="gray50")
+                    
+mp <- ggplot() +  mapWorld 
+mp <- mp + geom_point(data = tsunami, mapping = aes(x=LONGITUDE,y=LATITUDE,color = PRIMARY_MAGNITUDE),size = 0.3) + ggtitle("All tsunamis in the dataset")
+mp
+```
+From this, we can see that most tsunamis originate along fault lines. Furthermore, when looking at the Hawaiian islands specifically, the following is found:
+```{r,echo=FALSE}
+forMap <- tsunami %>% select(SOURCE_ID, YEAR, LOCATION, LATITUDE, LONGITUDE, PRIMARY_MAGNITUDE) %>% filter(LONGITUDE < -60 | LONGITUDE > 105, LATITUDE > -60 & LATITUDE < 75)
+
+qmap(location = "honolulu",zoom = 7) + geom_point(data = forMap, mapping = aes(x=LONGITUDE,y=LATITUDE,color = PRIMARY_MAGNITUDE),size = 3) + ggtitle("Tsunamis originating in Hawaii")
+```
+It is seen that they all originate around the active volcanoes on the Big Island. This means that most of the tsunamis do not originate in Hawaii. Alhough the waves from ones that originate around fault lines can devastate Hawaii, depending on their magnitude. Furthermore, answers to smaller questions about economics and other details can be found in the individual sections.
 
 # Recommendation
+The following are recommendations we have for the Red Cross:
+
+* Since there aren't many that originate here we must keep quick warning systems ready just in case
+
+* More importantly, make sure that warning and preparation systems are in place for tsunamis that come from fault lines on the continents, meaning that in 5 to 10 hours, we can warn the people of Hawaii that waves are coming
+
+* Make sure people know the consequences (economical damage, lives lost) of tsunamis and make sure they have insurance if they live in an evacuation zone
 
 # Dataset to Analyze
 The dataset Fantastic Four will be using will be a tsunami dataset from\ \begin{center}\texttt{https://www.kaggle.com/noaa/seismic-waves/data}\end{center}\ \
 This is an NOAA dataset of tsunami data for recordable history. A preview of the column headers of the raw data is the following:
 ```{r,echo=FALSE, message= FALSE}
-tsunami <- as_tibble(read_csv('https://raw.githubusercontent.com/bakerscott/CU-APPM2720/master/m3/Lab8/noaa-tsunami.csv'))
+
 
 print(tsunami,n=0,width=40)
 
@@ -46,13 +70,6 @@ This data contains date, magnitude, location, depth, time, and damage attributes
 * There are a LOT of values are N/A and we need to evaluate/get rid of tsunamis that do not give significant data.\
 * For economic impacts, it would be important to look at more recent data, which would be more realistic\
 * Simplify columns (total damage, date/time, etc.)
-
-# Subsequent Questions and Importance(delete after we have the individual plots w/ questions)
-* How has Tsunami affected an island? Fatalities, house damages, etc.
-
-* Where is the most common occurrence of Tsunami's? Does maximum height have a correlation with how much damage occurs?
-
-* Is there a relationship between time of year a tsunami occurs and how much damage is inflicted?
 
 # Individual Findings
 
@@ -97,6 +114,8 @@ tsunamiAvg1 %>%
 I chose to plot the relationship between the maximum wave height of a tsunami, the number of fatalities caused, and the number of houses damaged by a tsunami. I created this by standardizing the values for each data set for any time greater than 1850 and plotted the trends on the same axis with the pink being the standardized number of fatalities caused by a tsunami in a year, blue being the standardized value of maximum wave height in a year, and green being the standardized value of the number of houses damaged in result of the tsunami. This information is surprising because common sense would tell us that there would be a positive correlation between the wave height and the number of deaths from the tsunami but this graph shows us that there is in fact a negative correlation with the number of deaths and the wave height. This could be because larger tsunamis are easier to track and gives a country more time to prepare and evacuate, while small tsunamis can be more surprising and give a country less time to evacuate a region. The correlation between the number of houses damaged and the number of fatalities (green and pink respectively) is a positive correlation, which tells us that less people evacuated their houses for weaker tsunamis. There is a negative correlation between the maximum wave height and the number of houses damaged, which means that people protect their houses with stronger tsunamis but not with the weak ones. This information tells us that overall, people are unprepared to protect themselves and their houses from weak tsunamis possibly because they don't have the right equipment to monitor small storms or a lack of a proper warning system/criteria. This lack of preparedness that can be resolved simply by warning residents nearby earlier by acquiring better equipment and changing the criteria that tells residents earlier when it is time to evacuate. 
 
 ## Scott Baker
+I created maps with the tidy data to show visuailzation of the origins of tsunamis. Then zoomed in on Hawaii to look at magnitude and location. Interestingly enough, all the ones that originated near Hawaii are around the currently active volcanoes. 
+
 ```{r,echo=FALSE}
 
 forMap <- tsunami %>% select(SOURCE_ID, YEAR, LOCATION, LATITUDE, LONGITUDE, PRIMARY_MAGNITUDE) %>% filter(LONGITUDE < -60 | LONGITUDE > 105, LATITUDE > -60 & LATITUDE < 75)
@@ -106,28 +125,27 @@ mp <- NULL
 mapWorld <- borders("world", colour="gray50", fill="gray50")
                     
 mp <- ggplot() +  mapWorld 
-mp <- mp + geom_point(data = forMap, mapping = aes(x=LONGITUDE,y=LATITUDE,color = PRIMARY_MAGNITUDE),size = 0.3)
+mp <- mp + geom_point(data = tsunami, mapping = aes(x=LONGITUDE,y=LATITUDE,color = PRIMARY_MAGNITUDE),size = 0.3) + ggtitle("All tsunamis in the dataset")
 mp
 
-qmap(location = "hawaii",zoom = 3) + geom_point(data = forMap, mapping = aes(x=LONGITUDE,y=LATITUDE,color = PRIMARY_MAGNITUDE),size = 0.5)
-
-qmap(location = "honolulu",zoom = 7) + geom_point(data = forMap, mapping = aes(x=LONGITUDE,y=LATITUDE,color = PRIMARY_MAGNITUDE),size = 3)
+# qmap(location = "hawaii",zoom = 3) + geom_point(data = forMap, mapping = aes(x=LONGITUDE,y=LATITUDE,color = PRIMARY_MAGNITUDE),size = 0.5) + ggtitle("Tsunamis originating in the Pacific")
+# 
+# qmap(location = "honolulu",zoom = 7) + geom_point(data = forMap, mapping = aes(x=LONGITUDE,y=LATITUDE,color = PRIMARY_MAGNITUDE),size = 3) + ggtitle("Tsunamis originating in Hawaii")
 ```
 
 ## Zhenlong Li
 Question:
 Is there a relationship between time of year a tsunami occurs and how much damage is inflicted?
 ```{r,echo=FALSE, message=FALSE}
-damage_tsunami = tsunami %>%
+damange_tsunami = tsunami %>%
   filter(YEAR>=1900 & ALL_DAMAGE_MILLIONS != 'NA' )%>%
   select(YEAR, ALL_DAMAGE_MILLIONS) %>%
   mutate(damage = as.numeric(ALL_DAMAGE_MILLIONS))%>%
   select(-ALL_DAMAGE_MILLIONS)
-
-  ggplot(damage_tsunami, mapping = aes(x = YEAR , y = damage)) + geom_jitter() + geom_smooth(se = FALSE) + ylab("All Damage (Million Dollars)")
+  ggplot(damange_tsunami, mapping = aes(x = YEAR , y = damage)) + geom_jitter() + geom_smooth(se = FALSE) + ylab("All Damage (Million Dollars)")
 cor(damange_tsunami$YEAR, damange_tsunami$damage)
 ```
-As we can see from the plot and calculated correlation, there is no relationship between the time of year a tsunami occurs and how much damage is inflicted but the reason why trend line is concave up after 1975 may be the increase of population and construction in the modern world.
+As we can see from the plot and calculated correlation, there is no strong relationship between the time of year a tsunami occurs and how much damage is inflicted but the reason why trend line is concave up after 1975 may be the increase of population and construction in the modern world.
 
 # Rainfall Data
 
@@ -245,34 +263,23 @@ ggplot(data=challa) + geom_point(mapping=aes(x=year,y=normalized_thick))
 ```
 
 ## Team Plot
-```{r, echo=FALSE, message= FALSE}
-Malawi_team = normMalawiBSi %>% select(-BSi) %>% filter(Year >= 1300)
+```{r}
+Malawi_team = normMalawiBSi %>% select(-BSi)
 VOI_team = VOIavg %>% select(Year, standardizedRainfall)
 Tanganyika_team = Tanganyika %>% select(Year, Charcoal_standard)
 Challa_team = rename(challa, Year = year) %>%select(Year, normalized_thick)
-
-
-M_T = full_join(Malawi_team, Tanganyika_team)%>% 
-  rename(MALAWI_standardized_BSi = normMalawiBsi, TANGANYIKA_standardized_charcoal = Charcoal_standard)
-
+M_T = merge(Malawi_team, Tanganyika_team) %>% rename(MALAWI_standardized_BSi = normMalawiBsi, TANGANYIKA_standardized_charcoal = Charcoal_standard)
 V_C = merge(VOI_team, Challa_team) %>% rename(CHALLA_standardized_thick = normalized_thick, VOI_standardized_rainfall = standardizedRainfall)
 
-teamdata1 = M_T %>% gather(MALAWI_standardized_BSi, TANGANYIKA_standardized_charcoal, key = "Type", value = "Measurement" )
-
-teamdata2 = V_C %>% gather(CHALLA_standardized_thick, VOI_standardized_rainfall, key = "Type", value = "Measurement" )
-
-p <- ggplot()  + geom_smooth(teamdata1, mapping = aes(x= Year, y = Measurement, color = Type), se = FALSE ) +
- geom_smooth(teamdata2, mapping = aes(x= Year, y = Measurement, color = Type), se = FALSE )
-p + ggtitle("East Africa Lake Data Visualization")
+M_T %>% gather(MALAWI_standardized_BSi, TANGANYIKA_standardized_charcoal, key = "Type", value = "Measurement" ) %>% ggplot(Tan, mapping = aes(x= Year, y = Measurement, color = Type))  + geom_line()
+V_C %>% gather(CHALLA_standardized_thick, VOI_standardized_rainfall, key = "Type", value = "Measurement" ) %>% ggplot(Tan, mapping = aes(x= Year, y = Measurement, color = Type))  + geom_smooth(se = FALSE )
 ```
-
-Our teamplot plots one of the standardized values from each data set vs. different year as four trendlines from 1300 to 2000.
 
 # Contributions
 * Lindsay: Created an individual plot of tsunami characteristics for a visual comparision to isolate any trends, also produced a graph for the Malawi rainfall data. For both, utilized standard deviation function to normalize values and plot, used gather and select to narrow the data.
 
 * Lexie: Created individual plots of the rain data and tsunami data with descriptions. Also helped contribute to the overall question and importance along with who is hiring us. Also created some of the individual questions.
 
-* Li: Created individual plot of the relationship between the time of year a tsunami occurs and the damage is inflicted. Found the problem that we need to use github link to read data rather than using the local file on each of our computer and the problem was solved by Scott. Also, tidied the Tanganyika dataset and created the team plot of East Africa Lake and Rainfall Data.
+* Li: Added individual question and found the problem that we need to use github link to read data rather than using the local file on each of our computer. Also, finished part of the team application exercise.
 
-* Scott: 
+* Scott: Found the dataset, wrote the introduction, conclusion, and recommendation to the company we decided to work for. In addition, fixed the ".csv" links for all the datasets. I made plots about the tsunamis visually on maps. Finally, as per usual, managed the github and worked through merge conflicts.
