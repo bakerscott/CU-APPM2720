@@ -1,0 +1,32 @@
+---
+title: "Lab_09"
+author: "Fantastic Four"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+# Team Part (baseball)
+
+
+# Individual Findings
+
+## Lindsay Gettel
+
+## Lexie Marinelli
+
+## Scott Baker
+
+## Zhenlong Li
+
+
+# Contributions
+* Lindsay: 
+
+* Lexie:
+
+* Li:
+
+* Scott:
