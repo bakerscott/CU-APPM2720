@@ -150,13 +150,51 @@ As it gets later in the day, the number of departure delays increase which makes
 ## Scott Baker
 
 ## Zhenlong Li
+```{r, warning=FALSE}
+#13.4.6 #3
+plane_ages <- 
+  planes %>%
+  mutate(age = 2013 - year) %>%
+  select(tailnum, age)
 
+flights %>%
+  inner_join(plane_ages, by = "tailnum") %>%
+  group_by(age) %>%
+  filter(!is.na(dep_delay)) %>%
+  summarise(delay = mean(dep_delay)) %>%
+  ggplot(aes(x = age, y = delay)) + geom_jitter()
+```
+From the plot, we can see that there is no relationship between the age of a plane and its delays.
+
+```{r}
+#14.3.3 #5
+x <- c("123-456-7890", "1234-5678")
+str_view(x, "\\d\\d\\d-\\d\\d\\d-\\d\\d\\d\\d")
+```
+
+
+```{r}
+#15.4.1 #1
+summary(gss_cat[["tvhours"]])
+gss_cat %>%
+  filter(!is.na(tvhours)) %>%
+  ggplot(aes(x = tvhours)) +
+  geom_histogram(binwidth = 1)
+```
+I think the median will be a better summary. 
+
+```{r}
+#16.2.4 #1
+parsing <- ymd(c("2010-10-10", "bananas")) 
+parsing
+```
+It will produce an NA and a warning.
 
 # Contributions
 * Lindsay: Answered four textbook questions, using semi_join, str_subset, fct_collapse, and make_datetime. These were also combined with ggplot, and dplyr functions.
 
 * Lexie: Created individual plots answering 4 textbook questions. For the tidyverse functions, I used: stringr, ggplot2, tibble, and forcats.
 
-* Li:
+* Li: Finished four exercise from book. I used following functions: mutate, select, inner_join, group_by, filter, summarise, summary, str_view, geom_jitter and geom_histogram.
 
 * Scott:
