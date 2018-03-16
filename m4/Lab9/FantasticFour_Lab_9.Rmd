@@ -16,6 +16,61 @@ library(lubridate)
 # Individual Findings
 
 ## Lindsay Gettel
+```{r}
+library(tidyverse)
+library(nycflights13)
+library(forcats)
+library(lubridate)
+#13.5.1 Problem 3
+fueleconomy::common
+fueleconomy::vehicles
+#get records for most common models
+average_MPG<-semi_join(fueleconomy::vehicles, fueleconomy::common, by=c("make", "model"))%>%
+  group_by(make, model)%>%
+  mutate(avg_MPG=(hwy+cty)/2)%>%
+  arrange(desc(avg_MPG))
+```
+The top three cars, based on highest avgerage miles per gallons of highway and city driving, are the Ford Ranger pickup, Honda Insight, and the Toyota Prius.
+```{r}
+#14.4.5.1 Problem 3
+#switch first and last letters in words and determine which are still words
+newWords<-str_replace(words, "^([A-Za-z])(.*)([A-Za-z])$", "\\3\\2\\1")
+match<-str_extract_all(words, newWords, simplify=TRUE)
+match[match!=""]
+```
+Above are the words which remain common words even after switching the first and last letters.
+```{r}
+#15.3.1 Problem 1
+fct_count(gss_cat$rincome)
+newIncome<-fct_collapse(gss_cat$rincome, undelcared=c("No answer", "Don't know", "Refused"),
+               Not_Applicable="Not applicable",
+               high=c("$25000 or more", "$20000 - 24999", "$15000 - 19999"),
+               medium=c("$10000 - 14999", "$15000 - 19999", "$20000 - 24999"),
+               low=c("$5000 to 5999", "$6000 to 6999","$7000 to 7999", "$8000 to 9999"),
+               bottom=c("Lt $1000","$1000 to 2999", "$3000 to 3999", "$4000 to 4999"))
+ggplot(data=gss_cat)+ geom_bar(mapping=aes(x=newIncome, fill=gss_cat$rincome))+ coord_flip()
+```
+The graph above demonstrates how many people reponded to having specific incomes in the General Social survey.
+```{r}
+#16.3.4 Problem 5
+make_datetime_100 <- function(year, month, day, time){
+  make_datetime(year, month, day, time %/% 100, time %% 100)}
+flights_dt <- flights %>% 
+  filter(!is.na(dep_time), !is.na(arr_time)) %>% 
+  mutate(
+    dep_time = make_datetime_100(year, month, day, dep_time),
+    arr_time = make_datetime_100(year, month, day, arr_time),
+    sched_dep_time = make_datetime_100(year, month, day, sched_dep_time),
+    sched_arr_time = make_datetime_100(year, month, day, sched_arr_time)
+  ) %>% 
+  select(origin, dest, ends_with("delay"), ends_with("time"))
+flights_dt%>%
+  select(dep_delay, arr_delay, sched_dep_time, sched_arr_time)%>%
+  mutate(day=wday(sched_dep_time))%>%
+  group_by(day)%>%
+  summarise(avg_dep_delay=mean(dep_delay), avg_arr_delay=mean(arr_delay, na.rm=TRUE))
+```
+The best day to fly with minimal delays is Sunday.
 
 ## Lexie Marinelli
 ```{r, echo=FALSE}
