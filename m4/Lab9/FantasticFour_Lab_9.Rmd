@@ -7,6 +7,8 @@ output: pdf_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
+library(nycflights13)
+library(lubridate)
 ```
 # Team Part (baseball)
 
@@ -16,6 +18,71 @@ library(tidyverse)
 ## Lindsay Gettel
 
 ## Lexie Marinelli
+```{r, echo=FALSE}
+#13.4 exercise number 4
+  #What weather conditions make it more likely to see a delay?
+
+flights %>%
+  inner_join(weather, by= c("origin", "year", "month", "day", "hour")) %>%
+  group_by(precip) %>%
+  summarise(delay= mean(dep_delay, na.rm = TRUE)) %>%
+  ggplot(aes(x= precip, y=delay)) + geom_smooth(se=FALSE) +geom_point()
+```
+You would think there would be a positive correlation but after 0.2 the trend doesn't show any relation between delay time and the amount it is raining. 
+
+```{r, echo= FALSE}
+# 14.5.1 number 2
+# What are the five most common words in sentences?
+str_extract_all(sentences, boundary("word")) %>%
+  unlist() %>%
+  str_to_lower()%>%
+  tibble()%>%
+  set_names("word") %>%
+  group_by(word) %>%
+  count(sort = TRUE)
+
+```
+The chart is pretty self explanitory, the top five words used in sentences are: the, a, of, to, & and.
+
+```{r,echo=FALSE}
+#15.5.1 number 1
+#How have the proportions of people identifying as Democrat, Republican, and Independent changed over time?
+
+gss_cat%>%
+  mutate(partyid= fct_collapse(partyid, 
+                             other= c("No answer", "Don't know", "Other party"),
+                             rep=c("Strong republican", "Not str republican"), 
+                             ind= c("Ind,near rep", "Independent", "Ind,near dem"),
+                             dem= c("Not str democrat", "Strong democrat"))) %>%
+  count (year, partyid) %>%
+  group_by(year) %>%
+  mutate(proportion= n/sum(n)) %>%
+  ggplot(aes(x=year, y=proportion, color= partyid))+ geom_point() + geom_smooth(aes(color= partyid), se=FALSE) +labs(color= "Party ID") +ggtitle("Proportions of Political Parties Changing Over Time")
+```
+This plot shows us that over time the amount of people who consider themselves other have increases slightly, republicans have decreased slightly, democrats have been mostly stable and independent people have oscillated throughout the years.
+
+```{r, echo= FALSE}
+# 15.3.4 number 4
+# How does the average delay time change over the course of a day?
+make_datetime_100<- function(year, month, day, time) {
+  make_datetime(year, month, day, time %/% 100, time %/% 100)
+}
+flights_dt <- flights %>%
+  filter(!is.na(dep_time), !is.na(arr_time)) %>%
+  mutate(
+    dep_time= make_datetime_100(year, month, day, dep_time),
+    arr_time= make_datetime_100(year, month, day, arr_time), 
+    sched_dep_time= make_datetime_100(year, month, day, sched_dep_time),
+    sched_arr_time= make_datetime_100(year, month, day, sched_arr_time)) %>%
+  select(origin, dest, ends_with("delay"), ends_with("time"))
+
+flights_dt %>%
+  mutate(depHour= hour(sched_dep_time)) %>%
+  group_by(depHour) %>%
+  summarise(dep_delay= mean(dep_delay, na.rm=TRUE)) %>%
+  ggplot(aes(x=depHour, y= dep_delay)) + geom_point() +geom_smooth(se=FALSE) + xlab(label= "Hour of Departure") + ylab(label = "Departure Delay") +ggtitle("Time of Day vs. Departure Delay")
+```
+As it gets later in the day, the number of departure delays increase which makes sense because as the morning flights get pushed back, people on the later flights will also be delayed because of what happens earlier in the day. 
 
 ## Scott Baker
 
@@ -25,7 +92,7 @@ library(tidyverse)
 # Contributions
 * Lindsay: 
 
-* Lexie:
+* Lexie: Created individual plots answering 4 textbook questions. For the tidyverse functions, I used: stringr, ggplot2, tibble, and forcats.
 
 * Li:
 
