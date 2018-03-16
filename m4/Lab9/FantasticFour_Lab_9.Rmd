@@ -16,7 +16,8 @@ library(lubridate)
 # Individual Findings
 
 ## Lindsay Gettel
-```{r}
+Section 13.5.1#3: Get the records for the most common vehicles from the fuel economy data set.
+```{r, echo=FALSE}
 library(tidyverse)
 library(nycflights13)
 library(forcats)
@@ -30,16 +31,20 @@ average_MPG<-semi_join(fueleconomy::vehicles, fueleconomy::common, by=c("make", 
   mutate(avg_MPG=(hwy+cty)/2)%>%
   arrange(desc(avg_MPG))
 ```
-The top three cars, based on highest avgerage miles per gallons of highway and city driving, are the Ford Ranger pickup, Honda Insight, and the Toyota Prius.
-```{r}
+The top three cars, based on highest average miles per gallons of highway and city driving, are the Ford Ranger pickup, Honda Insight, and the Toyota Prius.
+
+Section 14.4.5.1#3: Switch the first and last letters for every word in the words data and compare and see which are still common words.
+```{r, echo=FALSE}
 #14.4.5.1 Problem 3
 #switch first and last letters in words and determine which are still words
 newWords<-str_replace(words, "^([A-Za-z])(.*)([A-Za-z])$", "\\3\\2\\1")
-match<-str_extract_all(words, newWords, simplify=TRUE)
-match[match!=""]
+match<-str_subset(words, newWords)
+match
 ```
 Above are the words which remain common words even after switching the first and last letters.
-```{r}
+
+Section 15.3.1#1: Consider the distribution of the reported incomes from the General Social survey.
+```{r, echo=FALSE}
 #15.3.1 Problem 1
 fct_count(gss_cat$rincome)
 newIncome<-fct_collapse(gss_cat$rincome, undelcared=c("No answer", "Don't know", "Refused"),
@@ -50,7 +55,9 @@ newIncome<-fct_collapse(gss_cat$rincome, undelcared=c("No answer", "Don't know",
                bottom=c("Lt $1000","$1000 to 2999", "$3000 to 3999", "$4000 to 4999"))
 ggplot(data=gss_cat)+ geom_bar(mapping=aes(x=newIncome, fill=gss_cat$rincome))+ coord_flip()
 ```
-The graph above demonstrates how many people reponded to having specific incomes in the General Social survey.
+The graph above demonstrates how many people responded to having specific incomes in the survey.
+
+Section 16.3.4#5: What day of the week is the best day to fly in order to minimize the amount of delays.
 ```{r}
 #16.3.4 Problem 5
 make_datetime_100 <- function(year, month, day, time){
@@ -64,13 +71,14 @@ flights_dt <- flights %>%
     sched_arr_time = make_datetime_100(year, month, day, sched_arr_time)
   ) %>% 
   select(origin, dest, ends_with("delay"), ends_with("time"))
-flights_dt%>%
+day_compare<-flights_dt%>%
   select(dep_delay, arr_delay, sched_dep_time, sched_arr_time)%>%
   mutate(day=wday(sched_dep_time))%>%
   group_by(day)%>%
   summarise(avg_dep_delay=mean(dep_delay), avg_arr_delay=mean(arr_delay, na.rm=TRUE))
+print(day_compare)
 ```
-The best day to fly with minimal delays is Sunday.
+The best day to fly with minimal delays is Sunday, it has the lowest arrival and the lowest departure delays.
 
 ## Lexie Marinelli
 ```{r, echo=FALSE}
@@ -97,7 +105,7 @@ str_extract_all(sentences, boundary("word")) %>%
   count(sort = TRUE)
 
 ```
-The chart is pretty self explanitory, the top five words used in sentences are: the, a, of, to, & and.
+The chart is pretty self explanatory, the top five words used in sentences are: the, a, of, to, & and.
 
 ```{r,echo=FALSE}
 #15.5.1 number 1
@@ -145,7 +153,7 @@ As it gets later in the day, the number of departure delays increase which makes
 
 
 # Contributions
-* Lindsay: 
+* Lindsay: Answered four textbook questions, using semi_join, str_subset, fct_collapse, and make_datetime. These were also combined with ggplot, and dplyr functions.
 
 * Lexie: Created individual plots answering 4 textbook questions. For the tidyverse functions, I used: stringr, ggplot2, tibble, and forcats.
 
