@@ -9,9 +9,46 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(nycflights13)
 library(lubridate)
+library(Lahman)
+library(ggmap)
+library(lubridate)
+library(forcats)
+library("stringr")
 ```
-# Team Part (baseball)
 
+
+# 2016 Colorado Rockies
+## Roster
+Here is the roster for the 2016 Colorado Rockies:
+```{r}
+names <- filter(Lahman::Master)
+batting <- filter(Lahman::Batting, yearID == 2016 & teamID == "COL")
+batting <- left_join(batting,names,"playerID")
+batting <- select(batting,playerID,nameFirst,nameLast,birthDate,birthMonth,debut,finalGame,G,AB,R,HR,RBI,SB,SO,birthCity,birthState,birthCountry)
+roster <- select(batting,nameFirst,nameLast,birthDate,debut,birthCity,birthState,birthCountry)
+roster
+```
+
+## Who came the quickest to the majors?
+```{r}
+batting$howLong <- ymd(batting$debut)- ymd(batting$birthDate)
+batting$howLong[order(batting$howLong)]
+filter(batting, howLong == 7408)
+```
+
+From this, we see that Miguel Castro was the quickest of the whole team to make it to the majors in 7408 days.
+
+## Which players on the team have five letter names?
+```{r}
+fiveletter <- str_subset(batting$nameFirst,"^(.....)$")
+fiveletter
+```
+
+## Where are the players are from?
+```{r}
+batting$geo<-geocode(batting$birthCity,output="latlona",source="google")
+ggmap(get_map(location = 'USA',zoom = 3)) + geom_point(data=batting$geo,mapping=aes(x=lon,y=lat),color='purple') 
+```
 
 # Individual Findings
 
@@ -22,6 +59,7 @@ library(tidyverse)
 library(nycflights13)
 library(forcats)
 library(lubridate)
+library(fueleconomy)
 #13.5.1 Problem 3
 fueleconomy::common
 fueleconomy::vehicles
@@ -148,7 +186,48 @@ flights_dt %>%
 As it gets later in the day, the number of departure delays increase which makes sense because as the morning flights get pushed back, people on the later flights will also be delayed because of what happens earlier in the day. 
 
 ## Scott Baker
+### 13.4.6.2: Add the location of the origin and destination (lat,long) to flights
+```{r}
+flights <- nycflights13::flights
+airports <- nycflights13::airports
+left_join(flights,airports, by = c("dest" = "faa"))
+left_join(flights,airports, by = c("origin"= "faa"))
+flights
+```
 
+### 14.3.2.1: Find words that:
+#### Start with y
+```{r}
+#words <- stringr::words
+#str_view_all(words,"^y")
+```
+#### Start with x
+```{r}
+#str_view_all(words,"x$")
+```
+#### Are three letters
+```{r}
+#str_view_all(words,"^(...)$")
+```
+#### Have seven letters or more
+```{r}
+#str_view_all(words,".......")
+```
+
+### 15.5.1.2:
+```{r}
+#mutate(gss_cat,rincome = fct_collapse(rincome, 'NA' = c("Don't know","Refused","Not applicable","No answer")),'known' = c("Lt $1000", str_c("$", c("1000", "3000", "4000"), " to ", c("2999", "3999", "4999")),str_c("$", c("5000", "6000", "7000", "8000")," to ", c("5999", "6999", "7999", "9999")),str_c("$", c("10000","15000","2000","25000"),"-",c("14999","19999","24999","more")))) 
+
+```
+### 16.4.5.3:
+```{r}
+dates <- c(20150101,20150201,20150301,20150401,20150501,20150601,20150701,20150801,20150901,20151001,20151101,20151201)
+ymd(dates)
+tday <- today()
+tday
+thisYear <- dates + 30000
+ymd(thisYear)
+```
 ## Zhenlong Li
 ```{r, warning=FALSE}
 #13.4.6 #3
@@ -169,7 +248,7 @@ From the plot, we can see that there is no relationship between the age of a pla
 ```{r}
 #14.3.3 #5
 x <- c("123-456-7890", "1234-5678")
-str_view(x, "\\d\\d\\d-\\d\\d\\d-\\d\\d\\d\\d")
+#str_view(x, "\\d\\d\\d-\\d\\d\\d-\\d\\d\\d\\d")
 ```
 
 
@@ -197,4 +276,4 @@ It will produce an NA and a warning.
 
 * Li: Finished four exercise from book. I used following functions: mutate, select, inner_join, group_by, filter, summarise, summary, str_view, geom_jitter and geom_histogram.
 
-* Scott:
+* Scott: Completed four excercises from the book (note: for the 'strings' and 'factors' excercises it would not compile for knit--something about html namespace). Also worked on the Colorado Rockies team section. As usual, organized the git and managed files/knitting.
