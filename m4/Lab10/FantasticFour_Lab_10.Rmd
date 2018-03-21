@@ -13,9 +13,15 @@ library(Lahman)
 library(ggmap)
 library(lubridate)
 library(forcats)
-library("stringr")
+library(stringr)
 ```
 
+```{r}
+#this is the initialization
+questions <- read_csv("https://raw.githubusercontent.com/bakerscott/CU-APPM2720/master/m4/Lab10/Questions_trunc.csv")
+
+answers <- read_csv("https://raw.githubusercontent.com/bakerscott/CU-APPM2720/master/m4/Lab10/Answers_trunc.csv")
+```
 
 # Team Question
 
@@ -26,8 +32,10 @@ library("stringr")
 ## Lexie Marinelli
 
 ## Scott Baker
+The feature I chose to look at is the relationship between the length of response and the score it recieves. 
 
 ## Zhenlong Li
+
 
 # Contributions
 * Lindsay: 
