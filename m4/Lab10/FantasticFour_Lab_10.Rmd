@@ -1,0 +1,39 @@
+---
+title: "Lab_10"
+author: "Fantastic Four"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(nycflights13)
+library(lubridate)
+library(Lahman)
+library(ggmap)
+library(lubridate)
+library(forcats)
+library("stringr")
+```
+
+
+# Team Question
+
+# Individual Findings
+
+## Lindsay Gettel
+
+## Lexie Marinelli
+
+## Scott Baker
+
+## Zhenlong Li
+
+# Contributions
+* Lindsay: 
+
+* Lexie:
+
+* Li: 
+
+* Scott: 
