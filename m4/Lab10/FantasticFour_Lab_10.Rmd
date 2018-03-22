@@ -10,7 +10,7 @@ library(tidyverse)
 library(nycflights13)
 library(lubridate)
 library(Lahman)
-library(ggmap)
+#library(ggmap)
 library(lubridate)
 library(forcats)
 library(stringr)
@@ -28,10 +28,48 @@ answers<- answers %>%
 ```
 
 # Team Question
+How does the timeliness of a response affect the score it receives?
+```{r}
+answersTime<-answers%>%
+  group_by(ParentId)%>%
+  arrange(CreationDate)%>%
+  mutate(responseTime=row_number())
+
+ggplot(data=answersTime)+ geom_smooth(mapping=aes(x=responseTime, y=Score), method="lm", se=FALSE)+ggtitle("Correlation of response time and score of the answer")
+```
+This graph presents an inverse relationship between response time and the score which the answer receives. The more time it takes for a response to be posed the lower its score will be.
 
 # Individual Findings
+What features affect the scores of the questions and answers and what is their impact?
 
 ## Lindsay Gettel
+```{r}
+Questions<-questions%>%
+  mutate(questionLength=nchar(Body, type="chars")+ nchar(Title, type="chars"))
+hasUse<-filter(questions, str_detect(questions$Title, "\\suse\\s"), 
+               str_detect(questions$Body, "try"), Score<100)%>% 
+  mutate(questionLength=nchar(Body, type="chars")+ nchar(Title, type="chars"))
+newQ<-left_join(Questions, hasUse, by="Title")
+newQ%>%
+  rename(Feature_Score="Score.y", Origional_Score="Score.x", Id="Id.x")%>%
+  filter(Origional_Score<25)%>%
+  gather(`Feature_Score`,`Origional_Score`, key="set", value="score" )%>%
+  ggplot()+ geom_violin(mapping=aes(x=Id, y=score, color=set))+facet_grid(~set)+ ggtitle("Scores for questions containing \"use\" and \"try\" and origional scores")
+```
+To analyze the questions, the focus feature was titles containing the word "use", and the body containing variants of "try". Connotation of use implies more logistical and processing related questions. This implementation could lead to a more specific question, which is easy to understand and interpret, resulting in a better score and reception of the question.
+The graph above demonstrates that questions with the given key words have a slightly higher average score than the average of the data set, there are also more scores ranked higher. The average for the questions with the applied feature have an average score of about 3, while the average score of all the questions is around 2, as seen in the graph there is also more scores in the range 3-10 for the feature questions.
+```{r}
+hasTry<-filter(answers, str_detect(answers$Body, "\\stry\\sthis"))%>%
+  mutate(responseLength=nchar(Body, type = "chars"))
+newA<-left_join(answers, hasTry, by="Id")
+newA%>%
+  rename(Feature_Score="Score.y", Origional_Score="Score.x")%>%
+  filter(Origional_Score<25, Origional_Score>-5)%>%
+  gather(`Feature_Score`,`Origional_Score`, key="set", value="score" )%>%
+  ggplot()+ geom_density(mapping=aes(x=score, color=set))+ facet_wrap(~set)+ ggtitle("Scores for answers containing \"try this\" and all other responses")
+```
+The feature applied to the answers were the key words "try this", which is significant in indicating a direct way to troubleshoot and answer the question. It is also possible that the key words could be followed by multiple solutions and examples, this would be an efficient and helpful answer to a given question and should have a higher score.
+The above graph illustrates that the average score for the featured answers is fairly close to the overall average, at about 2. The two representations have similar distributions, just with slightly varying frequencies, which is logical because the featured answers are a subset and contains less responses so it follows that the frequencies would be less. Therefore, there does not appear to be any correlation between the key words "try this" and the ranking that the answer received.
 
 ## Lexie Marinelli
 ```{r, echo=FALSE}
@@ -54,13 +92,13 @@ The two plots show us that there is no apparent relationship between questions t
 2. Time has an inverse relationship with the score of an answer. Also the plot containing the question word 'How' did not vary that much from the plot not containing the word.
 
 ## Scott Baker
-The feature I chose to look at is the relationship between the length of response and the score it recieves. 
+The feature I chose to look at is the relationship between the length of response and the score it receives. 
 
 ## Zhenlong Li
 
 
 # Contributions
-* Lindsay: 
+* Lindsay: Choose different features and plotted them with the scores as well as the the original set of scores for comparison. Used mutating joins as well as other functions from dplr, ggplot, strings and a few regular expressions. 
 
 * Lexie: Created individual plots with different features and analysed the relationship between the features.
 
