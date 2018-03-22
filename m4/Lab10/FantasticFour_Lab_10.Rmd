@@ -21,6 +21,10 @@ library(stringr)
 questions <- read_csv("https://raw.githubusercontent.com/bakerscott/CU-APPM2720/master/m4/Lab10/Questions_trunc.csv")
 
 answers <- read_csv("https://raw.githubusercontent.com/bakerscott/CU-APPM2720/master/m4/Lab10/Answers_trunc.csv")
+questions<- questions %>%
+  select(-X7)
+answers<- answers %>%
+  select(-X7)
 ```
 
 # Team Question
@@ -30,6 +34,24 @@ answers <- read_csv("https://raw.githubusercontent.com/bakerscott/CU-APPM2720/ma
 ## Lindsay Gettel
 
 ## Lexie Marinelli
+```{r, echo=FALSE}
+QnA<- left_join(questions, answers, by=c("Id"= "ParentId"))
+QnA<- QnA %>%
+  select(-OwnerUserId.x,-Body.x, -Id.y, -OwnerUserId.y)
+QnA %>%
+  mutate(diffTime=(CreationDate.y-CreationDate.x)) %>%
+  filter(diffTime>0, diffTime<86400,Score.y>10, Score.y<4000, str_detect(QnA$Title, "[Hh]ow")) %>% 
+  ggplot(aes(x=diffTime, y= Score.y)) +geom_point()+ggtitle("Questions with 'How'") + xlab("Length of time until response (sec)") + ylab("Score of Response")
+
+QnA %>%
+  mutate(diffTime=(CreationDate.y-CreationDate.x)) %>%
+  filter(diffTime>0, diffTime<86400,Score.y>10,Score.y<4000, !str_detect(QnA$Title, "[Hh]ow")) %>% 
+  ggplot(aes(x=diffTime, y= Score.y)) +geom_point() +ggtitle("Questions without 'How'") + xlab("Length of time until response (sec)") + ylab("Score of Response")
+```
+The two plots show us that there is no apparent relationship between questions that contain 'How' compared to questions that do not. The plots also show us that there is a direct relationship between the timeliness of the response and the score of the answer. 
+
+1. The feature I focused my search around was the timeliness of the response compared to the score of the answer separated by questions containing and not containing the word 'How'. I chose this because I was thinking that people who asked direct questions with a common question word would get a better response and if the difference in time the answer was posted, over the length of one day, had any effect on the score of the answer.
+2. Time has an inverse relationship with the score of an answer. Also the plot containing the question word 'How' did not vary that much from the plot not containing the word.
 
 ## Scott Baker
 The feature I chose to look at is the relationship between the length of response and the score it recieves. 
@@ -40,7 +62,7 @@ The feature I chose to look at is the relationship between the length of respons
 # Contributions
 * Lindsay: 
 
-* Lexie:
+* Lexie: Created individual plots with different features and analysed the relationship between the features.
 
 * Li: 
 
