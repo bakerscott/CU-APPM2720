@@ -7,10 +7,6 @@ output: pdf_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
-library(nycflights13)
-library(lubridate)
-library(Lahman)
-#library(ggmap)
 library(lubridate)
 library(forcats)
 library(stringr)
@@ -35,9 +31,14 @@ answersTime<-answers%>%
   arrange(CreationDate)%>%
   mutate(responseTime=row_number())
 
-ggplot(data=answersTime)+ geom_smooth(mapping=aes(x=responseTime, y=Score), method="lm", se=FALSE)+ggtitle("Correlation of response time and score of the answer")
+ggplot(data=answersTime)+ geom_jitter(mapping=aes(x=responseTime, y=Score))+ggtitle("Distribution of response time and score of the answer")+xlab("Response time")+ylab("Score")
 ```
-This graph presents an inverse relationship between response time and the score which the answer receives. The more time it takes for a response to be posed the lower its score will be.
+This graph presents a distribution that shows that the more time it takes for a response to be posted, the lower its score will be. However, when looking at the correlation between score and answer time:
+```{r}
+cor(answersTime$Score,answersTime$responseTime)
+```
+We find out that there is no significant correlation between these two variables.
+
 
 # Individual Findings
 What features affect the scores of the questions and answers and what is their impact?
@@ -93,7 +94,15 @@ The two plots show us that there is no apparent relationship between questions t
 
 ## Scott Baker
 The feature I chose to look at is the relationship between the length of response and the score it receives.
+```{r,echo=FALSE}
+lenSco <-select(answers,Score,Body)
+lenSco$Length <- nchar(lenSco$Body)
+lenSco
+ggplot(data=lenSco)+ geom_jitter(mapping=aes(x=Length, y=Score))+ggtitle("Distribution")+xlab("Length")+ylab("Score")
 
+
+cor(lenSco$Length,lenSco$Score)
+```
 ## Zhenlong Li
 
 
