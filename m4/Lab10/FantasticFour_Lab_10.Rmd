@@ -12,7 +12,7 @@ library(forcats)
 library(stringr)
 ```
 
-```{r}
+```{r,echo=FALSE,warning=FALSE,message=FALSE}
 #this is the initialization
 questions <- read_csv("https://raw.githubusercontent.com/bakerscott/CU-APPM2720/master/m4/Lab10/Questions_trunc.csv")
 
@@ -93,16 +93,34 @@ The two plots show us that there is no apparent relationship between questions t
 2. Time has an inverse relationship with the score of an answer. Also the plot containing the question word 'How' did not vary that much from the plot not containing the word.
 
 ## Scott Baker
-The feature I chose to look at is the relationship between the length of response and the score it receives.
-```{r,echo=FALSE}
+The feature I chose to look at is the relationship between the length of the question/response and the score it receives. First, look at the distribution of scores based on answer length:
+
+```{r,echo=FALSE,fig.width=8,fig.height=3}
 lenSco <-select(answers,Score,Body)
 lenSco$Length <- nchar(lenSco$Body)
-lenSco
-ggplot(data=lenSco)+ geom_jitter(mapping=aes(x=Length, y=Score))+ggtitle("Distribution")+xlab("Length")+ylab("Score")
-
-
-cor(lenSco$Length,lenSco$Score)
+# lenSco
+ggplot(data=lenSco)+ geom_jitter(mapping=aes(x=Length, y=Score))+ggtitle("Distribution of Scores depending on length of answer")+xlab("Length")+ylab("Score")
 ```
+
+From the plot, it is seen that the distribution favors higher scores for shorter lengths of responses. For questions, the following is found:
+
+
+```{r,echo=FALSE,fig.width=8,fig.height=3}
+lenScoq <-select(Questions,Score,Body,Title)
+lenScoq$Length <- nchar(lenScoq$Body) + nchar(lenScoq$Title)
+#lenScoq
+ggplot(data=lenScoq)+ geom_jitter(mapping=aes(x=Length, y=Score))+ggtitle("Distribution of Scores depending on length of question")+xlab("Length")+ylab("Score")
+```
+
+This also shows that there are higher scores for questions that are shorter in length. Now, examine the correlation values for these variables for questions and answers:
+
+```{r,echo=FALSE}
+cor(lenSco$Length,lenSco$Score)
+cor(lenScoq$Length,lenScoq$Score)
+```
+
+From this, it is seen that there is a small positive correlation (0.1275) between length of answer and the answer's score--which means in general, answers that are slightly longer get better scores. Second, there is a small and insignificant negative correlation (-0.0707) between question length and the score it receives. This means that there is not a relationship between the question length and the score. These two things are significant because it means that people read and vote on the question regardless of the length is has and that has little to do with the score it gets. Also, it means that, more-or-less, longer and more detailed answers will get better scores, since they are more in-depth. 
+
 ## Zhenlong Li
 ```{r}
 qdata = select(questions, Body, Score)
@@ -128,4 +146,4 @@ From the plots, we can see that inserting hyperlink which is included either in 
 
 * Li:
 
-* Scott:
+* Scott: Managed the git and organized files. Also looked at the relationship between length of question/response and the score it received. Was available to knit and submit remotely if needed.
