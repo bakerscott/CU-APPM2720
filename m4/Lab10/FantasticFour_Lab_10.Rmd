@@ -46,8 +46,8 @@ What features affect the scores of the questions and answers and what is their i
 ```{r}
 Questions<-questions%>%
   mutate(questionLength=nchar(Body, type="chars")+ nchar(Title, type="chars"))
-hasUse<-filter(questions, str_detect(questions$Title, "\\suse\\s"), 
-               str_detect(questions$Body, "try"), Score<100)%>% 
+hasUse<-filter(questions, str_detect(questions$Title, "\\suse\\s"),
+               str_detect(questions$Body, "try"), Score<100)%>%
   mutate(questionLength=nchar(Body, type="chars")+ nchar(Title, type="chars"))
 newQ<-left_join(Questions, hasUse, by="Title")
 newQ%>%
@@ -78,30 +78,30 @@ QnA<- QnA %>%
   select(-OwnerUserId.x,-Body.x, -Id.y, -OwnerUserId.y)
 QnA %>%
   mutate(diffTime=(CreationDate.y-CreationDate.x)) %>%
-  filter(diffTime>0, diffTime<86400,Score.y>10, Score.y<4000, str_detect(QnA$Title, "[Hh]ow")) %>% 
+  filter(diffTime>0, diffTime<86400,Score.y>10, Score.y<4000, str_detect(QnA$Title, "[Hh]ow")) %>%
   ggplot(aes(x=diffTime, y= Score.y)) +geom_point()+ggtitle("Questions with 'How'") + xlab("Length of time until response (sec)") + ylab("Score of Response")
 
 QnA %>%
   mutate(diffTime=(CreationDate.y-CreationDate.x)) %>%
-  filter(diffTime>0, diffTime<86400,Score.y>10,Score.y<4000, !str_detect(QnA$Title, "[Hh]ow")) %>% 
+  filter(diffTime>0, diffTime<86400,Score.y>10,Score.y<4000, !str_detect(QnA$Title, "[Hh]ow")) %>%
   ggplot(aes(x=diffTime, y= Score.y)) +geom_point() +ggtitle("Questions without 'How'") + xlab("Length of time until response (sec)") + ylab("Score of Response")
 ```
-The two plots show us that there is no apparent relationship between questions that contain 'How' compared to questions that do not. The plots also show us that there is a direct relationship between the timeliness of the response and the score of the answer. 
+The two plots show us that there is no apparent relationship between questions that contain 'How' compared to questions that do not. The plots also show us that there is a direct relationship between the timeliness of the response and the score of the answer.
 
 1. The feature I focused my search around was the timeliness of the response compared to the score of the answer separated by questions containing and not containing the word 'How'. I chose this because I was thinking that people who asked direct questions with a common question word would get a better response and if the difference in time the answer was posted, over the length of one day, had any effect on the score of the answer.
 2. Time has an inverse relationship with the score of an answer. Also the plot containing the question word 'How' did not vary that much from the plot not containing the word.
 
 ## Scott Baker
-The feature I chose to look at is the relationship between the length of response and the score it receives. 
+The feature I chose to look at is the relationship between the length of response and the score it receives.
 
 ## Zhenlong Li
 
 
 # Contributions
-* Lindsay: Choose different features and plotted them with the scores as well as the the original set of scores for comparison. Used mutating joins as well as other functions from dplr, ggplot, strings and a few regular expressions. 
+* Lindsay: Choose different features and plotted them with the scores as well as the the original set of scores for comparison. Used mutating joins as well as other functions from dplr, ggplot, strings and a few regular expressions.
 
 * Lexie: Created individual plots with different features and analysed the relationship between the features.
 
-* Li: 
+* Li:
 
-* Scott: 
+* Scott:
