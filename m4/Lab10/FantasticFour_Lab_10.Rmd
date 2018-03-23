@@ -104,7 +104,22 @@ ggplot(data=lenSco)+ geom_jitter(mapping=aes(x=Length, y=Score))+ggtitle("Distri
 cor(lenSco$Length,lenSco$Score)
 ```
 ## Zhenlong Li
+```{r}
+qdata = select(questions, Body, Score)
+question_https = filter(qdata, str_detect(qdata$Body,"https"))
+question_withouthttps = filter(qdata, str_detect(qdata$Body,"[^https]"))
+ggplot(data = question_https)+ geom_density(aes(Score))+ggtitle("Questions with 'https'") + xlab("Score") + ylab("Propotion")
+ggplot(data = question_withouthttps)+ geom_density(aes(Score))+ggtitle("Questions without 'https'") + xlab("Score") + ylab("Propotion")
 
+adata = select(answers, Body, Score)
+answers_https = filter(adata, str_detect(adata$Body,"https"))
+answers_withouthttps = filter(qdata, str_detect(qdata$Body,"[^https]"))
+ggplot(data = answers_https)+ geom_density(aes(Score))+ggtitle("Answers with 'https'") + xlab("Score") + ylab("Propotion")
+ggplot(data = answers_withouthttps)+ geom_density(aes(Score))+ggtitle("Answers without 'https'") + xlab("Score") + ylab("Propotion")
+
+```
+
+From the plots, we can see that inserting hyperlink which is included either in questions or answers will somehow help the score but the effect of adding hyperlink on the score is not so strong.
 
 # Contributions
 * Lindsay: Choose different features and plotted them with the scores as well as the the original set of scores for comparison. Used mutating joins as well as other functions from dplr, ggplot, strings and a few regular expressions.
