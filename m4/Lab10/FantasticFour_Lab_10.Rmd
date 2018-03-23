@@ -31,7 +31,9 @@ answersTime<-answers%>%
   arrange(CreationDate)%>%
   mutate(responseTime=row_number())
 
-ggplot(data=answersTime)+ geom_jitter(mapping=aes(x=responseTime, y=Score))+ggtitle("Distribution of response time and score of the answer")+xlab("Response time")+ylab("Score")
+ggplot(data=answersTime)+ geom_smooth(mapping=aes(x=responseTime, y=Score),se=FALSE)+ggtitle("Distribution of response time and score of the answer")+xlab("Response time")+ylab("Score")
+
+ggplot(data=answersTime)+ geom_jitter(mapping=aes(x=responseTime, y=Score))+ggtitle("Distribution of response time and score of the answer")+xlab("Response time")+ylab("Score")+ ylim(0,4000)
 ```
 This graph presents a distribution that shows that the more time it takes for a response to be posted, the lower its score will be. However, when looking at the correlation between score and answer time:
 ```{r}
@@ -39,6 +41,8 @@ cor(answersTime$Score,answersTime$responseTime)
 ```
 We find out that there is no significant correlation between these two variables.
 
+#Conclusion
+The most impactful factors of the score of a post are the amount of time until the response, as well as the length of the post. While there are other elements which affect the post score, such as key words, hyperlinks and post structure, the most significant are the response length and the time to respond. It was determined that the longer the response, the higher the resulting score, and that the quicker a response was posted the higher score it recieved.
 
 # Individual Findings
 What features affect the scores of the questions and answers and what is their impact?
