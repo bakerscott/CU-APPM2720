@@ -144,6 +144,6 @@ From the plots, we can see that inserting hyperlink which is included either in 
 
 * Lexie: Created individual plots with different features and analysed the relationship between the features.
 
-* Li:
+* Li: Created four individual plots to determine whether a hyperlink in questions or answers will help the score and knit/submit this lab to OSF.
 
 * Scott: Managed the git and organized files. Also looked at the relationship between length of question/response and the score it received. Was available to knit and submit remotely if needed.
