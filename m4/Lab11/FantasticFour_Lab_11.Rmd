@@ -112,7 +112,43 @@ sum(ariel1988$prop) + sum(rachel1988$prop)
 sum(ariel1990$prop) + sum(rachel1990$prop)
 
 ```
+
 # "The Little Mermaid" Effect
+```{r}
+# Did *The Little Mermaid* cause more baby girls to be named Ariel?
+library(babynames)
+a = filter(babynames,str_detect(babynames$name,"Ar[iy]+.l+[^a]?$"),year==1988,sex=="F") %>% count(wt=prop)
+
+b = filter(babynames,str_detect(babynames$name,"Ar[iy]+.l+[^a]?$"),year==1990,sex=="F") %>% count(wt=prop)
+
+Ariel.diff = b - a
+print(Ariel.diff)
+```
+
+```{r}
+# Deciding on list of Vowel girl names
+vowel_names88 = filter(babynames, str_detect(babynames$name, "^[AEIOUY]"), year == 1988, sex == "F")
+
+vowel_names90 = filter(babynames, str_detect(babynames$name, "^[AEIOUY]"), year == 1990, sex == "F")
+
+Vowel_girls <- inner_join(vowel_names88, vowel_names90, by="name") %>% mutate(diff=prop.y-prop.x) %>% select(name,prop.x,prop.y,diff)
+
+ggplot(Vowel_girls) +
+  geom_histogram(aes(x=diff),bins=100) + 
+  geom_vline(aes(xintercept=Ariel.diff),color="red",lwd=1) 
+```
+
+From this plot, we can see that the change in proportion of female "Ariel"" baby names from 1988 to 1990 is bigger than the changes in other female names starting with a vowel over that time period.
+
+```{r}
+# What percentile change is Ariel's change?
+filter(Vowel_girls,diff<Ariel.diff) %>% arrange(desc(diff))
+
+filter(Vowel_girls,diff<Ariel.diff) %>% count() / Vowel_girls %>% count()
+ # 100 percentile
+```
+
+Alyssa has the biggest positive change from 1988 to 1990. Ariel has the second biggest change of all girl names. No baby girl name with other version of Ariels had a bigger difference in proportions than "Ariel".
 
 # Our Names
 
@@ -121,6 +157,6 @@ sum(ariel1990$prop) + sum(rachel1990$prop)
 
 * Lexie: Covered the first three letters of name section
 
-* Li:
+* Li: Our team decided that "the Littile Mermaid Effect" part of mine was the best, so I added my write-up to that section.
 
 * Scott:
