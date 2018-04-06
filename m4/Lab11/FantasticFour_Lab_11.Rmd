@@ -1,0 +1,30 @@
+---
+title: "Lab_11"
+author: "Fantastic Four"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(lubridate)
+library(forcats)
+library(stringr)
+```
+
+# First three letters of names
+
+# Ariel and Rachel regexs
+
+# "The Little Mermaid" Effect
+
+# Our Names
+
+# Contributions
+* Lindsay: 
+
+* Lexie:
+
+* Li:
+
+* Scott:
