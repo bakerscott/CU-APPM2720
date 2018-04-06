@@ -114,6 +114,7 @@ sum(ariel1990$prop) + sum(rachel1990$prop)
 ```
 
 # "The Little Mermaid" Effect
+
 ```{r}
 # Did *The Little Mermaid* cause more baby girls to be named Ariel?
 library(babynames)
