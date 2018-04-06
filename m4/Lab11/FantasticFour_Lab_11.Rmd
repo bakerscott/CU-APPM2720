@@ -18,6 +18,75 @@ babynames <- babynames::babynames
 
 # First three letters of names
 
+```{r, echo=FALSE}
+#Scott
+tot_sco<-filter(babynames, str_detect(babynames$name, "Sco")| str_detect(babynames$name, "sco")) %>%
+  count()
+Sco<-filter(babynames, str_detect(babynames$name, "Sco")) %>%
+  count()
+sco_percent<-Sco/ (tot_sco)
+
+#Li
+tot_zhe<-filter(babynames, str_detect(babynames$name, "Zhe")| str_detect(babynames$name, "zhe")) %>%
+  count()
+Zhe<-filter(babynames, str_detect(babynames$name, "Zhe")) %>%
+  count()
+zhe_percent<-Zhe/ (tot_zhe)
+
+#Lindsay
+tot_lin<-filter(babynames, str_detect(babynames$name, "Lin")| str_detect(babynames$name, "lin")) %>%
+  count()
+Lin<-filter(babynames, str_detect(babynames$name, "Lin")) %>%
+  count()
+lin_percent<-Lin/ (tot_lin)
+
+#Lexie
+tot_lex<-filter(babynames, str_detect(babynames$name, "Lex")| str_detect(babynames$name, "lex")) %>%
+  count()
+Lex<-filter(babynames, str_detect(babynames$name, "Lex")) %>%
+  count()
+lex_percent<-Lex/ (tot_lex)
+
+zhe_percent
+sco_percent
+lex_percent
+lin_percent
+
+#graphs of proportions
+filter(babynames, str_detect(babynames$name,"Lex")) %>%
+  select(year, n, prop)%>%
+  group_by(year) %>%
+  count (wt=prop) %>%
+  ggplot(aes(x= year, y= nn)) + geom_smooth(se=FALSE) + ggtitle(label="Proportion of Lex over time") + ylab(label = "Proportion")
+
+filter(babynames, str_detect(babynames$name,"Sco")) %>%
+  select(year, n, prop)%>%
+  group_by(year) %>%
+  count (wt=prop) %>%
+  ggplot(aes(x= year, y= nn)) + geom_smooth(se=FALSE)+ ggtitle(label="Proportion of Sco over time")+ylab(label= "Proportion")
+
+filter(babynames, str_detect(babynames$name,"Zhe")) %>%
+  select(year, n, prop)%>%
+  group_by(year) %>%
+  count (wt=prop) %>%
+  ggplot(aes(x= year, y= nn)) + geom_smooth(se=FALSE)+ ggtitle(label="Proportion of Zhe over time") + ylab(label="Proportion")
+
+filter(babynames, str_detect(babynames$name,"Lin")) %>%
+  select(year, n, prop)%>%
+  group_by(year) %>%
+  count (wt=prop) %>%
+  ggplot(aes(x= year, y= nn)) + geom_smooth(se=FALSE)+ ggtitle(label="Proportion of Lin over time") + ylab(label="Proportion")
+
+```
+The person who has the highest ratio for their name is Zhenlong, with 58%. Scott came in 2nd with 43%, Lexie is next with 18%, and Lindsay is last with 15%.
+
+In the graph for the proportion of Lex over time, it is very small and constant for a while until a little after 1960, then it increases rapidly for the rest of the plot. A name starting with Lex was still pretty uncommon in 1998, with a proportion around 0.0005.
+
+In the graph for Sco, it starts out low at 1880, decreases then starts increasing around 1930. The popularity of Sco hits a peak around 1970 then decreases for the rest of the plot. In 1997, the proportion of Sco is around 0.005, but is decreasing for later years.
+
+In the graph for Zhe, there is no data available for the years before 1995 but the graph osciallates for the 20 years. Around 1997 the proportion for Zhe was still very uncommon, around 0.000003 on an increasing trend.
+
+In the graph for Lin it starts out decreasing in 1880 then increases around 1900's. The popularity of Lin hits a peak around 1950 then is decreasing for the rest of the plot. Around 1998, Lin had a proportion around 0.005.
 # Ariel and Rachel regexs
 ```{r,echo=FALSE}
 #how many versions of the name "Ariel" were there in 1973; 1988; 1990?
@@ -35,7 +104,7 @@ rachel1990 <- filter(babynames,str_detect(babynames$name,"^Rach[:lower:]*l$"),ye
 ```
 
 
-The chance that a girl born in 1973 would be named Rachel or Ariel is 
+The chance that a girl born in 1973 would be named Rachel or Ariel is
 ```{r,echo=FALSE}
 #What are the chances a girl born in 1973 would be named either Rachel or Ariel (including various versions)? In 1988? In 1990?
 sum(ariel1973$prop) + sum(rachel1973$prop)
@@ -48,9 +117,9 @@ sum(ariel1990$prop) + sum(rachel1990$prop)
 # Our Names
 
 # Contributions
-* Lindsay: 
+* Lindsay:
 
-* Lexie:
+* Lexie: Covered the first three letters of name section
 
 * Li:
 
