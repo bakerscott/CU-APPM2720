@@ -10,12 +10,39 @@ library(tidyverse)
 library(lubridate)
 library(forcats)
 library(stringr)
+
+#setup:
+babynames <- babynames::babynames
+
 ```
 
 # First three letters of names
 
 # Ariel and Rachel regexs
+```{r,echo=FALSE}
+#how many versions of the name "Ariel" were there in 1973; 1988; 1990?
+ariel1973 <- filter(babynames,str_detect(babynames$name,"^Ar[:lower:]*l$"),year==1973,sex=="F")
+ariel1988 <- filter(babynames,str_detect(babynames$name,"^Ar[:lower:]*l$"),year==1988,sex=="F")
+ariel1990 <- filter(babynames,str_detect(babynames$name,"^Ar[:lower:]*l$"),year==1990,sex=="F")
+```
 
+
+```{r,echo=FALSE}
+#how many versions of the name "Rachel" were there in 1973; 1988; 1990?
+rachel1973 <- filter(babynames,str_detect(babynames$name,"^Rach[:lower:]*l$"),year==1973,sex=="F")
+rachel1988 <- filter(babynames,str_detect(babynames$name,"^Rach[:lower:]*l$"),year==1988,sex=="F")
+rachel1990 <- filter(babynames,str_detect(babynames$name,"^Rach[:lower:]*l$"),year==1990,sex=="F")
+```
+
+
+The chance that a girl born in 1973 would be named Rachel or Ariel is 
+```{r,echo=FALSE}
+#What are the chances a girl born in 1973 would be named either Rachel or Ariel (including various versions)? In 1988? In 1990?
+sum(ariel1973$prop) + sum(rachel1973$prop)
+sum(ariel1988$prop) + sum(rachel1988$prop)
+sum(ariel1990$prop) + sum(rachel1990$prop)
+
+```
 # "The Little Mermaid" Effect
 
 # Our Names
