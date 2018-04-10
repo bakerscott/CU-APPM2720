@@ -1,0 +1,25 @@
+---
+title: "Lab_11"
+author: "Fantastic Four"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(lubridate)
+library(forcats)
+library(stringr)
+```
+# Main part
+here is where we will put work for our Gapminder lab stuff.
+
+
+# Contributions
+* Lindsay: 
+
+* Lexie: 
+
+* Li:
+
+* Scott: 
