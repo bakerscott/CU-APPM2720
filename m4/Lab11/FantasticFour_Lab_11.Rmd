@@ -87,7 +87,9 @@ In the graph for Sco, it starts out low at 1880, decreases then starts increasin
 In the graph for Zhe, there is no data available for the years before 1995 but the graph osciallates for the 20 years. Around 1997 the proportion for Zhe was still very uncommon, around 0.000003 on an increasing trend.
 
 In the graph for Lin it starts out decreasing in 1880 then increases around 1900's. The popularity of Lin hits a peak around 1950 then is decreasing for the rest of the plot. Around 1998, Lin had a proportion around 0.005.
+
 # Ariel and Rachel regexs
+
 There were 2 different versions of the name "Ariel" in 1973, 9 in 1988, and 11 in 1990.
 
 ```{r}
@@ -114,6 +116,7 @@ count(rachel1990)
 
 
 The chance that a girl born in 1973 would be named Rachel or Ariel (or versions of) is 0.4735%. For 1988 and 1990, the chances are 1.0577% and 1.1198%, respectively.
+
 ```{r}
 #What are the chances a girl born in 1973 would be named either Rachel or Ariel (including various versions)? In 1988? In 1990?
 sum(ariel1973$prop) + sum(rachel1973$prop)
@@ -121,6 +124,7 @@ sum(ariel1988$prop) + sum(rachel1988$prop)
 sum(ariel1990$prop) + sum(rachel1990$prop)
 
 ```
+
 # "The Little Mermaid" Effect
 
 ```{r}
@@ -147,7 +151,7 @@ ggplot(Vowel_girls) +
   geom_vline(aes(xintercept=Ariel.diff),color="red",lwd=1)
 ```
 
-From this plot, we can see that the change in proportion of female "Ariel"" baby names from 1988 to 1990 is bigger than the changes in other female names starting with a vowel over that time period.
+From this plot, we can see that the change in proportion of female "Ariel" baby names from 1988 to 1990 is bigger than the changes in other female names starting with a vowel over that time period.
 
 ```{r}
 # What percentile change is Ariel's change?
@@ -160,6 +164,7 @@ filter(Vowel_girls,diff<Ariel.diff) %>% count() / Vowel_girls %>% count()
 Alyssa has the biggest positive change from 1988 to 1990. Ariel has the second biggest change of all girl names. No baby girl name with other version of Ariels had a bigger difference in proportions than "Ariel".
 
 # Our Names
+
 ```{r}
 NAMES<-babynames::babynames
 Lindsay98<-filter(NAMES, str_detect(NAMES$name, "^L[i|y]nd?s[a|e]?y"), year==1998)
@@ -242,7 +247,7 @@ inner_join(all, all79, by="name")%>%
 
 ```
 The vertical lines in the graph correspond to the difference in name proportions for each team member, "Lee" is blue, "Lindsay" is red, "Lexie" is orange and "Scott" is green.
-The two graphs above illustrate the changes in teammember names from 1997-2015 and 1979-1997 in comparison to the changes in all names in the dataset over the same years. The dotted vertical lines signify the names which underwent significant changes in popularity over the range of years. Overall the name "Lexie" experienced the least amount of change in both ranges of years, as the differene in proportions is closer to zero. In contrast "Lindsay" and "Scoot" demonstrate larger changes in popularity both before 1997 and after 1997. The name "Lee" conveys a mpderate increase in popularity from 1979-1997, and a slight decrease from 1997-2015.
+The two graphs above illustrate the changes in teammember names from 1997-2015 and 1979-1997 in comparison to the changes in all names in the dataset over the same years. The dotted vertical lines signify the names which underwent significant changes in popularity over the range of years. Overall the name "Lexie" experienced the least amount of change in both ranges of years, as the differene in proportions is closer to zero. In contrast "Lindsay" and "Scott" demonstrate larger changes in popularity both before 1997 and after 1997. The name "Lee" conveys a mpderate increase in popularity from 1979-1997, and a slight decrease from 1997-2015.
 Since the bithyears span 1996-1998, to account for the variation of years, it was decided to average the birthyears and used 1997 as the comparison year. It was also decided to not filter by sex, and maintain all results for each name.
 
 # Contributions
