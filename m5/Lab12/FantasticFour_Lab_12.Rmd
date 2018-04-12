@@ -11,12 +11,23 @@ library(lubridate)
 library(forcats)
 library(stringr)
 
+#reading the data into a dataset: from here on out, there will only be functions
 gapminder <- gapminder::gapminder
-gapminder
+
+```
+
+# Functions Defined
+```{r}
+#here is where we define all our functions being used:
+showLevels <- function(data_input){
+  print(unique(data_input$country))
+}
 ```
 # Main part
-here is where we will put work for our Gapminder lab stuff.
 
+```{r}
+showLevels(gapminder)
+```
 ## SubQ1
 ```{r}
 # How does life expectancy vary by continent and by decade? Write functions and employ iteration to calculate 5 statistics (min, max, mean, median, IQR=difference between 75%tile and 25%tile) for each continent for each decade.
