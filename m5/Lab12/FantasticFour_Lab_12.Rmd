@@ -1,5 +1,5 @@
 ---
-title: "Lab_11"
+title: "Lab_12"
 author: "Fantastic Four"
 output: pdf_document
 ---
@@ -10,6 +10,9 @@ library(tidyverse)
 library(lubridate)
 library(forcats)
 library(stringr)
+
+gapminder <- gapminder::gapminder
+gapminder
 ```
 # Main part
 here is where we will put work for our Gapminder lab stuff.
