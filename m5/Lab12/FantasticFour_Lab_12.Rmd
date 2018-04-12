@@ -14,6 +14,17 @@ library(stringr)
 # Main part
 here is where we will put work for our Gapminder lab stuff.
 
+## SubQ1
+```{r}
+# How does life expectancy vary by continent and by decade? Write functions and employ iteration to calculate 5 statistics (min, max, mean, median, IQR=difference between 75%tile and 25%tile) for each continent for each decade.
+
+```
+
+## SubQ1
+```{r}
+# How does GDP per capita vary by continent and by decade? Write functions and employ iteration to calculate 5 statistics (min, max, mean, median, IQR=difference between 75%tile and 25%tile) for each continent for each decade.
+
+```
 
 # Contributions
 * Lindsay: 
