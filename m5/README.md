@@ -1,6 +1,11 @@
-module 5:
-tests:
+### module 5:
 
-topics:
+#### tests:
+4/9
 
-included:
+#### topics:
+
+Pipes, Functions, Vectors, Iteration, and Functional Programming in R.
+
+#### included:
+* Lab12 - Gapminder data

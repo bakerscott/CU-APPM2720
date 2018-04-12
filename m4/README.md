@@ -1,6 +1,13 @@
-module 4:
-tests:
+### module 4:
 
-topics:
+#### tests:
+3/13
 
-included:
+#### topics:
+
+Relational Data, Strings, Factors, Dates and Times
+
+#### included:
+* Lab9 - Relational data, Strings, Factors, Dates and times
+* Lab10 - Text and Time Analysis
+* Lab11 - Baby Names

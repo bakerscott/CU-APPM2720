@@ -8,18 +8,8 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 ```
-A couple of quick thoughts on dataset:
-* Lahman or Retrosheet baseball stats-- some of these are not "tidy" based on experience
-* Weather data from somewhere-- could also find data with "holes"
-* Google public datasets-- lots of them out there
-* Use an API to snag our own data? (scott could run this)
-* Go check out catalog.data.gov
-* scott's favorite so far: https://www.kaggle.com/noaa/seismic-waves/data
-* airline fleet data, might need some tidying https://www.kaggle.com/traceyvanp/airlinefleet/data
-
-
-# "Who is Hiring us?"
-Fantastic Four is being hired by the Pacific Tsunami Museum in Hilo, Hawaii to look at tsunami data. There are two reasons that this museum is hiring the team. First, they would like to map out all the tsunamis in the Pacific in a creative way using the data we have. This could be economic impact of more recent tsunamis (since that part of the data is available) or the relationship between magnitude and source of the waves. Second, they would like to know if there is a better way to advise or educate the people of Hawaii about future tsunamis.
+# Who is Hiring us?
+Fantastic Four is being hired by the American Red Cross in Honolulu, Hawaii to look at tsunami data. There are two reasons that this organization is hiring the team. First, they would like to map out all the tsunamis in the Pacific in a creative way using the data we have. This could be economic impact of more recent tsunamis (since that part of the data is available) or the relationship between magnitude and source of the waves. Second, they would like to know if there is a better way to predict, educate, and minimize impact to society for islands in the Pacific. 
 
 # Questions and Importance 
 There are two questions we have set out to answer. The first is:\
@@ -30,16 +20,7 @@ The second question to look at is:\
 \begin{center}\textbf{What are the patterns in tsunamis in the Pacific and how to they relate to ones recorded in Hawaii?}\end{center}\ \
 This question is important because by being able to see relationships between waves in Hawaii and other places in the Pacific, we can put together our resources in order to better prepare and educate society in order to minimize impact.
 
-# "Overall team question, why it is important, and why those reasons are important" 
-some quesiton ideas:
-* How has Tsunami affected a country? Fatalities, house damages, etc.
-
-* Where is the most common occurance of Tsunami's? Does maximum height have a correlation with how much damage occurs?
-
-It's interesting because so many natural disasters have happened recently and we would like to find if there are any patterns within the data we have found.
-
-
-# "A breif description of the dataset you wish to analyze next week"
+# Dataset to Analyze
 The dataset Fantastic Four will be using will be a tsunami dataset from\ \begin{center}\texttt{https://www.kaggle.com/noaa/seismic-waves/data}\end{center}\ \
 This is an NOAA dataset of tsunami data for recordable history. A preview of the column headers of the raw data is the following:
 ```{r,echo=FALSE}
@@ -56,43 +37,16 @@ This data contains date, magnitude, location, depth, time, and damage attributes
 * Simplify columns (total damage, date/time, etc.)
 
 # Subsequent Questions and Importance:
+* How has Tsunami affected an island? Fatalities, house damages, etc.
 
+* Where is the most common occurrence of Tsunami's? Does maximum height have a correlation with how much damage occurs?
 
+* Is there a relationship between time of year a tsunami occurs and how much damage is inflicted?
 
-# Rainfall Data
+* What is the relationship between the tsunami source and the wave, and how does the distance affect the tsunami severity and amount of damage? This is significant in analyzing where tsunamis cause the most damage, which could indicate areas that are at greater risk of being impacted by a tsunami. It could possibly lead to formulating predictions of where future tsunamis may occur and how intense they will be. This could help with pre-storm evacuations and safety preparation which would limit injuries, possible deaths, and destruction. Which in turn would limit resource and economical strain following tsunamis.
 
-## Lindsay Gettel
-
-
-## Lexie Marinelli
-```{r, echo= FALSE}
-VOI <-read_csv("VOI_Rain.csv")
-VOI <-VOI %>% 
-  select(-X14,-X15) %>%
-  gather(Jan,Feb,Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec, key="Month", value= "Rainfall")
-```
-```{r, echo= FALSE}
-VOI %>%
-  filter(Year>=1960) %>%
-  ggplot(mapping=aes(x=Year,y=Rainfall)) +geom_point(aes(color=Month))  + facet_wrap(~Month)+ggtitle(label="Rain trend from 1960-1990") +xlab(label="Year")+ ylab(label= "Level of Rainfall")
-
-VOI %>%
-  filter(Year>=1930 & Year<=1960) %>%
-  ggplot(mapping=aes(x=Year,y=Rainfall)) +geom_point(aes(color=Month)) +facet_wrap(~Month)+ggtitle(label="Rain trend from 1930-1960") +xlab(label="Year")+ ylab(label= "Level of Rainfall (cm)")
-```
-This plot shows the months that it rains the most starting from 1960 and going until 1990 and another graph going from 1930 to 1960 to see if rain patterns have changed between the two time periods. From both graphs we can gather that f the rainiest months are winter and spring- November, December, January, February, March, and April. During the 1930-1960 time period, rain patterns were more consistant to previous years. On the other hand, the amount of rain in 1960-1990 is more scattered making it less predictable. 
-
-## Zhenlong Li
-
-
-## Scott Baker
-
+* How the warning status relate to the damage to people and environment? This is important because predicting an catastrophe such as tsunami, earthquake and so on will be an cutting-edge technique for people to minimize their losses.
 
 # Contributions
-* Lindsay:
+Contributions will be added in the Lab 8 writeup since this is a two-part lab.
 
-* Lexie:
-
-* Li:
-
-* Scott: 
