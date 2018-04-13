@@ -1,7 +1,7 @@
 ---
 title: "Lab_12"
 author: "Fantastic Four"
-output: pdf_document
+output: html_document
 ---
 
 ```{r setup, include=FALSE}
@@ -12,7 +12,7 @@ library(forcats)
 library(stringr)
 
 #reading the data into a dataset: from here on out, there will only be functions
-gapminder <- gapminder::gapminder
+gapminder <- gapminder::gapminder_unfiltered
 
 ```
 
@@ -25,7 +25,8 @@ showLevels <- function(data_input){
 
 summaryStats <- function(data_input,continent_in,start_year,end_year,column_in){
   #main function to return the summary stats for a certain dataset and column for years
-  x <- filter(data_input,continent == continent_in,year>=start_year,year<=end_year)
+  x2 <- filter(data_input,continent == continent_in,year>=start_year,year<=end_year)
+  x <- sample_n(x2,10,replace=TRUE)
   df <- data.frame(continent_in,start_year,end_year,mean(x[[column_in]]),median(x[[column_in]]),min(x[[column_in]]),max(x[[column_in]]),IQR(x[[column_in]]))
   return(df)
 }
@@ -61,23 +62,174 @@ runAll_calc_summaryStats <- function(data_input,start_year,end_year,column_in){
 runAll_calc_summaryStats(gapminder,1950,2010,"pop")
 
 ```
+
+
+
+
+
+
+
+
+
 ## SubQ1
-```{r,fig.height=4,fig.width=10}
+```{r,fig.height=3,fig.width=10,msg=FALSE,warning=FALSE}
 # How does life expectancy vary by continent and by decade? Write functions and employ iteration to calculate 5 statistics (min, max, mean, median, IQR=difference between 75%tile and 25%tile) for each continent for each decade.
+i <- 0
+temp <- 0
+while(i < 100){
+  temp <- rbind(temp,calc_summaryStats(gapminder,"Asia",1950,2010,"lifeExp"))
+  temp <- temp[-1,]
+  i <- i + 1
+}
 
-temp <- runAll_calc_summaryStats(gapminder,1950,2010,"lifeExp")
-temp <- temp %>% group_by(continent)
-temp <- temp[-1,]
-
-ggplot(data=temp) + geom_pointrange(mapping=aes(x=start_year,y=mean,ymin=minimum,ymax=maximum)) +facet_grid(~continent) + ggtitle("Continental Life Expectancy changes over time") + ylab("Mean Life Expectancy") + xlab("Year (start of decade)")
+ggplot(data=temp) + geom_histogram(mapping=aes(mean), bins=20) +facet_grid(~start_year) + geom_vline(aes(xintercept=mean(mean)),color='Red') + ggtitle("Life Expectancy in Asia over time") + ylab("Mean Life Expectancy") + xlab("Year (start of decade)")
 
 ```
 
-## SubQ1
-```{r}
+
+Here is a graph of the life expectancy in Europe over the last six decades. It is seen that 
+```{r,fig.width=10,fig.height=3,msg=FALSE,warning=FALSE}
+i <- 0
+temp <- 0
+while(i < 100){
+  temp <- rbind(temp,calc_summaryStats(gapminder,"Europe",1950,2010,"lifeExp"))
+  temp <- temp[-1,]
+  i <- i + 1
+}
+
+ggplot(data=temp) + geom_histogram(mapping=aes(mean), bins=20) +facet_grid(~start_year) + geom_vline(aes(xintercept=mean(mean)),color='Red') + ggtitle("Life Expectancy in Europe over time") + ylab("Mean Life Expectancy") + xlab("Year (start of decade)")
+
+
+
+```
+
+
+```{r,fig.width=10,fig.height=3,msg=FALSE,warning=FALSE}
+i <- 0
+temp <- 0
+while(i < 100){
+  temp <- rbind(temp,calc_summaryStats(gapminder,"Africa",1950,2010,"lifeExp"))
+  temp <- temp[-1,]
+  i <- i + 1
+}
+
+ggplot(data=temp) + geom_histogram(mapping=aes(mean), bins=20) +facet_grid(~start_year) + geom_vline(aes(xintercept=mean(mean)),color='Red') + ggtitle("Life Expectancy in Africa over time") + ylab("Mean Life Expectancy") + xlab("Year (start of decade)")
+
+
+
+```
+
+
+```{r,fig.width=10,fig.height=3,msg=FALSE,warning=FALSE}
+i <- 0
+temp <- 0
+while(i < 100){
+  temp <- rbind(temp,calc_summaryStats(gapminder,"Americas",1950,2010,"lifeExp"))
+  temp <- temp[-1,]
+  i <- i + 1
+}
+
+ggplot(data=temp) + geom_histogram(mapping=aes(mean), bins=20) +facet_grid(~start_year) + geom_vline(aes(xintercept=mean(mean)),color='Red') + ggtitle("Life Expectancy in Americas over time") + ylab("Mean Life Expectancy") + xlab("Year (start of decade)")
+
+
+
+```
+
+
+```{r,fig.width=10,fig.height=3,msg=FALSE,warning=FALSE}
+i <- 0
+temp <- 0
+while(i < 100){
+  temp <- rbind(temp,calc_summaryStats(gapminder,"Oceania",1950,2010,"lifeExp"))
+  temp <- temp[-1,]
+  i <- i + 1
+}
+
+ggplot(data=temp) + geom_histogram(mapping=aes(mean), bins=20) +facet_grid(~start_year) + geom_vline(aes(xintercept=mean(mean)),color='Red') + ggtitle("Life Expectancy in Oceania over time") + ylab("Mean Life Expectancy") + xlab("Year (start of decade)")
+
+
+
+```
+
+
+## SubQ2
+```{r,fig.height=4,fig.width=10}
 # How does GDP per capita vary by continent and by decade? Write functions and employ iteration to calculate 5 statistics (min, max, mean, median, IQR=difference between 75%tile and 25%tile) for each continent for each decade.
 
-runAll_calc_summaryStats(gapminder,1950,2010,"gdpPercap")
+```
+
+```{r,fig.width=10,fig.height=3,msg=FALSE,warning=FALSE}
+i <- 0
+temp <- 0
+while(i < 100){
+  temp <- rbind(temp,calc_summaryStats(gapminder,"Asia",1950,2010,"gdpPercap"))
+  temp <- temp[-1,]
+  i <- i + 1
+}
+
+ggplot(data=temp) + geom_histogram(mapping=aes(mean), bins=20) +facet_grid(~start_year) + geom_vline(aes(xintercept=mean(mean)),color='Red') + ggtitle("GDP per capita in Asia over time") + ylab("GDP per capita") + xlab("Year (start of decade)")
+
+
+
+```
+
+```{r,fig.width=10,fig.height=3,msg=FALSE,warning=FALSE}
+i <- 0
+temp <- 0
+while(i < 100){
+  temp <- rbind(temp,calc_summaryStats(gapminder,"Europe",1950,2010,"gdpPercap"))
+  temp <- temp[-1,]
+  i <- i + 1
+}
+
+ggplot(data=temp) + geom_histogram(mapping=aes(mean), bins=20) +facet_grid(~start_year) + geom_vline(aes(xintercept=mean(mean)),color='Red') + ggtitle("GDP per capita in Europe over time") + ylab("GDP per capita") + xlab("Year (start of decade)")
+
+
+
+```
+
+```{r,fig.width=10,fig.height=3,msg=FALSE,warning=FALSE}
+i <- 0
+temp <- 0
+while(i < 100){
+  temp <- rbind(temp,calc_summaryStats(gapminder,"Africa",1950,2010,"gdpPercap"))
+  temp <- temp[-1,]
+  i <- i + 1
+}
+
+ggplot(data=temp) + geom_histogram(mapping=aes(mean), bins=20) +facet_grid(~start_year) + geom_vline(aes(xintercept=mean(mean)),color='Red') + ggtitle("GDP per capita in Africa over time") + ylab("GDP per capita") + xlab("Year (start of decade)")
+
+
+
+```
+
+```{r,fig.width=10,fig.height=3,msg=FALSE,warning=FALSE}
+i <- 0
+temp <- 0
+while(i < 100){
+  temp <- rbind(temp,calc_summaryStats(gapminder,"Americas",1950,2010,"gdpPercap"))
+  temp <- temp[-1,]
+  i <- i + 1
+}
+
+ggplot(data=temp) + geom_histogram(mapping=aes(mean), bins=20) +facet_grid(~start_year) + geom_vline(aes(xintercept=mean(mean)),color='Red') + ggtitle("GDP per capita in Americas over time") + ylab("GDP per capita") + xlab("Year (start of decade)")
+
+
+
+```
+
+```{r,fig.width=10,fig.height=3,msg=FALSE,warning=FALSE}
+i <- 0
+temp <- 0
+while(i < 100){
+  temp <- rbind(temp,calc_summaryStats(gapminder,"Oceania",1950,2010,"gdpPercap"))
+  temp <- temp[-1,]
+  i <- i + 1
+}
+
+ggplot(data=temp) + geom_histogram(mapping=aes(mean), bins=20) +facet_grid(~start_year) + geom_vline(aes(xintercept=mean(mean)),color='Red') + ggtitle("GDP per capia in Oceania over time") + ylab("GDP per capita") + xlab("Year (start of decade)")
+
+
 
 ```
 
