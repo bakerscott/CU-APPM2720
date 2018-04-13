@@ -10,6 +10,9 @@ library(tidyverse)
 library(lubridate)
 library(forcats)
 library(stringr)
+suppressPackageStartupMessages(library(dplyr))
+library(gapminder)
+library(magrittr)
 
 #reading the data into a dataset: from here on out, there will only be functions
 gapminder <- gapminder::gapminder
@@ -59,10 +62,24 @@ runAll_calc_summaryStats <- function(data_input,start_year,end_year,column_in){
 What are the general trends in population and life expectancy over time? Is there an overall relationship between these two variables? 
 
 These questions are significant because they can lead to theoretical analysis of the trend countries will face in years to come of population growth and life expectancy, given that there is no drastic impact to the populations' health in the future. Using this data, we can also observe, at different time periods, if major events in the world correspond to changes in the population or a countries life expectancy. 
-```{r}
+```{r, warning=FALSE}
 # Is there a correlation between life expectancy and population size?
 runAll_calc_summaryStats(gapminder,1950,2010,"pop")
 
+ggplot(gapminder, aes(x = pop, y = lifeExp)) +
+  geom_jitter() +
+  geom_smooth(se = FALSE, method = "lm")
+
+ov_cor <- gapminder %$%
+  cor(pop, lifeExp)
+
+gcor <- gapminder %>% group_by(country) %>% summarize(correlation = cor(pop, lifeExp))
+
+ggplot(gcor, aes(x = correlation)) +
+  geom_density() +
+  geom_vline(xintercept = ov_cor, linetype = "longdash") +
+  geom_text(data = NULL, x = ov_cor, y = 10, label = round(ov_cor, 2),
+            hjust = -0.1)
 ```
 
 ## SubQ1
@@ -92,6 +109,6 @@ runAll_calc_summaryStats(gapminder, 1950, 2010, "lifeExp")
 
 * Lexie: Helped create overall question to answer and steps to answer it. 
 
-* Li:
+* Li: Plotted correlation between life expectancy and population size by using ggplot2, deplyr and magrittr.
 
 * Scott: 
