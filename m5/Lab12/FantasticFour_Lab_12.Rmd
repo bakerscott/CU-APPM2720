@@ -20,29 +20,58 @@ gapminder <- gapminder::gapminder
 ```{r}
 #for defining functions (?):
 showLevels <- function(data_input){
-  print(unique(data_input))
+  return(unique(data_input))
 }
 
-lifeExpectancyStats <- function(data_input,continent_in,start_year,end_year)
-  x <- data_input %>% filter(continent == continent_in,year>=start_year,year<=end_year) #summary(data_input$lifeExp)
-  summary(x)
+summaryStats <- function(data_input,continent_in,start_year,end_year,column_in){
+  #main function to return the summary stats for a certain dataset and column for years
+  x <- filter(data_input,continent == continent_in,year>=start_year,year<=end_year)
+  df <- data.frame(start_year,end_year,mean(x[[column_in]]),median(x[[column_in]]),min(x[[column_in]]),max(x[[column_in]]),IQR(x[[column_in]]))
+  return(df)
+}
+
+calc_summaryStats <- function(data_input,continent_in,start_year,end_year,column_in){
+  yearA <- start_year
+  output_summary <- 0
+
+  while(yearA < end_year){
+    output_summary <- rbind(output_summary, summaryStats(data_input,continent_in,yearA,yearA+9,column_in))
+    yearA <- yearA + 10
+  }
+  output_summary <- output_summary[-1,]
+  colnames(output_summary) <- c("start_year","end_year","mean","median","minimum","maximum","IQR")
+  print(output_summary)
+}
+
+runAll_calc_summaryStats <- function(data_input,start_year,end_year,column_in){
+  #cont = c("Africa","Asia","Americas","Europe","Oceania")
+  fun <- showLevels(data_input$continent)
+  for(item in fun){
+    calc_summaryStats(gapminder,item,start_year,end_year,column_in)
+}
+  
+}
 ```
 # Main part
 
 ```{r}
 #showLevels(gapminder$country)
 
-lifeExpectancyStats(gapminder,"Africa",1950,1959)
 ```
 ## SubQ1
 ```{r}
 # How does life expectancy vary by continent and by decade? Write functions and employ iteration to calculate 5 statistics (min, max, mean, median, IQR=difference between 75%tile and 25%tile) for each continent for each decade.
+
+runAll_calc_summaryStats(gapminder,1950,2010,"lifeExp")
+
 
 ```
 
 ## SubQ1
 ```{r}
 # How does GDP per capita vary by continent and by decade? Write functions and employ iteration to calculate 5 statistics (min, max, mean, median, IQR=difference between 75%tile and 25%tile) for each continent for each decade.
+
+runAll_calc_summaryStats(gapminder,1950,2010,"gdpPercap")
 
 ```
 
