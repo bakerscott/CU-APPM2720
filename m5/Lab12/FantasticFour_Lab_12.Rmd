@@ -26,7 +26,7 @@ showLevels <- function(data_input){
 summaryStats <- function(data_input,continent_in,start_year,end_year,column_in){
   #main function to return the summary stats for a certain dataset and column for years
   x <- filter(data_input,continent == continent_in,year>=start_year,year<=end_year)
-  df <- data.frame(start_year,end_year,mean(x[[column_in]]),median(x[[column_in]]),min(x[[column_in]]),max(x[[column_in]]),IQR(x[[column_in]]))
+  df <- data.frame(continent_in,start_year,end_year,mean(x[[column_in]]),median(x[[column_in]]),min(x[[column_in]]),max(x[[column_in]]),IQR(x[[column_in]]))
   return(df)
 }
 
@@ -39,31 +39,37 @@ calc_summaryStats <- function(data_input,continent_in,start_year,end_year,column
     yearA <- yearA + 10
   }
   output_summary <- output_summary[-1,]
-  colnames(output_summary) <- c("start_year","end_year","mean","median","minimum","maximum","IQR")
-  print(output_summary)
+  colnames(output_summary) <- c("continent","start_year","end_year","mean","median","minimum","maximum","IQR")
+  return(output_summary)
 }
 
 runAll_calc_summaryStats <- function(data_input,start_year,end_year,column_in){
   #cont = c("Africa","Asia","Americas","Europe","Oceania")
+  output_dataframe <- 0
   fun <- showLevels(data_input$continent)
   for(item in fun){
-    calc_summaryStats(gapminder,item,start_year,end_year,column_in)
-}
+    output_dataframe <- rbind(output_dataframe, calc_summaryStats(gapminder,item,start_year,end_year,column_in))
+  }
+  return(output_dataframe)
   
 }
 ```
 # Main part
 
 ```{r}
-#showLevels(gapminder$country)
+# Is there a correlation between life expectancy and population size?
+runAll_calc_summaryStats(gapminder,1950,2010,"pop")
 
 ```
 ## SubQ1
-```{r}
+```{r,fig.height=4,fig.width=10}
 # How does life expectancy vary by continent and by decade? Write functions and employ iteration to calculate 5 statistics (min, max, mean, median, IQR=difference between 75%tile and 25%tile) for each continent for each decade.
 
-runAll_calc_summaryStats(gapminder,1950,2010,"lifeExp")
+temp <- runAll_calc_summaryStats(gapminder,1950,2010,"lifeExp")
+temp <- temp %>% group_by(continent)
+temp <- temp[-1,]
 
+ggplot(data=temp) + geom_pointrange(mapping=aes(x=start_year,y=mean,ymin=minimum,ymax=maximum)) +facet_grid(~continent) + ggtitle("Continental Life Expectancy changes over time") + ylab("Mean Life Expectancy") + xlab("Year (start of decade)")
 
 ```
 
