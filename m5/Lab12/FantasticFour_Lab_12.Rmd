@@ -54,13 +54,17 @@ runAll_calc_summaryStats <- function(data_input,start_year,end_year,column_in){
   
 }
 ```
-# Main part
+# Overall Question
 
+What are the general trends in population and life expectancy over time? Is there an overall relationship between these two variables? 
+
+These questions are significant because they can lead to theoretical analysis of the trend countries will face in years to come of population growth and life expectancy, given that there is no drastic impact to the populations' health in the future. Using this data, we can also observe, at different time periods, if major events in the world correspond to changes in the population or a countries life expectancy. 
 ```{r}
 # Is there a correlation between life expectancy and population size?
 runAll_calc_summaryStats(gapminder,1950,2010,"pop")
 
 ```
+
 ## SubQ1
 ```{r,fig.height=4,fig.width=10}
 # How does life expectancy vary by continent and by decade? Write functions and employ iteration to calculate 5 statistics (min, max, mean, median, IQR=difference between 75%tile and 25%tile) for each continent for each decade.
@@ -72,19 +76,21 @@ temp <- temp[-1,]
 ggplot(data=temp) + geom_pointrange(mapping=aes(x=start_year,y=mean,ymin=minimum,ymax=maximum)) +facet_grid(~continent) + ggtitle("Continental Life Expectancy changes over time") + ylab("Mean Life Expectancy") + xlab("Year (start of decade)")
 
 ```
+This graph shows a general  increase in life expectancy for each continent from 1950 to 2000. Africa started with the lowest life expectancy and increased steadily until 1990 and then leveled off. Asia has the greatest change in life expectancy  overall, due to the rapid development of the countries. 
 
-## SubQ1
+## SubQ2
 ```{r}
 # How does GDP per capita vary by continent and by decade? Write functions and employ iteration to calculate 5 statistics (min, max, mean, median, IQR=difference between 75%tile and 25%tile) for each continent for each decade.
 
 runAll_calc_summaryStats(gapminder,1950,2010,"gdpPercap")
+runAll_calc_summaryStats(gapminder, 1950, 2010, "lifeExp")
 
 ```
 
 # Contributions
-* Lindsay: 
+* Lindsay: Contributed to write up and analysis, as well as overall question significance.
 
-* Lexie: 
+* Lexie: Helped create overall question to answer and steps to answer it. 
 
 * Li:
 
