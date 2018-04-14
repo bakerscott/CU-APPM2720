@@ -63,6 +63,7 @@ runAll_calc_summaryStats <- function(data_input,start_year,end_year,column_in){
 What are the general trends in population and life expectancy over time? Is there an overall relationship between these two variables?
 
 These questions are significant because they can lead to theoretical analysis of the trend countries will face in years to come of population growth and life expectancy, given that there is no drastic impact to the populations' health in the future. Using this data, we can also observe, at different time periods, if major events in the world correspond to changes in the population or a countries life expectancy.
+
 ```{r, warning=FALSE}
 # Is there a correlation between life expectancy and population size?
 runAll_calc_summaryStats(gapminder,1950,2010,"pop")
@@ -91,7 +92,11 @@ ggplot(gcor, aes(x = correlation)) +
 
 
 
-## SubQ1
+## Does Life Expectancy vary?
+
+In this section, an iteration of sampling from the data allows us to see that there is an increase in life expectancy for all continents. Additionally the graphs show the distribution of sample data for each decade and marks the average value of life expectancy over all the sample. This turns out to show that naturally, life expectancy has increased over the last six decades. Additionally, the average increase of Oceania is the least and Europe has the most.
+
+
 ```{r,fig.height=3,fig.width=10,msg=FALSE,warning=FALSE}
 # How does life expectancy vary by continent and by decade? Write functions and employ iteration to calculate 5 statistics (min, max, mean, median, IQR=difference between 75%tile and 25%tile) for each continent for each decade.
 i <- 0
@@ -107,7 +112,8 @@ ggplot(data=temp) + geom_histogram(mapping=aes(mean), bins=20) +facet_grid(~star
 ```
 
 
-Here is a graph of the life expectancy in Europe over the last six decades. It is seen that
+Here is a graph of the life expectancy in Europe over the last six decades:
+
 ```{r,fig.width=10,fig.height=3,msg=FALSE,warning=FALSE}
 i <- 0
 temp <- 0
@@ -122,7 +128,6 @@ ggplot(data=temp) + geom_histogram(mapping=aes(mean), bins=20) +facet_grid(~star
 
 
 ```
-This graph shows a general  increase in life expectancy for each continent from 1950 to 2000. Africa started with the lowest life expectancy and increased steadily until 1990 and then leveled off. Asia has the greatest change in life expectancy  overall, due to the rapid development of the countries.
 
 
 ```{r,fig.width=10,fig.height=3,msg=FALSE,warning=FALSE}
@@ -173,7 +178,10 @@ ggplot(data=temp) + geom_histogram(mapping=aes(mean), bins=20) +facet_grid(~star
 ```
 
 
-## SubQ2
+## Does GDP per capita vary?
+In this section, an iteration of sampling from the data allows us to see that there is an increase in GDP per capita for all continents, although not as significant as life expectancy--probably due to change in population as well. Additionally the graphs show the distribution of sample data for each decade and marks the average value of GDP per capita over all the sample. This turns out to show that GDP per capita has increased over the last six decades. Additionally, the distribution of average GDP per capita has gotten significantly more spread over the last seventy years.
+
+
 ```{r,fig.height=4,fig.width=10}
 # How does GDP per capita vary by continent and by decade? Write functions and employ iteration to calculate 5 statistics (min, max, mean, median, IQR=difference between 75%tile and 25%tile) for each continent for each decade.
 
@@ -261,4 +269,4 @@ ggplot(data=temp) + geom_histogram(mapping=aes(mean), bins=20) +facet_grid(~star
 
 * Li: Plotted correlation between life expectancy and population size by using ggplot2, deplyr and magrittr.
 
-* Scott:
+* Scott: Wrote all the function in 'Functions Defined' section to be used with the rest of the writeup. Had one issue--using ggplot in a function (as you've noticed, there is some repeat code) wouldn't allow me to put mean 'geom_vline' in the plots for both subquestions. Additionally, completed both subquestions, managed files, and submitted.
