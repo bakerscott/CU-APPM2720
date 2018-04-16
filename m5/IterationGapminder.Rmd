@@ -1,5 +1,6 @@
 ---
 title: "IterationGapminder"
+author: "Scott Baker"
 output: html_document
 ---
 
@@ -13,24 +14,29 @@ library(stringr)
 gapminder <- gapminder::gapminder_unfiltered
 ```
 
-The question is "Did Asia get better health from the 1960's to the 1990's"
+The question is "Did Asia get better health from the 1960's to the 1990's?"
 
 The Null Hypothesis is "There is no change between the health in Asia between the 1960's and the 1990's"
 
 The test statistic ("summary") of the data is a mean of a sample of 10 values from the gapminder data
 
 ```{r}
+#data for both years--has "no label"
 gData <- filter(gapminder, continent == "Asia", (year < 1970 & year >= 1960) | (year < 2000 & year >= 1990))
+#data for the 60's:
 gData60 <- filter(gapminder, continent == "Asia", (year < 1970 & year >= 1960))
+#data for the 90's:
 gData90 <- filter(gapminder, continent == "Asia", (year < 2000 & year >= 1990))
 
 i <- 0
-len <- 1000
+#this is the number of iterations
+len <- 1000 
 output <- as.data.frame(1:len)
 #output
 
 colnames(output) <- c("values")
 
+#ITERATION:
 while(i < len){
   temp <- sample_n(gData,10,replace=TRUE)
   meanT <- mean(temp$lifeExp)
@@ -39,12 +45,15 @@ while(i < len){
 }
 #output
 
+
+#percentiles setup:
 m60 <- mean(gData60$lifeExp)
 m90 <- mean(gData90$lifeExp)
 pm60 <- 0
 pm90 <- 0
 
 j <- 0
+#percentile checking
 while(j < len){
   if(output[j+1,1] < m60){
     pm60 <- pm60 + 1
@@ -54,10 +63,14 @@ while(j < len){
   }
   j <- j + 1
 }
+
+#normalization to a percentage
 pm60 <- pm60 / len*100
 pm90 <- pm90 / len*100
 
+#percentile the mean of the 60's life expectancy is:
 pm60
+#percentile the mean of the 90's life expectancy is:
 pm90
 
 
