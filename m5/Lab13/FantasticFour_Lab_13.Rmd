@@ -1,0 +1,28 @@
+---
+title: "Lab_13"
+author: "Fantastic Four"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(lubridate)
+library(forcats)
+library(stringr)
+library(magrittr)
+
+#reading the data into a dataset: from here on out, there will only be functions
+gapminder <- gapminder::gapminder_unfiltered
+
+```
+
+
+# Contributions
+* Lindsay: Contributed to write up and analysis, as well as overall question significance.
+
+* Lexie: Helped create overall question to answer and steps to answer it.
+
+* Li: Plotted correlation between life expectancy and population size by using ggplot2, deplyr and magrittr.
+
+* Scott: Wrote all the function in 'Functions Defined' section to be used with the rest of the writeup. Had one issue--using ggplot in a function (as you've noticed, there is some repeat code) wouldn't allow me to put mean 'geom_vline' in the plots for both subquestions. Additionally, completed both subquestions, managed files, and submitted.
