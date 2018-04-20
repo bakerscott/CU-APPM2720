@@ -21,24 +21,39 @@ gmFood <- as_data_frame(read_csv("https://raw.githubusercontent.com/bakerscott/C
 #lexie's data
 gdp<- read_csv("https://raw.githubusercontent.com/bakerscott/CU-APPM2720/master/m5/Lab13/gdp_total_ppp.csv")
 hiv<- read_csv("https://raw.githubusercontent.com/bakerscott/CU-APPM2720/master/m5/Lab13/hiv_plwha.csv")
+
+#lindsay's data
+femaleBMI<-read.csv("Indicator_BMI_female.csv", header=TRUE, check.names=FALSE)
+maleBMI<-read.csv("Indicator_BMI_male.csv", header = TRUE, check.names = FALSE)
 ```
 
-# Scott's Section, will add title later
+# How can CU's involvements help improve living around the world?
+
 ```{r}
-#this is for cleanup:
-gmFood <- as.data.frame(gmFood)
-#united states food consumption
-uS <- gmFood[241,]
-uS <- uS[-1]
+#this section will be for giving reason to improving lives
+
 ```
 
-Has there been an increase in food consumption from the 1960's to the 2000's in the United States? This question is important in assessing the overall health of students at CU over the last fourty years. By looking at this question, potential improvments could be made at CU with regards to food consumption and health.
+
+
+
+
+# Subquestions
+
+## How has food consumption changed in the last forty years? (Scott)
+
+Has there been an increase in food consumption from the 1960's to the 2000's in the United States? This question is important in assessing the overall health of students at CU and people in our country over the last forty years. By looking at this question, potential improvments could be made at CU with regards to food consumption and health. Additionally, answering this question may give logic to funding food sustainability research.
 
 The null hypothesis we wish to test is "there is no change in food consumption from 1960 to 2000 in the United States".
 
-The test statistic is ten "unlabeled" values for food consumption over the last fourty years. Here is the histogram of 1000 iterations of the test statistic.
+The test statistic is ten "unlabeled" values for food consumption over the last forty years. Here is the histogram of 1000 iterations of the test statistic.
 
 ```{r,warning=FALSE,msg=FALSE,fig.width=10,fig.height=4}
+#this is for cleanup:
+gmFood <- as.data.frame(gmFood)
+#united states food consumption
+uS <- gmFood[241,] #snag the row US
+uS <- uS[-1] #get rid of the "United States" label
 
 dfUS <- data_frame(year=integer(),
                     energy=double()
@@ -101,12 +116,84 @@ ggplot(data=output) + geom_histogram(mapping=aes(values),color="green", bins=30)
   ylab("Count") +
   ggtitle("Sampling of Food Consumption in the US from the 1960's to the 2000's")
 
+#mean of the test stat 1K
+MM <- sapply(output,mean)
+#standard deviation of the test stat 1K
+SS <- sapply(output,sd)
+
+#zscore 60's
+z60 <- (m60 - MM)/SS
+#ascore 2k's
+z2k <- (m2k - MM)/SS
 ```
-#Subquestions
+
+The distribution of the test statistic is fairly normal with mean `r MM` and standard deviation `r SS`. It is seen that the mean value for the 1960's is `r m60` and sits at the 0th percentile. This means that there are no values in the distribution of the test statistic that is lower than this mean. Furthermore, the z-score for an assumed normal distribution is `r z60` which tells us that there is a significant difference between average for the 60's and testing average. Additionally, the same analysis is true for the value in the 2000's. The average food consumption in the 2000's is `r m2k` which sits at the 100th percentile (technically 99.9th) and has a z-score of `r z2k`. By assessing these scores, the null hypothesis can be rejected and it can be said that there is a significant difference between food consumption in the 1960's and in the 2000's.
+
+With regard to CU, this increase in consumption on average means two things for our school. First, the school must make sure they are promoting health programs in order to keep students active and not let them consume more food than they can maintain. Second, since there has been an increase in consumption, the school must keep funding research about food sustainability. With a growing population and growing consumption, research on sustatinable food would be a good investment for the future of society.
+
 
 ##Lindsay
+```{r}
+fBMI<-gather(femaleBMI, -`Country`, key=year, value="femaleBMI")
+BMI_f<-rename(fBMI, "country"="Country")
+mBMI<-gather(maleBMI, -`Country`, key=year, value="maleBMI")
+BMI_m<-rename(mBMI, "country"="Country")
+addFBMI<-merge(gapminder, BMI_f, by=c("country"="country", "year"="year"))
+BMI.data<-merge(addFBMI, BMI_m, by=c("country"="country", "year"="year"))
+```
+1. Is there a significantly significant difference between the difference in mean values of the differences in African male and female BMI by from 1987 to 2007?
+2. There should not be a difference in the mean difference BMI for the countries, the year should not affect the difference which should be zero.
+3. The summary of the data wll be the mean of the difference in BMI for each African countries' male and female BMI.
+4. After determining the means of the countries BMI difference, drawn repeatidly, the values will be placed in a histogram , and the mean of the distribution shoud occur at zero.
+5. For female BMI 40% of the mean difference values are between -0.119 and 0.110, while 40% of male BMI fall between -0.73 and 0.069. For both sexes, almost half the data lies in those ranges, which are very small, which suggests that most of the differences are zero, or very close to zero.
+6. The two graphs illustrate the mean value of the randomly selected differences between BMI for males and females from 1987 to 2007. The female BMI and male BMI are representative of a standard normal distribution, with the mean at 0, this is the expected result of the null hypothisis. This data validates the null hypothsis, that BMI is not dependent on country or year, beacue the randomly sampled data has a mean diffrence in BMI of zero when the labels are stripped off the data.
+```{r}
+set.seed(30)
+diffBMI<-tibble(country=unique(filter(BMI.data, continent=="Africa", year==1987)$country), one=0, two=0, three=0, four=0)
+BSIsample<-vector("double", length=length(diffBMI$country))
+female.medians<-vector("double", length=1000)
+male.medians<-vector("double", length=1000)
+mixBMI<-function(place, choiceNum, yr=c(1987, 2007)){
+  val1<-filter(BMI.data, country==place, year==yr[1])
+  val2<-filter(BMI.data, country==place, year==yr[2])
+  difference<-val1[,choiceNum]-val2[choiceNum]
+  diff<-as.numeric(difference)
+  c(0, diff, -diff, 0)
+}
+countryMix<-function(data, col){
+  for(j in seq_along(data$country)){
+    data[j, 2:5]<-mixBMI(data$country[j], col)
+  }
+  return(data)
+}
+getSample<-function(data, vector){
+  for(k in seq_along(vector)){
+    vector[k]<-as.numeric(sample(data[sample(nrow(data),1),2:5], 1))
+      #sample(female.diffBMI[,2:5],1)
+  }
+  return(vector)
+}
+getMean<-function(set, vectorFill, col){
+  for(n in seq_along(vectorFill)){ 
+    set<-countryMix(set, col)
+    BSIsample<-getSample(set, BSIsample)
+    vectorFill[n]<-mean(BSIsample)
+  }
+  return(vectorFill)
+}
+female.medians<-getMean(diffBMI, female.medians, 7)
+male.medians<-getMean(diffBMI, male.medians, 8)
+
+ggplot()+ geom_histogram(aes(female.medians), bins=70)+ geom_vline(aes(xintercept=0), color="red")+ ggtitle("Means of country female BSI from 1987 to 2007")
+ggplot()+ geom_histogram(aes(male.medians), bins=70)+ geom_vline(aes(xintercept=0), color="blue")+ ggtitle("Means of country male BSI from 1987 to 2007")
+
+quantile(female.medians, probs=c(.3,.7))
+quantile(male.medians, probs=c(.3,.7))
+```
 
 ##Lexie
+
+
 ```{r, echo= FALSE}
 
 ```
@@ -245,9 +332,9 @@ ggplot(data= hivGapAVG) +geom_histogram(aes(avgHIV), bins=20) +geom_vline(aes(xi
 
 In this histogram, the distribution is mostly on the left side of the average, but still close to the median. This calculation is overall a 
 accurate representation of the average number of adults with HIV over time. 
+
 ##Li
 
-##Scott
 
 # Contributions
 * Lindsay: 
