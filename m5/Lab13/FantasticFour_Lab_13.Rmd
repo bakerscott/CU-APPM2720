@@ -18,8 +18,156 @@ gapminder <- gapminder::gapminder_unfiltered
 #scott's food gapminder data
 gmFood <- read_csv("https://raw.githubusercontent.com/bakerscott/CU-APPM2720/master/m5/Lab13/Gapminder_Food_Consumption.csv")
 
+#lexie's data
+gdp<- read_csv("https://raw.githubusercontent.com/bakerscott/CU-APPM2720/master/m5/Lab13/gdp_total_ppp.csv")
+hiv<- read_csv("https://raw.githubusercontent.com/bakerscott/CU-APPM2720/master/m5/Lab13/hiv_plwha.csv")
+```
+#Subquestions
+
+##Lindsay
+
+##Lexie
+```{r, echo= FALSE}
+
 ```
 
+Question: How is GDP related to adults with HIV? This is important because it can affect how we address AIDS in developing countries compared to how we treat it in developed countries. 
+Null Hypothesis: GDP is not related to the amount of adults with HIV.
+
+```{r, echo= FALSE}
+colnames(gdp)[1]<- "country"
+
+gdp <- gdp %>%
+  gather(-country, key= "year", value = "totalGDP")
+
+gdp<-gdp %>%
+  select(country, year, totalGDP) %>%
+  filter(!is.na(totalGDP), year>=1990)
+
+colnames(hiv)[1]<- "country"
+
+hiv<- hiv %>%
+  gather(-country, key= "year", value = "HIVcases")
+
+hiv<- hiv %>%
+  filter(!is.na(HIVcases), year>= 1990) 
+hiv[3] <- transform(as.integer(hiv$HIVcases))
+hiv[2]<- transform(as.integer(hiv$year))
+hiv[1] <- transform(as.factor(hiv$country))
+
+
+hivGap <- full_join(gapminder, hiv, by= "country")
+hivGap<- hivGap %>%  
+  filter(year.x == year.y) %>%
+  select(-year.y)
+
+colnames(hivGap)[3]<- "year"
+
+hivgdp <- full_join(gdp, hiv, by= "country")
+hivgdp<- hivgdp %>%  
+  filter(year.x == year.y) %>%
+  select(-year.y)
+
+colnames(hivgdp)[2]<- "year"
+
+hivgdp1 <- hivgdp %>%
+  filter(country== "Afghanistan"| country== "Australia" | country== "Brazil" | country == "Congo, Rep" | country == "Cote d'Ivoire" | country=="France" | country== "Haiti" | country== "India" | country=="Kenya" | country== "Nigeria" | country== "Rwanda" | country== "South Africa" | country== "Thailand" | country=="Tanzania" | country=="Switzerland" | country=="United Kingdom" | country== "United States" |country == "Uganda" | country== "Zimbabwe")
+
+gdp1 <- gdp %>%
+  filter(country== "Afghanistan"| country== "Australia" | country== "Brazil" | country == "Congo, Rep" | country == "Cote d'Ivoire" | country=="France" | country== "Haiti" | country== "India" | country=="Kenya" | country== "Nigeria" | country== "Rwanda" | country== "South Africa" | country== "Thailand" | country=="Tanzania" | country=="Switzerland" | country=="United Kingdom" | country== "United States" |country == "Uganda" | country== "Zimbabwe")
+```
+
+```{r, echo=FALSE,fig.width=5,fig.height=5}
+
+#ggplot(hivgdp1, aes(year, HIVcases, color= country)) + geom_point(alpha=1/3) + geom_smooth(data=gdp1, aes(year, totalGDP, color= country)) + geom_text(show.legend = FALSE, label= countries, nudge_y = 0.1, nudge_x = 0.05)
+
+hivgdpAVG <- hivgdp1 %>%
+  group_by(year) %>%
+  summarise(avgHIV= mean(HIVcases, na.rm=TRUE), avgGDP= mean(totalGDP, na.rm=TRUE))
+
+totalAvgHivGdp<- hivgdpAVG %>%
+  summarise(totalAvgHIV= mean(avgHIV), totalAvgGdp= mean(avgGDP))
+
+
+stdev<- hivgdpAVG %>%
+  summarise(sd(avgHIV), sd(avgGDP))
+
+
+hivgdpAVG1 <- hivgdpAVG %>%
+  mutate(stdHIV= (avgHIV- totalAvgHivGdp[[1]])/ stdev[[1]], stdGDP= (avgGDP - totalAvgHivGdp[[2]])/ stdev[[2]])
+
+countries<- c("Afghanistan", "Australia", "Brazil", "Cote d'Ivoire", "France", "Haiti", "India", "Kenya", "Nigeria", "Rwanda", "South Africa", "Thailand", "Tanzania", "Switzerland", "United Kingdom", "United States", "Uganda", "Zimbabwe")
+years<- c("1990","1991","1992", "1993", "1994", "1995", "1996", "1997", "1998", "1999", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011")
+
+hivgdpAVG1 %>%ggplot(aes(stdGDP, stdHIV)) + geom_point(aes(color= year), size=3) + geom_line() +geom_text(show.legend = FALSE, label= years, nudge_y = 0.1, nudge_x = 0.05)+ xlab("Standardized GDP")+  ylab("Standardized HIV") +ggtitle("GDP vs. HIV in adult population")
+```
+
+Test Statistic: Using the standardized values for a selected number of countries GDP and adults with HIV, the graph shows for some time between 1990-2011, the standardized number for GDP and HIV show a linear relationship. As time gets closer to 2000, the trend plateaus and remains slowly increasing for the rest of the plot. 
+
+
+```{r, echo= FALSE, message=FALSE, warning=FALSE}
+#for defining functions (?):
+showLevels <- function(data_input){
+  return(unique(data_input))
+}
+
+summaryStats <- function(data_input,continent_in,start_year,end_year,column_in){
+  #main function to return the summary stats for a certain dataset and column for years
+  x2 <- filter(data_input,continent == continent_in,year>=start_year,year<=end_year)
+  x <- sample_n(x2,10,replace=TRUE)
+  df <- data.frame(continent_in,start_year,end_year,mean=mean(x[[column_in]]),median=median(x[[column_in]]),min=min(x[[column_in]]),max=max(x[[column_in]]),IQR=IQR(x[[column_in]]))
+  return(df)
+}
+calc_summaryStats <- function(data_input,continent_in,start_year,end_year,column_in){
+  yearA <- start_year
+  output_summary <- 0
+
+  while(yearA < end_year){
+    output_summary <- rbind(output_summary, summaryStats(data_input,continent_in,yearA,yearA+9,column_in))
+    yearA <- yearA + 10
+  }
+  output_summary <- output_summary[-1,]
+  colnames(output_summary) <- c("continent","start_year","end_year","mean","median","minimum","maximum","IQR")
+  return(output_summary)
+}
+
+runAll_calc_summaryStats <- function(data_input,start_year,end_year,column_in){
+  #cont = c("Africa","Asia","Americas","Europe","Oceania")
+  output_dataframe <- 0
+  fun <- showLevels(data_input$continent)
+  for(item in fun){
+    output_dataframe <- rbind(output_dataframe, calc_summaryStats(hivGap,item,start_year,end_year,column_in))
+  }
+  return(output_dataframe)
+}
+
+i <- 0
+temp <- 0
+#while(i < 100){
+#  temp <- rbind(temp,calc_summaryStats(hivGap,"Africa",1990,2012,"HIVcases"))
+#  temp <- temp[-1,]
+#  i <- i + 1
+#}
+
+#ggplot(data=temp) + geom_histogram(mapping=aes(mean), bins=20) +facet_grid(~start_year) + geom_vline(aes(xintercept=mean(mean)),color='Red') + ggtitle("Life Expectancy in Africa over time") + ylab("Mean Life Expectancy") + xlab("Year (start of decade)")
+
+hivGapAVG <- hivGap%>%
+  group_by(year) %>%
+  summarise(avgHIV= mean(HIVcases, na.rm=TRUE), avgGDP= mean(gdpPercap, na.rm=TRUE))
+hivGapAVG1<- hivGapAVG %>%
+  summarise(totalAvgHIV= mean(avgHIV), totalAvgGDP= mean(avgGDP))
+
+
+
+#back-up plan
+ggplot(data= hivGapAVG) +geom_histogram(aes(avgHIV), bins=20) +geom_vline(aes(xintercept= hivGapAVG1[[1]]), color= "red") + ggtitle("Average number of adults with HIV over time")
+```
+
+In this histogram, the distribution is mostly on the left side of the average, but still close to the median. This calculation is overall a 
+accurate representation of the average number of adults with HIV over time. 
+##Li
+
+##Scott
 
 # Contributions
 * Lindsay: 
