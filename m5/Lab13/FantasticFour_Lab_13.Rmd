@@ -360,4 +360,4 @@ In term of the Chancellor of CU Boulder's request for help him and others around
 
 * Li: Used interating functions to testing the hypothesis about whether the employment rate of students between 1991 and 2007 is decreasing or increasing and related it with the overall question about CU.
 
-* Scott: Wrote the introduction and the subquestion on food consumption. Responsible for knitting the final submission and managing file in the git.
+* Scott: Wrote the introduction and the subquestion on food consumption. Responsible for knitting the final submission and managing files in the git.
