@@ -36,7 +36,7 @@ maleBMI<-read.csv("https://raw.githubusercontent.com/bakerscott/CU-APPM2720/mast
 
 
 
-
+Analysing the relationship between adults with HIV and the GDP of a country is important for the student population because this will create an awareness for the student population that we can act on. HIV in developing countries will have to be treated differently than is it treated in the US due to the lack of resources, which can be fixed and addressed by our generation starting with creating awareness.
 
 # Subquestions
 
@@ -179,15 +179,10 @@ The above data illustrates that over time there as been little to no change in t
 
 ##Lexie
 
-
-```{r, echo= FALSE}
-
-```
-
 Question: How is GDP related to adults with HIV? This is important because it can affect how we address AIDS in developing countries compared to how we treat it in developed countries. 
 Null Hypothesis: GDP is not related to the amount of adults with HIV.
 
-```{r, echo= FALSE}
+```{r, echo= FALSE, warning=FALSE}
 colnames(gdp)[1]<- "country"
 
 gdp <- gdp %>%
@@ -230,7 +225,7 @@ gdp1 <- gdp %>%
   filter(country== "Afghanistan"| country== "Australia" | country== "Brazil" | country == "Congo, Rep" | country == "Cote d'Ivoire" | country=="France" | country== "Haiti" | country== "India" | country=="Kenya" | country== "Nigeria" | country== "Rwanda" | country== "South Africa" | country== "Thailand" | country=="Tanzania" | country=="Switzerland" | country=="United Kingdom" | country== "United States" |country == "Uganda" | country== "Zimbabwe")
 ```
 
-```{r, echo=FALSE,fig.width=5,fig.height=5}
+```{r, echo=FALSE,fig.width=5,fig.height=5, warning=FALSE}
 
 #ggplot(hivgdp1, aes(year, HIVcases, color= country)) + geom_point(alpha=1/3) + geom_smooth(data=gdp1, aes(year, totalGDP, color= country)) + geom_text(show.legend = FALSE, label= countries, nudge_y = 0.1, nudge_x = 0.05)
 
@@ -255,69 +250,20 @@ years<- c("1990","1991","1992", "1993", "1994", "1995", "1996", "1997", "1998", 
 hivgdpAVG1 %>%ggplot(aes(stdGDP, stdHIV)) + geom_point(aes(color= year), size=3) + geom_line() +geom_text(show.legend = FALSE, label= years, nudge_y = 0.1, nudge_x = 0.05)+ xlab("Standardized GDP")+  ylab("Standardized HIV") +ggtitle("GDP vs. HIV in adult population")
 ```
 
-Test Statistic: Using the standardized values for a selected number of countries GDP and adults with HIV, the graph shows for some time between 1990-2011, the standardized number for GDP and HIV show a linear relationship. As time gets closer to 2000, the trend plateaus and remains slowly increasing for the rest of the plot. 
+Test Statistic: Using the standardized values for a selected number of countries GDP and adults with HIV, the graph shows for some time between 1990-2011, the standardized number for GDP and HIV show a linear relationship. As time gets closer to 2000, the trend plateaus and remains slowly increasing for the rest of the plot. This shows us that there can be some relation between adults with HIV and the GDP of a country which proves my null hypothesis wrong. 
 
 
-```{r, echo= FALSE, message=FALSE, warning=FALSE}
-#for defining functions (?):
-showLevels <- function(data_input){
-  return(unique(data_input))
-}
-
-summaryStats <- function(data_input,continent_in,start_year,end_year,column_in){
-  #main function to return the summary stats for a certain dataset and column for years
-  x2 <- filter(data_input,continent == continent_in,year>=start_year,year<=end_year)
-  x <- sample_n(x2,10,replace=TRUE)
-  df <- data.frame(continent_in,start_year,end_year,mean=mean(x[[column_in]]),median=median(x[[column_in]]),min=min(x[[column_in]]),max=max(x[[column_in]]),IQR=IQR(x[[column_in]]))
-  return(df)
-}
-calc_summaryStats <- function(data_input,continent_in,start_year,end_year,column_in){
-  yearA <- start_year
-  output_summary <- 0
-
-  while(yearA < end_year){
-    output_summary <- rbind(output_summary, summaryStats(data_input,continent_in,yearA,yearA+9,column_in))
-    yearA <- yearA + 10
-  }
-  output_summary <- output_summary[-1,]
-  colnames(output_summary) <- c("continent","start_year","end_year","mean","median","minimum","maximum","IQR")
-  return(output_summary)
-}
-
-runAll_calc_summaryStats <- function(data_input,start_year,end_year,column_in){
-  #cont = c("Africa","Asia","Americas","Europe","Oceania")
-  output_dataframe <- 0
-  fun <- showLevels(data_input$continent)
-  for(item in fun){
-    output_dataframe <- rbind(output_dataframe, calc_summaryStats(hivGap,item,start_year,end_year,column_in))
-  }
-  return(output_dataframe)
-}
-
-i <- 0
-temp <- 0
-#while(i < 100){
-#  temp <- rbind(temp,calc_summaryStats(hivGap,"Africa",1990,2012,"HIVcases"))
-#  temp <- temp[-1,]
-#  i <- i + 1
-#}
-
-#ggplot(data=temp) + geom_histogram(mapping=aes(mean), bins=20) +facet_grid(~start_year) + geom_vline(aes(xintercept=mean(mean)),color='Red') + ggtitle("Life Expectancy in Africa over time") + ylab("Mean Life Expectancy") + xlab("Year (start of decade)")
-
+```{r, echo= FALSE, message=FALSE, warning=FALSE, fig.width=5, fig.height=5}
 hivGapAVG <- hivGap%>%
   group_by(year) %>%
   summarise(avgHIV= mean(HIVcases, na.rm=TRUE), avgGDP= mean(gdpPercap, na.rm=TRUE))
 hivGapAVG1<- hivGapAVG %>%
   summarise(totalAvgHIV= mean(avgHIV), totalAvgGDP= mean(avgGDP))
 
-
-
-#back-up plan
 ggplot(data= hivGapAVG) +geom_histogram(aes(avgHIV), bins=20) +geom_vline(aes(xintercept= hivGapAVG1[[1]]), color= "red") + ggtitle("Average number of adults with HIV over time")
 ```
 
-In this histogram, the distribution is mostly on the left side of the average, but still close to the median. This calculation is overall a 
-accurate representation of the average number of adults with HIV over time. 
+In this histogram, the distribution is mostly on the left side of the average, but still close to the median. This calculation is overall an accurate representation of the average number of adults with HIV over time. 
 
 ##Li
 
@@ -401,7 +347,7 @@ In term of the Chancellor of CU Boulder's request for help him and others around
 # Contributions
 * Lindsay: Created functions to find differences of values, then randomly select data to calculate the mean, then plotted values. Also merged datasets and found percentiles for data.
 
-* Lexie: 
+* Lexie: Analysed subquestion relating to adults with HIV in countries with varying GDP's by merging and tidying 2 data sets from the gapminder website while using gapminder as well. 
 
 * Li: Used interating functions to testing the hypothesis about whether the employment rate of students between 1991 and 2007 is decreasing or increasing and related it with the overall question about CU.
 
