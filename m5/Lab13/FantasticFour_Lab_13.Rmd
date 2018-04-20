@@ -139,7 +139,7 @@ The distribution of the test statistic is fairly normal with mean `r MM` and sta
 With regard to CU, this increase in consumption on average means two things for our school. First, the school must make sure they are promoting health programs in order to keep students active and not let them consume more food than they can maintain. Second, since there has been an increase in consumption, the school must keep funding research about food sustainability. With a growing population and growing consumption, research on sustatinable food would be a good investment for the future of society.
 
 
-##Lindsay
+## Is there a difference in BMI? (Lindsay)
 ```{r}
 fBMI<-gather(femaleBMI, -`Country`, key=year, value="femaleBMI")
 BMI_f<-rename(fBMI, "country"="Country")
@@ -184,7 +184,7 @@ quantile(female.medians, probs=c(.3,.7))
 ```
 The above data illustrates that over time there as been little to no change in the Afrian populatin BMI. This suggests that the population has maintained a steady average BMI from 1987-2007, suggesting the overall health of the population has not changed. Using this model to represent a larger demographic, no change in BMI indicates a stability for population health, however, if recalculated and the BMI fuluctuates, it would indicate possible heath issues such as obesity, or malnutrition. To make this model more accurate, it would be benificial to determine the change in BMI for more recent dates and other countries.
 
-##Lexie
+## Is there a change in adults with HIV? (Lexie)
 
 Analysing the relationship between adults with HIV and the GDP of a country is important for the student population because this will create an awareness for the student population that we can act on. HIV in developing countries will have to be treated differently than is it treated in the US due to the lack of resources, which can be fixed and addressed by our generation starting with creating awareness.
 
@@ -274,7 +274,7 @@ ggplot(data= hivGapAVG) +geom_histogram(aes(avgHIV), bins=20) +geom_vline(aes(xi
 
 In this histogram, the distribution is mostly on the left side of the average, but still close to the median. This calculation is overall an accurate representation of the average number of adults with HIV over time.
 
-##Li
+## How does employment change from the 90's to the 00's? (Li)
 
 The question is "Did the students (15-24 years old) have a better chance to get employed in the United States from the 1990's to the 2000's?"
 
