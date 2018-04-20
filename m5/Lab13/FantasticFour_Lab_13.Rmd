@@ -350,4 +350,4 @@ accurate representation of the average number of adults with HIV over time.
 
 * Li: 
 
-* Scott:
+* Scott: Wrote the introduction and the subquestion on food consumption. Responsible for knitting the final submission and managing file in the git.
