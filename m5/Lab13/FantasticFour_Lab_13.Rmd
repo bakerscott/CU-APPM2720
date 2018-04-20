@@ -4,7 +4,7 @@ author: "Fantastic Four"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include=FALSE,message=FALSE,warning=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(lubridate)
@@ -16,7 +16,87 @@ library(magrittr)
 gapminder <- gapminder::gapminder_unfiltered
 
 #scott's food gapminder data
-gmFood <- read_csv("https://raw.githubusercontent.com/bakerscott/CU-APPM2720/master/m5/Lab13/Gapminder_Food_Consumption.csv")
+gmFood <- as_data_frame(read_csv("https://raw.githubusercontent.com/bakerscott/CU-APPM2720/master/m5/Lab13/Gapminder_Food_Consumption.csv"))
+
+```
+
+# Scott's Section, will add title later
+```{r}
+#this is for cleanup:
+gmFood <- as.data.frame(gmFood)
+#united states food consumption
+uS <- gmFood[241,]
+uS <- uS[-1]
+```
+
+Has there been an increase in food consumption from the 1960's to the 2000's in the United States? This question is important in assessing the overall health of students at CU over the last fourty years. By looking at this question, potential improvments could be made at CU with regards to food consumption and health.
+
+The null hypothesis we wish to test is "there is no change in food consumption from 1960 to 2000 in the United States".
+
+The test statistic is ten "unlabeled" values for food consumption over the last fourty years. Here is the histogram of 1000 iterations of the test statistic.
+
+```{r,warning=FALSE,msg=FALSE,fig.width=10,fig.height=4}
+
+dfUS <- data_frame(year=integer(),
+                    energy=double()
+                   )
+tempY <- 1960
+for(i in seq_along(uS)){
+  dfUS[i,2] <- uS[1,i]
+  dfUS[i,1] <- tempY + i
+}
+#data for the 60's:
+uS60 <- filter(dfUS, (year < 1970 & year >= 1960))
+#data for the 2k's:
+uS2K <- filter(dfUS, (year >= 2000))
+#data for "fake data":
+dfUS <- filter(dfUS, (year >= 2000) || (year < 1970 & year >= 1960))
+i <- 0
+#this is the number of iterations:
+len <- 1000 
+output <- as.data.frame(1:len)
+#output
+colnames(output) <- c("values")
+#ITERATION:
+while(i < len){
+  temp <- sample_n(dfUS,10,replace=TRUE)
+  meanT <- mean(temp$energy)
+  output[i+1,1] <- meanT
+  i <- i + 1
+}
+#output
+#percentiles setup:
+m60 <- mean(uS60$energy)
+m2k <- mean(uS2K$energy)
+pm60 <- 0
+pm2k <- 0
+j <- 0
+#percentile checking
+while(j < len){
+  if(output[j+1,1] < m60){
+    pm60 <- pm60 + 1
+  }
+  else if(output[j+1,1] < m2k){
+    pm2k <- pm2k + 1
+  }
+  j <- j + 1
+}
+#normalization to a percentage
+pm60 <- pm60 / len*100
+pm2k <- pm2k / len*100
+#percentile the mean of the 60's life expectancy is:
+pm60
+#percentile the mean of the 2k's life expectancy is:
+pm2k
+#plot
+ggplot(data=output) + geom_histogram(mapping=aes(values),color="green", bins=30) + 
+  geom_vline(aes(xintercept = m60),color="red",lty=2) + 
+  geom_vline(aes(xintercept = m2k),color="blue",lty=2) +
+  geom_text(aes(x=3700, label="2000's Mean", y=100), colour="blue", angle=90, text=element_text(size=20)) +
+  geom_text(aes(x=2900, label="1960's Mean", y=100), colour="red", angle=90, text=element_text(size=20)) +
+  xlab("Mean Energy Consumption (kilocals/person per day)") +
+  ylab("Count") +
+  ggtitle("Sampling of Food Consumption in the US from the 1960's to the 2000's")
 
 ```
 
