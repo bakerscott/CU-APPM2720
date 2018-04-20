@@ -18,6 +18,9 @@ gapminder <- gapminder::gapminder_unfiltered
 #scott's food gapminder data
 gmFood <- as_data_frame(read_csv("https://raw.githubusercontent.com/bakerscott/CU-APPM2720/master/m5/Lab13/Gapminder_Food_Consumption.csv"))
 
+#lexie's data
+gdp<- read_csv("https://raw.githubusercontent.com/bakerscott/CU-APPM2720/master/m5/Lab13/gdp_total_ppp.csv")
+hiv<- read_csv("https://raw.githubusercontent.com/bakerscott/CU-APPM2720/master/m5/Lab13/hiv_plwha.csv")
 ```
 
 # Scott's Section, will add title later
@@ -98,9 +101,6 @@ ggplot(data=output) + geom_histogram(mapping=aes(values),color="green", bins=30)
   ylab("Count") +
   ggtitle("Sampling of Food Consumption in the US from the 1960's to the 2000's")
 
-#lexie's data
-gdp<- read_csv("https://raw.githubusercontent.com/bakerscott/CU-APPM2720/master/m5/Lab13/gdp_total_ppp.csv")
-hiv<- read_csv("https://raw.githubusercontent.com/bakerscott/CU-APPM2720/master/m5/Lab13/hiv_plwha.csv")
 ```
 #Subquestions
 
