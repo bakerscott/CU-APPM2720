@@ -9,3 +9,4 @@ Pipes, Functions, Vectors, Iteration, and Functional Programming in R.
 
 #### included:
 * Lab12 - Gapminder data
+* Lab13 - Gapminder data II
