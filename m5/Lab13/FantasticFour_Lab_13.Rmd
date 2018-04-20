@@ -23,14 +23,20 @@ gdp<- read_csv("https://raw.githubusercontent.com/bakerscott/CU-APPM2720/master/
 hiv<- read_csv("https://raw.githubusercontent.com/bakerscott/CU-APPM2720/master/m5/Lab13/hiv_plwha.csv")
 ```
 
-# Scott's Section, will add title later
+# How can CU's extracurriculars help improve living around the world?
+
 ```{r}
-#this is for cleanup:
-gmFood <- as.data.frame(gmFood)
-#united states food consumption
-uS <- gmFood[241,]
-uS <- uS[-1]
+#this section will be for giving reason to improving lives
+
 ```
+
+
+
+
+
+# Subquestions
+
+## How has food consumption changed in the last fourty years? (Scott)
 
 Has there been an increase in food consumption from the 1960's to the 2000's in the United States? This question is important in assessing the overall health of students at CU over the last fourty years. By looking at this question, potential improvments could be made at CU with regards to food consumption and health.
 
@@ -39,6 +45,11 @@ The null hypothesis we wish to test is "there is no change in food consumption f
 The test statistic is ten "unlabeled" values for food consumption over the last fourty years. Here is the histogram of 1000 iterations of the test statistic.
 
 ```{r,warning=FALSE,msg=FALSE,fig.width=10,fig.height=4}
+#this is for cleanup:
+gmFood <- as.data.frame(gmFood)
+#united states food consumption
+uS <- gmFood[241,] #snag the row US
+uS <- uS[-1] #get rid of the "United States" label
 
 dfUS <- data_frame(year=integer(),
                     energy=double()
@@ -102,11 +113,18 @@ ggplot(data=output) + geom_histogram(mapping=aes(values),color="green", bins=30)
   ggtitle("Sampling of Food Consumption in the US from the 1960's to the 2000's")
 
 ```
-#Subquestions
+
+
+
 
 ##Lindsay
 
+
+
+
 ##Lexie
+
+
 ```{r, echo= FALSE}
 
 ```
@@ -245,9 +263,9 @@ ggplot(data= hivGapAVG) +geom_histogram(aes(avgHIV), bins=20) +geom_vline(aes(xi
 
 In this histogram, the distribution is mostly on the left side of the average, but still close to the median. This calculation is overall a 
 accurate representation of the average number of adults with HIV over time. 
+
 ##Li
 
-##Scott
 
 # Contributions
 * Lindsay: 
