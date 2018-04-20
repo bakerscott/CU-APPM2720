@@ -36,13 +36,13 @@ hiv<- read_csv("https://raw.githubusercontent.com/bakerscott/CU-APPM2720/master/
 
 # Subquestions
 
-## How has food consumption changed in the last fourty years? (Scott)
+## How has food consumption changed in the last forty years? (Scott)
 
-Has there been an increase in food consumption from the 1960's to the 2000's in the United States? This question is important in assessing the overall health of students at CU and people in our country over the last fourty years. By looking at this question, potential improvments could be made at CU with regards to food consumption and health. Additionally, answering this question may give logic to funding food sustainability research.
+Has there been an increase in food consumption from the 1960's to the 2000's in the United States? This question is important in assessing the overall health of students at CU and people in our country over the last forty years. By looking at this question, potential improvments could be made at CU with regards to food consumption and health. Additionally, answering this question may give logic to funding food sustainability research.
 
 The null hypothesis we wish to test is "there is no change in food consumption from 1960 to 2000 in the United States".
 
-The test statistic is ten "unlabeled" values for food consumption over the last fourty years. Here is the histogram of 1000 iterations of the test statistic.
+The test statistic is ten "unlabeled" values for food consumption over the last forty years. Here is the histogram of 1000 iterations of the test statistic.
 
 ```{r,warning=FALSE,msg=FALSE,fig.width=10,fig.height=4}
 #this is for cleanup:
