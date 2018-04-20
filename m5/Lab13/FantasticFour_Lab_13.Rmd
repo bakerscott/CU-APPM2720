@@ -15,6 +15,9 @@ library(magrittr)
 #plain gapminder data
 gapminder <- gapminder::gapminder_unfiltered
 
+#overall college enrollment data
+collegeEnroll <- as_data_frame(read.csv("https://raw.githubusercontent.com/bakerscott/CU-APPM2720/master/m5/Lab13/College_Enrollment.csv"))
+
 #scott's food gapminder data
 gmFood <- as_data_frame(read_csv("https://raw.githubusercontent.com/bakerscott/CU-APPM2720/master/m5/Lab13/Gapminder_Food_Consumption.csv"))
 
@@ -27,15 +30,19 @@ femaleBMI<-read.csv("Indicator_BMI_female.csv", header=TRUE, check.names=FALSE)
 maleBMI<-read.csv("Indicator_BMI_male.csv", header = TRUE, check.names = FALSE)
 ```
 
-# How can CU's involvements help improve living around the world?
+# How can CU Improve?
 
-```{r}
-#this section will be for giving reason to improving lives
+As a team of data scientists hired by the school to look at improvements we can make as a top-tier research university, we have identified four subjects of interest -- Body Mass Index (BMI), adults with HIV, employment rate, and food consumption. By looking at historical data for these subjects and conclusions from testing, improvements can be made to our school and research. Motivation behind this subject comes from the continual increase in student enrollment to universities over the last fifty years (as seen below). Along with enrollment, CU must make sure that the quality of education and research does not decrease.
+
+```{r,fig.height=4,fig.width=7}
+#for overall question
+ggplot(collegeEnroll, aes(y=Public+Private, x=year)) + 
+    geom_bar( stat="identity",color="red") +
+    xlab("Year") + 
+    ylab("Total Enrollment (millions)") +
+    ggtitle("Total Enrollment in US Universities (Including Projected)")
 
 ```
-
-
-
 
 
 # Subquestions
