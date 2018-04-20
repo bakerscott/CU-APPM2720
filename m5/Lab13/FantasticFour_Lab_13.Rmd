@@ -321,12 +321,88 @@ accurate representation of the average number of adults with HIV over time.
 
 ##Li
 
+The question is "Did the students (15-24 years old) have a better chance to get employed in the United States from the 1990's to the 2000's?"
+
+The Null Hypothesis is "There is no change between the employment rate for young people in US between the 1990's and the 2000's"
+
+The test statistic of the data is a mean of a sample of 10 values from the data.
+
+```{r,warning=FALSE,message=FALSE}
+employment <- read_csv("https://github.com/bakerscott/CU-APPM2720/raw/master/m5/Lab13/indicator_t%2015-24%20employ.csv")
+
+colnames(employment) <- c("country","1991","1992","1993","1994", "1995","1996","1997","1998","1999","2000","2001","2002","2003","2004","2005","2006","2007")
+
+rate <- gather(employment, -'country', key = "year", value = "EmploymentRate")
+rate$year <- as.numeric(rate$year)
+rate$EmploymentRate <- as.numeric(rate$EmploymentRate)
+
+Data <- filter(rate, country == "United States", (year < 2000 & year >= 1900) | (year < 2100 & year >= 2000))
+
+Data90 <- filter(rate, country == "United States", (year < 2000 & year >= 1900))
+
+Data00 <- filter(rate, country == "United States", (year < 2100 & year >= 2000))
+
+i <- 0
+j <- 0
+n <- 1000
+
+output <- as.data.frame(1:n)
+colnames(output) <- c("values")
+
+while(i < n){
+  temp <- sample_n(Data,10,replace=TRUE)
+  meanT <- mean(temp$EmploymentRate)
+  output[i+1,1] <- meanT
+  i <- i + 1
+}
+
+
+m90 <- mean(Data90$EmploymentRate)
+m00 <- mean(Data00$EmploymentRate)
+pm90 <- 0
+pm00 <- 0
+
+
+while(j < n){
+  if(output[j+1,1] < m90){
+    pm90 <- pm90 + 1
+  }
+  else if(output[j+1,1] < m00){
+    pm00 <- pm00 + 1
+  }
+  j <- j + 1
+}
+
+
+pm90 <- pm90 / n*100
+pm00 <- pm00 / n*100
+
+pm90
+
+pm00
+
+
+
+ggplot(data=output) + geom_histogram(mapping=aes(values), bins=20) + 
+  geom_vline(aes(xintercept = m90),color="red",lty=2) + 
+  geom_vline(aes(xintercept = m00),color="blue",lty=2) +
+  geom_text(aes(x=m00, label="2000", y=100), colour="blue", angle=90, text=element_text(size=16)) +
+  geom_text(aes(x=m90, label="1990", y=100), colour="red", angle=90, text=element_text(size=16)) +
+  xlab("Mean Employment Rate") +
+  ylab("Count") +
+  ggtitle("Sampling of Employment Rate in US from the 1990's to the 2000's")
+  
+```
+
+From this above distribution, the 1990's employment rate was at `r m90` where the percentile was `r pm90`% and this means that there are no values in the distribution of the test statistic that is greater than this mean. The 2000's employment rate was at `r m00` where the percentile was `r pm00`% and this means that there are no values in the distribution of the test statistic that is smaller than this mean. Therefore we reject the null hypothesis and conclude that the employment rate for students in US is decresing and the employment situation is not optimistic in recent decade years.
+
+In term of the Chancellor of CU Boulder's request for help him and others around campus "benefit humanity", we would encourage students to go to graduate school after graduating and for the students who would like to work. Also, we would suggest that the career service of CU should be cherished and developed with more investment in the future to help students to have a better chance to get a decent job.
 
 # Contributions
 * Lindsay: Created functions to find differences of values, then randomly select data to calculate the mean, then plotted values. Also merged datasets and found percentiles for data.
 
 * Lexie: 
 
-* Li: 
+* Li: Used interating functions to testing the hypothesis about whether the employment rate of students between 1991 and 2007 is decreasing or increasing and related it with the overall question about CU.
 
 * Scott:
