@@ -23,7 +23,7 @@ gdp<- read_csv("https://raw.githubusercontent.com/bakerscott/CU-APPM2720/master/
 hiv<- read_csv("https://raw.githubusercontent.com/bakerscott/CU-APPM2720/master/m5/Lab13/hiv_plwha.csv")
 ```
 
-# How can CU's extracurriculars help improve living around the world?
+# How can CU's involvements help improve living around the world?
 
 ```{r}
 #this section will be for giving reason to improving lives
@@ -112,9 +112,20 @@ ggplot(data=output) + geom_histogram(mapping=aes(values),color="green", bins=30)
   ylab("Count") +
   ggtitle("Sampling of Food Consumption in the US from the 1960's to the 2000's")
 
+#mean of the test stat 1K
+MM <- sapply(output,mean)
+#standard deviation of the test stat 1K
+SS <- sapply(output,sd)
+
+#zscore 60's
+z60 <- (m60 - MM)/SS
+#ascore 2k's
+z2k <- (m2k - MM)/SS
 ```
 
+The distribution of the test statistic is fairly normal with mean `r MM` and standard deviation `r SS`. It is seen that the mean value for the 1960's is `r m60` and sits at the 0th percentile. This means that there are no values in the distribution of the test statistic that is lower than this mean. Furthermore, the z-score for an assumed normal distribution is `r z60` which tells us that there is a significant difference between average for the 60's and testing average. Additionally, the same analysis is true for the value in the 2000's. The average food consumption in the 2000's is `r m2k` which sits at the 100th percentile (technically 99.9th) and has a z-score of `r z2k`. By assessing these scores, the null hypothesis can be rejected and it can be said that there is a significant difference between food consumption in the 1960's and in the 2000's.
 
+With regard to CU, this increase in consumption on average means two things for our school. First, the school must make sure they are promoting health programs in order to keep students active and not let them consume more food than they can maintain. Second, since there has been an increase in consumption, the school must keep funding research about food sustainability. With a growing population and growing consumption, research on sustatinable food would be a good investment for the future of society.
 
 
 ##Lindsay
