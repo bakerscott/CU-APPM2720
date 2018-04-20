@@ -38,7 +38,7 @@ hiv<- read_csv("https://raw.githubusercontent.com/bakerscott/CU-APPM2720/master/
 
 ## How has food consumption changed in the last fourty years? (Scott)
 
-Has there been an increase in food consumption from the 1960's to the 2000's in the United States? This question is important in assessing the overall health of students at CU over the last fourty years. By looking at this question, potential improvments could be made at CU with regards to food consumption and health.
+Has there been an increase in food consumption from the 1960's to the 2000's in the United States? This question is important in assessing the overall health of students at CU and people in our country over the last fourty years. By looking at this question, potential improvments could be made at CU with regards to food consumption and health. Additionally, answering this question may give logic to funding food sustainability research.
 
 The null hypothesis we wish to test is "there is no change in food consumption from 1960 to 2000 in the United States".
 
