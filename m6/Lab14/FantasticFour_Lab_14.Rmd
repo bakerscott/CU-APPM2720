@@ -284,7 +284,7 @@ With a z-score (`r z60`) super close to the mean, we can say that the mean of th
 
 
 # Contributions
-*Lindsay: Created a model to add predictions and determine if there is linear relationship between arrival delays to Denver and aircraft delays.
+* Lindsay: Created a model to add predictions and determine if there is linear relationship between arrival delays to Denver and aircraft delays.
 
 * Lexie: Created individual plots and analyzed what information we have learned.
 
