@@ -1,7 +1,7 @@
 ---
 title: "Lab_14"
 author: "Fantastic Four"
-output: pdf_document
+output: html_document
 ---
 
 ```{r setup, include=FALSE}
@@ -23,16 +23,24 @@ It is important to isolate the different events which result in delayed flights 
 This graph best shows that the main factor of the longest flight delays are caused by weather. The chart below contains the top 10 longest delays in 2017, most of which occur in December through Feburary. This information goes along with what we have found below in the individual findings section about the months relating to amount of delays. There are still points that lie outside of the linear trend which tells us that weather is not the only factor contributing to the delay time.  Furthermore, there seems to be a strong correlation (.957) between the departure delay of a flight and the tardiness at DIA--which means that DIA might not be the problem with late flights.
 
 ```{r, echo=FALSE}
-modified_data <-COflights %>%
+modified_data <- COflights %>%
   filter(ARR_DELAY >=15 | DEP_DELAY>=15, MONTH, DAY_OF_MONTH, !WEATHER_DELAY==0)%>%
   mutate(total_delay= ARR_DELAY+DEP_DELAY)
+  
+weTdelay <- lm(total_delay~WEATHER_DELAY,data=modified_data)
 
-ggplot(data= modified_data, mapping=aes(x= WEATHER_DELAY, y= total_delay)) +geom_point()
+ggplot(data= modified_data, mapping=aes(x= WEATHER_DELAY, y= total_delay)) + 
+  geom_point() +
+  geom_abline(slope = weTdelay$coefficients[[2]], intercept = weTdelay$coefficients[[1]], colour = "red")+
+  ggtitle("Weather Delay vs. Total Delay with Linear Regression") + 
+  xlab("Weather Delay") +
+  ylab("Total Delay")
+  
 
-modified_data%>%
-  filter(total_delay>=2222) %>%
-  select(MONTH, DAY_OF_MONTH, total_delay)%>%
-  print(MONTH, total_delay)
+#modified_data%>%
+#  filter(total_delay>=2222) %>%
+#  select(MONTH, DAY_OF_MONTH, total_delay)%>%
+#  print(MONTH, total_delay)
 ```
 
 # Overall Findings
@@ -117,12 +125,34 @@ And the probability of that the actual air time greater than 300 mins will have 
 
 ## Scott Baker
 
+### Improvements
+
+There are three improvements I made:
+
+* I used factors to reorder the bar graphs that show arrival delay and departure delay counts by airline.
+
+* I applied a linear regression to look at the relationship between arrival delay and deparure delay.
+
+* I conducted a hypothesis test looking at the percentage of Southwest flights (out of the total) that arrive late.
+
+Most of the analysis remains the same as the original lab. However, by changing the three aspects described above, my code is cleaner and the visuals provides more convincing support to the analysis already done. 
+
+
+### Analysis
+
 First, I take a look at the number of flights that arrived late (more than 15 minutes) into Denver based on airline. Here is the graph:
 
-```{r,echo=FALSE}
-stuff <- filter(COflights,ARR_DELAY >= 15, DEST == "DEN") %>%
-  select(CARRIER)
-ggplot(stuff,mapping = aes(x = CARRIER)) + geom_bar() + geom_text(stat='count',aes(label=..count..),vjust = -0.5) + ggtitle("Number of ARR_DELAY >= 15 flights into Denver per Airline")
+```{r,fig.height=6,fig.width=9}
+stuff <- filter(COflights,ARR_DELAY >= 15, DEST == "DEN") %>% select(CARRIER) %>%  group_by(CARRIER) %>% summarise(count=n())
+
+stuff$CARRIER <- factor(stuff$CARRIER,levels = stuff$CARRIER[order(stuff$count)])
+
+ggplot(stuff, aes(x = CARRIER, y = count)) + 
+  geom_bar(stat = "identity") + 
+  geom_text(aes(label=count),vjust =-0.5) +
+  ggtitle("Number of ARR_DELAY >= 15 flights into Denver per Airline") +
+  ylab("Number of delayed arrivals")
+
 ```
 
 The first major observation is that airlines "WN", "UA", and "OO" have the most flights delayed landing.
@@ -130,35 +160,93 @@ The first major observation is that airlines "WN", "UA", and "OO" have the most 
 * United (UA): 6889
 * SkyWest (OO): 6070
 
-Although this confirms personal experience that some United and Southwest flights I've been on have been delayed, this does not provide any insight into the probabilities that a certain airline will have a delayed arrival. Furthermore, let us look at the actual proportion that a certain airline's flight to Denver is late. Observe the following table:
+```{r,fig.height=6,fig.width=9}
+stuff2 <- filter(COflights,DEP_DELAY >= 15, ORIGIN == "DEN") %>% select(CARRIER) %>%  group_by(CARRIER) %>% summarise(count=n())
 
-```{r,echo=FALSE}
-allflights <- filter(COflights,DEST == "DEN") %>%
-  select(CARRIER)
+stuff2$CARRIER <- factor(stuff2$CARRIER,levels = stuff2$CARRIER[order(stuff2$count)])
 
-tb1 <- allflights %>% table()
-tb2 <- stuff %>% table()
-tb2/tb1
+ggplot(stuff2, aes(x = CARRIER, y = count)) + 
+  geom_bar(stat = "identity") + 
+  geom_text(aes(label=count),vjust =-0.5) +
+  ggtitle("Number of DEP_DELAY >= 15 flights into Denver per Airline") +
+  ylab("Number of delayed arrivals")
+
 
 ```
+Now when looking at departure delays, the same three carriers appear at the top of the list:
+* Southwest (WN): 14025
+* United (UA): 7058
+* SkyWest (OO): 5538
 
-Here, we can see that "B6", "VX", and "NK" have the highest rate of late flights.
-* JetBlue (B6): 27.31%
-* Virgin (VX): 25.36%
-* Spirit (NK): 20.24%
-
-From this, we find that actually JetBlue, Virgin, and Spirit have the most delayed arrivals with respect to total flights--NOT United, Southwest, and SkyWest.
 
 The second part of my analysis is to show that there is a strong correlation between the departure delay and the tardiness of their arrival:
 
-```{r,echo=FALSE}
+```{r,echo=FALSE,fig.height=5,fig.width=8}
 arrdepdelay <- filter(COflights,DEST=="DEN"&!is.na(ARR_DELAY)&!is.na(DEP_DELAY)) %>% select(ARR_DELAY,DEP_DELAY)
 
-ggplot(arrdepdelay,mapping=aes(x=ARR_DELAY,y=DEP_DELAY)) + geom_point()+ ggtitle("Arrival Delay vs. Departure Delay")
+admod <- lm(ARR_DELAY~DEP_DELAY,data=arrdepdelay)
+arrdepdelay <- arrdepdelay %>% add_predictions(admod)
+
+
+ggplot(arrdepdelay) +
+  geom_point(mapping= aes(x = ARR_DELAY,y = DEP_DELAY)) +
+  geom_abline(slope = admod$coefficients[[2]], intercept = admod$coefficients[[1]], colour = "red")+
+  ggtitle("Arrival Delay vs. Departure Delay with Linear Regression") + 
+  xlab("Arrival Delay") +
+  ylab("Departure Delay")
+  #geom_text(aes(x=1250, label="regression line" , y=1000), colour="red", angle=35, text=element_text(size=20))
+  
 cor(arrdepdelay$ARR_DELAY,arrdepdelay$DEP_DELAY)
 ```
 
-From this we have two results. First, the correlation value between arrival delay (in Denver) and departure delay is .957, which is a strong correlation. Second, the implication of this is that there sometimes might not be anything DIA can do better to ensure more flights are on time--it could all be a product of the departure airport and their inability to get planes off in time. Although, this observation is generic and more specifics would be needed to confirm.
+From this we have two results. First, the correlation value between arrival delay (in Denver) and departure delay is .957, which is a strong correlation. Second, the implication of this is that there sometimes might not be anything DIA can do better to ensure more flights are on time--it could all be a product of the departure airport and their inability to get planes off in time. 
+
+For Southwest, we can take a look at the Southwest case, to see if they are actually the worst at arriving on time. The null hypothesis is that Southwest is not the worst at arriving on time. For this, we will use a test statistic of the percentage of Southwest flights that are late compared to others. The sample size would be 100 flights.
+
+```{r,warning=FALSE,msg=FALSE,fig.width=10,fig.height=4}
+dfTest <- filter(COflights,ARR_DELAY >= 15, DEST == "DEN") %>% select(CARRIER)
+i <- 0
+#this is the number of iterations:
+len <- 1000
+output <- as.data.frame(1:len)
+#output
+colnames(output) <- c("values")
+#ITERATION:
+while(i < len){
+  temp <- sample_n(dfTest,100,replace=TRUE)
+  meanT <- temp %>% group_by(CARRIER) %>% summarise(count=n()) %>% filter(CARRIER == "WN")
+  output[i+1,1] <- meanT$count/100
+  i <- i + 1
+}
+#output
+```
+
+
+```{r}
+mSt <- 12577 / sum(stuff$count)
+
+
+ggplot(data=output) + geom_histogram(mapping=aes(values),color="blue", bins=30) +
+  geom_vline(aes(xintercept = mSt),color="red",lty=2) +
+  #geom_text(aes(x=.35, label="mean", y=100), colour="red", angle=90, text=element_text(size=20)) +
+  xlab("Percentage") +
+  ylab("Count") +
+  ggtitle("Sampling of average percentage of Southwest flights arriving late")
+
+#mean of the test stat 1K
+MM <- sapply(output,mean)
+#standard deviation of the test stat 1K
+SS <- sapply(output,sd)
+
+#zscore SW percentage
+z60 <- (mSt - MM)/SS
+
+```
+
+
+With a z-score (`r z60`) super close to the mean, we can say that the mean of the test stat is close enough to the actual percentage of Southwest flights getting delayed. Therefore we can reject the null hypothesis and say that Southwest has the highest proportion of total flights with an arrival delay. Choose wisely next time you are flying Southwest and are trying to make a short connecting flight...
+
+
 
 # Contributions
 *Lindsay: Created a model to add predictions and determine if there is linear relationship between arrival delays to Denver and aircraft delays. 
@@ -167,4 +255,4 @@ From this we have two results. First, the correlation value between arrival dela
 
 * Li: Creted two plots to see how distance and actual elapsed time affected whether a flight is delayed or on-time. Checking my findings by using calcluating the probability of each event.
 
-* Scott: Besides the normal organization of the git and knitting/submitting the final file, I took care of the recommendation to DIA officials. I also examined airline-by-airline arrival delay.
+* Scott: Improved individual part from lab 6 by adding linear regression, hypothesis tesing, and string factors to make analysis more clear. Also added linear regression to the team question graph. Was responsible for knitting and submitting the document. 
