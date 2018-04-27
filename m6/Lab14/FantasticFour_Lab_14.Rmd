@@ -22,7 +22,7 @@ It is important to isolate the different events which result in delayed flights 
 # Conclusion
 This graph best shows that the main factor of the longest flight delays are caused by weather. The chart below contains the top 10 longest delays in 2017, most of which occur in December through Feburary. This information goes along with what we have found below in the individual findings section about the months relating to amount of delays. There are still points that lie outside of the linear trend which tells us that weather is not the only factor contributing to the delay time.  Furthermore, there seems to be a strong correlation (.957) between the departure delay of a flight and the tardiness at DIA--which means that DIA might not be the problem with late flights.
 
-```{r, echo=FALSE}
+```{r}
 modified_data <- COflights %>%
   filter(ARR_DELAY >=15 | DEP_DELAY>=15, MONTH, DAY_OF_MONTH, !WEATHER_DELAY==0)%>%
   mutate(total_delay= ARR_DELAY+DEP_DELAY)
@@ -65,7 +65,7 @@ The new tools I used are the linear model function to determine the models slope
 
 Using this model I can determine that weather is a large cause that exibits a linear relationship, there is still a good amount of variance for shorter delayed flights. This relates to the overall question because it addresses areas where DIA can improve. one of areas DIA can improve their efficiency is improving their preparedness for days with bad weather to minimized the number of delayed flights.
 
-```{r, echo= FALSE, warning=FALSE, message=FALSE}
+```{r, warning=FALSE, message=FALSE}
 modified_data <-COflights %>%
   filter(ARR_DELAY >=15 | DEP_DELAY>=15, MONTH, DAY_OF_MONTH, WEATHER_DELAY <=1500)%>%
   mutate(total_delay= ARR_DELAY+DEP_DELAY)
@@ -92,7 +92,7 @@ I have also included a graph of the residuals which shows, for the most part, th
 ## Lindsay Gettel
 How does a late aircraft delay affect the arrival delay of flights into Denver?
 This is a significant question in order to consider how previous flights affect the timing and schedules of others. If there is a relationship between late aircrafts and arrival delays, then precautions can be taken to avoid late aircrafts, and possibly to adjust precedures inbetween one flight and another to help minumize the domino affect of delayed flights.
-```{r, echo= FALSE, message=FALSE, warning=FALSE}
+```{r, message=FALSE, warning=FALSE}
 DEN<-COflights%>%
   filter(DEST=="DEN", !is.na(ARR_DELAY))
 # COflights%>%
@@ -119,7 +119,7 @@ To add the linear regression, I utilized the linearization function and applied 
 How does the flying distacne and carrier delay affect the arrival and departure delay time of the flights to/from Denver?
 
 The question is interesting and vital to our overall question since we can foresee the delay by analyzing the dataset of flights in Colorado so that DIA will reduce the delays and rearrage the schedule if they can.
-```{r, echo=FALSE}
+```{r}
 
 DENflights_arr <- COflights%>%
   filter(ORIGIN=="DEN", !is.na(ARR_DELAY), ARR_DELAY >= 15)%>%
@@ -137,7 +137,7 @@ From the above two plots, we can see a model with a categorical distance will pr
 
 Next, I will use an obvious linear model to analyze the relationship between carrier delay time and departure delay.
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
+```{r, message=FALSE, warning=FALSE}
 DENflights_dep <- COflights%>%
   filter(ORIGIN=="DEN", !is.na(DEP_DELAY), DEP_DELAY >= 15)%>%
   select(ORIGIN, DEP_DELAY, CARRIER, CARRIER_DELAY)
