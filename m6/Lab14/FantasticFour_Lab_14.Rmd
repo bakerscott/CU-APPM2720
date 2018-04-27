@@ -43,6 +43,7 @@ ggplot(data= modified_data, mapping=aes(x= WEATHER_DELAY, y= total_delay)) +
 #  print(MONTH, total_delay)
 ```
 
+
 # Overall Findings
 There seems to be many factors which all contribute to delayed flights. There are the mesured delays such as weather, security, mechanics, and air traffic. There is also a correlation between the month of the year and the amount of flight delays. January seems to have the most delays, and then the delays decrese until April which then begin to increse until August, followed by incresing delays until December. There is also relevant that the origin and destination of flights impacted the delays, for example, flights from Denver are more likely to be delayed than flights into Denver. There is also a relationship between flight length and how much the flight is delayed. On average two hour flights had the most amount of delays. Additionally, JetBlue and Virgin Airlines had the worst proportion of late flights (~27% and ~25% respectively) into Denver.
 
@@ -96,9 +97,9 @@ This is a significant question in order to consider how previous flights affect 
 ```{r, echo= FALSE, message=FALSE, warning=FALSE}
 DEN<-COflights%>%
   filter(DEST=="DEN", !is.na(ARR_DELAY))
-COflights%>%
-  filter(DEST=="DEN", !is.na(ARR_DELAY))%>%
-  ggplot()+ geom_point(aes(x=LATE_AIRCRAFT_DELAY, y=ARR_DELAY))
+# COflights%>%
+#   filter(DEST=="DEN", !is.na(ARR_DELAY))%>%
+#   ggplot()+ geom_point(aes(x=LATE_AIRCRAFT_DELAY, y=ARR_DELAY))
 
 linearModel<-lm(ARR_DELAY~LATE_AIRCRAFT_DELAY, data=DEN)
 
@@ -114,6 +115,7 @@ ggplot(DEN, aes(LATE_AIRCRAFT_DELAY))+ geom_point(aes(y=ARR_DELAY))+ geom_line(a
 ```
 The above graph illustrates the linear model of arrival delay regressed on late aircraft delay. The linear fit seams to model a portion of the data, but is not ideal, it demonsrates a slight positive relationship between late aircraft and arrival delays. The model does not fit due to the vertical spread of plots at which there was no delay due to late aicrafts, but there was still a significant arrival delay This indicates that increased late aircraft delays cause arrival delays, however, it is not the singular factor in late arrivals.
 Therefore, on time aircrafts, help minimize late arrivals and increase the chance a flight arrives ontime in Denver.
+To add the linear regression, I utilized the linearization function and applied predictions to to data set based off of the model.
 
 ## Zhenlong Li
 How does the flying distacne and carrier delay affect the arrival and departure delay time of the flights to/from Denver?
@@ -127,7 +129,7 @@ DENflights_arr <- COflights%>%
 
 DENflights_arr_mod <- lm(DISTANCE ~ ARR_DELAY, data = DENflights_arr, na.action = na.exclude)
 
-grid_arr <- DENflights %>%
+grid_arr <- DENflights_arr %>%
   add_predictions(DENflights_arr_mod)
 
 ggplot(DENflights_arr, aes(DISTANCE)) + geom_jitter(aes(y = ARR_DELAY))+ geom_line(aes(y = pred), data = grid, color="blue")
@@ -280,8 +282,9 @@ With a z-score (`r z60`) super close to the mean, we can say that the mean of th
 
 
 
+
 # Contributions
-* Lindsay: Created a model to add predictions and determine if there is linear relationship between arrival delays to Denver and aircraft delays.
+*Lindsay: Created a model to add predictions and determine if there is linear relationship between arrival delays to Denver and aircraft delays.
 
 * Lexie: Created individual plots and analyzed what information we have learned.
 
