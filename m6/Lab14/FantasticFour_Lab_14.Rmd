@@ -63,27 +63,29 @@ COflights %>%
 This graph shows the trend of the number of flights delayed in each month. January tops the other months with the number of flights delayed, it drops down to lower values until April. After April there is close to a linear increase in the number of delayed flights going until August, due to summer vacationers. September drops down significantly, most likely it is not a popular month to travel, as well as November since it has the lowest number of delayed flights. December increases in their number of delayed flights due to the hectic holiday season travellers.  
 
 ## Lindsay Gettel
-```{r}
-#Is a flight more likely to be delayed when leaving DEN or arriving in DEN?
+How does a late aircraft delay affect the arrival delay of flightes into Denver?
+This is a significant question in order to consider how previous flights affect the timing and schedules of others. If there is a relationship between late aircrafts and arrival delays, then precautions can be taken to avoid late aircrafts, and possibly to adjust precedures inbetween one flight and another to help minumize the domino affect of delayed flights.
+```{r, echo= FALSE, message=FALSE, warning=FALSE}
+DEN<-COflights%>%
+  filter(DEST=="DEN", !is.na(ARR_DELAY))
 COflights%>%
-  filter(ORIGIN=="DEN", DEP_DELAY>=15, !CANCELLED=="1")%>%
-  ggplot()+ geom_density(mapping=aes(x=DEP_DELAY), color="blue")+ xlim(0, 180)+ ggtitle("Departure delay for flight leaving DEN")+ ylim(0, 0.03)
-COflights%>%
-  filter(DEST=="DEN", ARR_DELAY>=15, !CANCELLED=="1")%>%
-  ggplot()+ geom_density(mapping=aes(x=ARR_DELAY), color="red")+ xlim(0,180)+ ggtitle("Arrival delay for flight into DEN")
-#probability late given the destination was DEN\
-allFlights<-filter(COflights, !CANCELLED=="1" & !is.na(CANCELLED))
-lateDen<-allFlights%>% filter(DEST=="DEN" & ARR_DELAY>=15)%>% count()
-den<-allFlights%>% filter(DEST=="DEN")%>% count()
-P_late_toDEN<-lateDen/den
-#probability late given orgin was DEN
-late_from_DEN<-allFlights%>% filter(ORIGIN=="DEN" & ARR_DELAY>=15)%>% count()
-fromDen<-allFlights%>% filter(ORIGIN=="DEN")%>% count()
-P_late_fromDen<- late_from_DEN/fromDen
-message("Conditional probability a flight is late given the destiation is DEN: ", P_late_toDEN)
-message("conditional probability a flight is late given it is leaving DEN: ", P_late_fromDen)
+  filter(DEST=="DEN", !is.na(ARR_DELAY))%>%
+  ggplot()+ geom_point(aes(x=LATE_AIRCRAFT_DELAY, y=ARR_DELAY))
+
+linearModel<-lm(ARR_DELAY~LATE_AIRCRAFT_DELAY, data=DEN)
+
+denPred<-DEN%>%
+  data_grid(LATE_AIRCRAFT_DELAY)%>%
+  add_predictions(linearModel)
+
+denRes<-DEN%>%
+  add_residuals(linearModel)
+
+ggplot(DEN, aes(LATE_AIRCRAFT_DELAY))+ geom_point(aes(y=ARR_DELAY))+ geom_line(aes(y=pred), data=denPred, color="blue", size=1)+ ggtitle("Arrival delay and delayed aircraft with liner model projection")
+
 ```
-The two plots show, respectively, how frequently flights are delayed a given amount of time when a flight is leaving or landing at the Denver airport. Both graphs have a similar distribution, however, flights into DEN have many more flights with a 20minute delay or greater. Calculated conditional probability demonstrate the probability of late arrival given the destination is Denver is 16%, and the probability of a late departure given a flight is leaving Denver is 19%.
+The above graph illustrates the linear model of arrival delay regressed on late aircraft delay. The linear fit seams to model a portion of the data, but is not ideal, it demonsrates a slight positive relationship between late aircraft and arrival delays. The model does not fit due to the vertical spread of plots at which there was no delay due to late aicrafts, but there was still a significant arrival delay This indicates that increased late aircraft delays cause arrival delays, however, it is not the singular factor in late arrivals. 
+Therefore, on time aircrafts, help minimize late arrivals and increase the chance a flight arrives ontime in Denver.
 
 ## Zhenlong Li
 Here's a plot showing that most delayed flights occured where flying distance is between 750 mile to 1000 miles:
@@ -159,7 +161,7 @@ cor(arrdepdelay$ARR_DELAY,arrdepdelay$DEP_DELAY)
 From this we have two results. First, the correlation value between arrival delay (in Denver) and departure delay is .957, which is a strong correlation. Second, the implication of this is that there sometimes might not be anything DIA can do better to ensure more flights are on time--it could all be a product of the departure airport and their inability to get planes off in time. Although, this observation is generic and more specifics would be needed to confirm.
 
 # Contributions
-* Lindsay: Created density plots to see how flight delays were impacted given that flights were either into or out of Denver. Calculated conditional probabilities that a flight was late given the destination or origin of a flight was DEN.
+*Lindsay: Created a model to add predictions and determine if there is linear relationship between arrival delays to Denver and aircraft delays. 
 
 * Lexie: Created individual plot and decription of graph. Also helped create the conclusion plot with help conclusion paragraph and recommendation ideas.
 
