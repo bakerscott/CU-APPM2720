@@ -43,9 +43,7 @@ ggplot(data= modified_data, mapping=aes(x= WEATHER_DELAY, y= total_delay)) +
 #  print(MONTH, total_delay)
 ```
 
-
-# Overall Findings
-There seems to be many factors which all contribute to delayed flights. There are the mesured delays such as weather, security, mechanics, and air traffic. There is also a correlation between the month of the year and the amount of flight delays. January seems to have the most delays, and then the delays decrese until April which then begin to increse until August, followed by incresing delays until December. There is also relevant that the origin and destination of flights impacted the delays, for example, flights from Denver are more likely to be delayed than flights into Denver. There is also a relationship between flight length and how much the flight is delayed. On average two hour flights had the most amount of delays. Additionally, JetBlue and Virgin Airlines had the worst proportion of late flights (~27% and ~25% respectively) into Denver.
+The overall findings of this lab were generally similar to those in Lab 6 but with the use of linear models and iteration we can make conclusions about the information with more certainty. We now are able to better isolate variables to create models to analyze patterns that we can then use to predict future values. 
 
 #Recommendations
 Dear DIA Administraion,
@@ -92,7 +90,7 @@ I have also included a graph of the residuals which shows, for the most part, th
 
 
 ## Lindsay Gettel
-How does a late aircraft delay affect the arrival delay of flightes into Denver?
+How does a late aircraft delay affect the arrival delay of flights into Denver?
 This is a significant question in order to consider how previous flights affect the timing and schedules of others. If there is a relationship between late aircrafts and arrival delays, then precautions can be taken to avoid late aircrafts, and possibly to adjust precedures inbetween one flight and another to help minumize the domino affect of delayed flights.
 ```{r, echo= FALSE, message=FALSE, warning=FALSE}
 DEN<-COflights%>%
@@ -286,7 +284,7 @@ With a z-score (`r z60`) super close to the mean, we can say that the mean of th
 # Contributions
 * Lindsay: Created a model to add predictions and determine if there is linear relationship between arrival delays to Denver and aircraft delays.
 
-* Lexie: Created individual plots and analyzed what information we have learned.
+* Lexie: Created individual plots and analyzed what information we have learned. Also created conclusion summarizing this lab.
 
 * Li: Initialized the write-up on git and impovred my previous analysis which is how distance and carrier delay affected a flight by using packages: modelr, tidyverse and ggplot2.
 
