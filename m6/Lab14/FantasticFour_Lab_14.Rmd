@@ -51,16 +51,36 @@ The following observations were made through our analysis:
 # Individual Findings
 
 ## Lexie Marinelli
-```{r, echo=FALSE}
-COflights %>%
-  filter (MONTH, ARR_DELAY >=15) %>%
-  count (MONTH) %>%
-  mutate("Number of delayed flights"= n)%>%
-  ggplot() + geom_smooth(mapping= aes(x= MONTH, y= n), se=FALSE)+geom_point(mapping=aes(x=MONTH, y=n))+ ggtitle(label="Trend of delayed flights throughout the year") +xlab(label="Month")+ ylab(label= "Number of Delayed Flights")
 
+Are a majority of flight delays in Colorado caused by weather?
+
+The new tools I used are the linear model function to determine the models slope and intercept and I used the data grid to add predictions and residuals to see how accurate the model is.
+
+Using this model I can determine that weather is a large cause that exibits a linear relationship, there is still a good amount of variance for shorter delayed flights. This relates to the overall question because it addresses areas where DIA can improve. one of areas DIA can improve their efficiency is improving their preparedness for days with bad weather to minimized the number of delayed flights. 
+
+```{r, echo= FALSE, warning=FALSE, message=FALSE}
+modified_data <-COflights %>%
+  filter(ARR_DELAY >=15 | DEP_DELAY>=15, MONTH, DAY_OF_MONTH, WEATHER_DELAY <=1500)%>%
+  mutate(total_delay= ARR_DELAY+DEP_DELAY)
+
+delaymod<- lm(total_delay~ WEATHER_DELAY , data= modified_data)
+
+modified_data1 <- modified_data %>%
+  data_grid(WEATHER_DELAY) %>%
+  add_predictions(delaymod)
+
+ggplot(modified_data, aes(x= WEATHER_DELAY)) +geom_point(aes(y=total_delay)) + geom_line(data= modified_data1, aes(y=pred), size=1, color= "red")
+
+modified_data1<- modified_data %>%
+  add_residuals(delaymod)
+
+ggplot(modified_data1, aes(resid)) + geom_freqpoly(binwidth= 0.5)
 ```
 
-This graph shows the trend of the number of flights delayed in each month. January tops the other months with the number of flights delayed, it drops down to lower values until April. After April there is close to a linear increase in the number of delayed flights going until August, due to summer vacationers. September drops down significantly, most likely it is not a popular month to travel, as well as November since it has the lowest number of delayed flights. December increases in their number of delayed flights due to the hectic holiday season travellers.  
+The model I chose to create was relating the total delay an aircraft experiences compared to the number of times it is related to weather. This model is best represented as a linear fit with a slope of 1.702 and a y-intercept of 113.104 The graph shows us that a majority of longer delays are caused by weather with some exceptions for the shorter delay times. Overall this model provides an accurate fit to the weather delay compared to the total delay of flights in Colorado in January. 
+
+I have also included a graph of the residuals which shows, for the most part, that the residuals are centered around 0. Some of the larger residuals are causes by other delay factors not including a weather delay but this is just a small amount of the data. 
+
 
 ## Lindsay Gettel
 How does a late aircraft delay affect the arrival delay of flightes into Denver?
@@ -163,7 +183,7 @@ From this we have two results. First, the correlation value between arrival dela
 # Contributions
 *Lindsay: Created a model to add predictions and determine if there is linear relationship between arrival delays to Denver and aircraft delays. 
 
-* Lexie: Created individual plot and decription of graph. Also helped create the conclusion plot with help conclusion paragraph and recommendation ideas.
+* Lexie: Created individual plots and analyzed what information we have learned. 
 
 * Li: Creted two plots to see how distance and actual elapsed time affected whether a flight is delayed or on-time. Checking my findings by using calcluating the probability of each event.
 
