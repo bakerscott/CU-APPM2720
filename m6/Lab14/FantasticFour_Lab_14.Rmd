@@ -17,7 +17,7 @@ COflights <- read_csv("https://files.osf.io/v1/resources/3z5as4pej8/providers/os
 
 # Guiding Question
 ##What factors lead to on time arrivals? What factors cause flight delays?
-It is important to isolate the different events which result in delayed flights and prompt flights in order to improve procedures to make them more effective and give a better assurance that flights will remain on schedule. This information could also help schedule future flights as well as preserve all assets which go into operating airports and flights. The factors we examined were: time, airline, weather, flight time, and length of flight. Although it can be difficult to completely isolate each of these factors (as, in the real world factors are compound), we tried to isolate these elements the best we could. 
+It is important to isolate the different events which result in delayed flights and prompt flights in order to improve procedures to make them more effective and give a better assurance that flights will remain on schedule. This information could also help schedule future flights as well as preserve all assets which go into operating airports and flights. The factors we examined were: time, airline, weather, flight time, and length of flight. Although it can be difficult to completely isolate each of these factors (as, in the real world factors are compound), we tried to isolate these elements the best we could.
 
 # Conclusion
 This graph best shows that the main factor of the longest flight delays are caused by weather. The chart below contains the top 10 longest delays in 2017, most of which occur in December through Feburary. This information goes along with what we have found below in the individual findings section about the months relating to amount of delays. There are still points that lie outside of the linear trend which tells us that weather is not the only factor contributing to the delay time.  Furthermore, there seems to be a strong correlation (.957) between the departure delay of a flight and the tardiness at DIA--which means that DIA might not be the problem with late flights.
@@ -26,16 +26,16 @@ This graph best shows that the main factor of the longest flight delays are caus
 modified_data <- COflights %>%
   filter(ARR_DELAY >=15 | DEP_DELAY>=15, MONTH, DAY_OF_MONTH, !WEATHER_DELAY==0)%>%
   mutate(total_delay= ARR_DELAY+DEP_DELAY)
-  
+
 weTdelay <- lm(total_delay~WEATHER_DELAY,data=modified_data)
 
-ggplot(data= modified_data, mapping=aes(x= WEATHER_DELAY, y= total_delay)) + 
+ggplot(data= modified_data, mapping=aes(x= WEATHER_DELAY, y= total_delay)) +
   geom_point() +
   geom_abline(slope = weTdelay$coefficients[[2]], intercept = weTdelay$coefficients[[1]], colour = "red")+
-  ggtitle("Weather Delay vs. Total Delay with Linear Regression") + 
+  ggtitle("Weather Delay vs. Total Delay with Linear Regression") +
   xlab("Weather Delay") +
   ylab("Total Delay")
-  
+
 
 #modified_data%>%
 #  filter(total_delay>=2222) %>%
@@ -59,16 +59,36 @@ The following observations were made through our analysis:
 # Individual Findings
 
 ## Lexie Marinelli
-```{r, echo=FALSE}
-COflights %>%
-  filter (MONTH, ARR_DELAY >=15) %>%
-  count (MONTH) %>%
-  mutate("Number of delayed flights"= n)%>%
-  ggplot() + geom_smooth(mapping= aes(x= MONTH, y= n), se=FALSE)+geom_point(mapping=aes(x=MONTH, y=n))+ ggtitle(label="Trend of delayed flights throughout the year") +xlab(label="Month")+ ylab(label= "Number of Delayed Flights")
 
+Are a majority of flight delays in Colorado caused by weather?
+
+The new tools I used are the linear model function to determine the models slope and intercept and I used the data grid to add predictions and residuals to see how accurate the model is.
+
+Using this model I can determine that weather is a large cause that exibits a linear relationship, there is still a good amount of variance for shorter delayed flights. This relates to the overall question because it addresses areas where DIA can improve. one of areas DIA can improve their efficiency is improving their preparedness for days with bad weather to minimized the number of delayed flights.
+
+```{r, echo= FALSE, warning=FALSE, message=FALSE}
+modified_data <-COflights %>%
+  filter(ARR_DELAY >=15 | DEP_DELAY>=15, MONTH, DAY_OF_MONTH, WEATHER_DELAY <=1500)%>%
+  mutate(total_delay= ARR_DELAY+DEP_DELAY)
+
+delaymod<- lm(total_delay~ WEATHER_DELAY , data= modified_data)
+
+modified_data1 <- modified_data %>%
+  data_grid(WEATHER_DELAY) %>%
+  add_predictions(delaymod)
+
+ggplot(modified_data, aes(x= WEATHER_DELAY)) +geom_point(aes(y=total_delay)) + geom_line(data= modified_data1, aes(y=pred), size=1, color= "red")
+
+modified_data1<- modified_data %>%
+  add_residuals(delaymod)
+
+ggplot(modified_data1, aes(resid)) + geom_freqpoly(binwidth= 0.5)
 ```
 
-This graph shows the trend of the number of flights delayed in each month. January tops the other months with the number of flights delayed, it drops down to lower values until April. After April there is close to a linear increase in the number of delayed flights going until August, due to summer vacationers. September drops down significantly, most likely it is not a popular month to travel, as well as November since it has the lowest number of delayed flights. December increases in their number of delayed flights due to the hectic holiday season travellers.  
+The model I chose to create was relating the total delay an aircraft experiences compared to the number of times it is related to weather. This model is best represented as a linear fit with a slope of 1.702 and a y-intercept of 113.104 The graph shows us that a majority of longer delays are caused by weather with some exceptions for the shorter delay times. Overall this model provides an accurate fit to the weather delay compared to the total delay of flights in Colorado in January.
+
+I have also included a graph of the residuals which shows, for the most part, that the residuals are centered around 0. Some of the larger residuals are causes by other delay factors not including a weather delay but this is just a small amount of the data.
+
 
 ## Lindsay Gettel
 How does a late aircraft delay affect the arrival delay of flightes into Denver?
@@ -92,35 +112,47 @@ denRes<-DEN%>%
 ggplot(DEN, aes(LATE_AIRCRAFT_DELAY))+ geom_point(aes(y=ARR_DELAY))+ geom_line(aes(y=pred), data=denPred, color="blue", size=1)+ ggtitle("Arrival delay and delayed aircraft with liner model projection")
 
 ```
-The above graph illustrates the linear model of arrival delay regressed on late aircraft delay. The linear fit seams to model a portion of the data, but is not ideal, it demonsrates a slight positive relationship between late aircraft and arrival delays. The model does not fit due to the vertical spread of plots at which there was no delay due to late aicrafts, but there was still a significant arrival delay This indicates that increased late aircraft delays cause arrival delays, however, it is not the singular factor in late arrivals. 
+The above graph illustrates the linear model of arrival delay regressed on late aircraft delay. The linear fit seams to model a portion of the data, but is not ideal, it demonsrates a slight positive relationship between late aircraft and arrival delays. The model does not fit due to the vertical spread of plots at which there was no delay due to late aicrafts, but there was still a significant arrival delay This indicates that increased late aircraft delays cause arrival delays, however, it is not the singular factor in late arrivals.
 Therefore, on time aircrafts, help minimize late arrivals and increase the chance a flight arrives ontime in Denver.
 
 ## Zhenlong Li
-Here's a plot showing that most delayed flights occured where flying distance is between 750 mile to 1000 miles:
-```{r, echo=FALSE}
-filter(COflights,ARR_DELAY >=15)%>%
-  select(DISTANCE)%>%
-  count (DISTANCE) %>%
-  ggplot()+ geom_jitter(mapping = aes(x= DISTANCE, y = n)) + geom_smooth(mapping = aes(x= DISTANCE, y= n), method = 'loess', se = FALSE) + ylab(label= "Number of Delayed Flights")
-dis<-COflights%>% filter(DISTANCE>=750 & DISTANCE<=1000)%>% count()
-all<-COflights%>% count()
-p1 = dis / all
-p1
-```
-And the probability of that flying distance between 750 mile to 1000 miles will have 35% to be delayed.
+How does the flying distacne and carrier delay affect the arrival and departure delay time of the flights to/from Denver?
 
-Here's a plot showing that the actual air time greater than 300 mins will have less on-time flights:
+The question is interesting and vital to our overall question since we can foresee the delay by analyzing the dataset of flights in Colorado so that DIA will reduce the delays and rearrage the schedule if they can.
 ```{r, echo=FALSE}
-filter(COflights,ARR_DELAY <= 14)%>%
-  select(ACTUAL_ELAPSED_TIME)%>%
-  count (ACTUAL_ELAPSED_TIME) %>%
-  ggplot()+ geom_col( mapping = aes(x= ACTUAL_ELAPSED_TIME, y= n), width = 1)+ geom_smooth(mapping = aes(x= ACTUAL_ELAPSED_TIME, y= n), method = 'loess', se = FALSE) +xlab(label="Elapsed Time")+ ylab(label= "Number of On-time Flights")
-time<-COflights%>% filter(ACTUAL_ELAPSED_TIME>=300)%>% count()
-all<-COflights%>% count()
-p2 = time / all
-p2
+
+DENflights_arr <- COflights%>%
+  filter(ORIGIN=="DEN", !is.na(ARR_DELAY), ARR_DELAY >= 15)%>%
+  select(DISTANCE, ARR_DELAY)
+
+DENflights_arr_mod <- lm(DISTANCE ~ ARR_DELAY, data = DENflights_arr, na.action = na.exclude)
+
+grid_arr <- DENflights %>%
+  add_predictions(DENflights_arr_mod)
+
+ggplot(DENflights_arr, aes(DISTANCE)) + geom_jitter(aes(y = ARR_DELAY))+ geom_line(aes(y = pred), data = grid, color="blue")
+
+ggplot(DENflights_arr, aes(DISTANCE)) + geom_point(aes(y = ARR_DELAY)) + geom_point(data = grid_arr, aes(y = pred), colour = "red", size = 1)
 ```
-And the probability of that the actual air time greater than 300 mins will have 0.65% to be on-time.
+
+From the above two plots, we can see a zero-slope linear model with some noises and a model with a categorical distance will predict the mean value for each distance. I improved my previous part by changing the variables on y-axis and modeling a relationship between arrival delay time and flying distance via modelr package.
+
+Next, I will use an obvious linear model to analyze the relationship between carrier delay time and departure delay.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+DENflights_dep <- COflights%>%
+  filter(ORIGIN=="DEN", !is.na(DEP_DELAY), DEP_DELAY >= 15)%>%
+  select(ORIGIN, DEP_DELAY, CARRIER, CARRIER_DELAY)
+
+DENflights_dep_mod <- lm(DEP_DELAY ~ CARRIER_DELAY, data = DENflights_dep, na.action = na.exclude)
+
+grid_dep <- DENflights_dep %>%
+  add_predictions(DENflights_dep_mod)
+
+ggplot(DENflights_dep, aes(CARRIER_DELAY,color = CARRIER))+ geom_jitter(aes(y = DEP_DELAY))+ geom_line(aes(y = pred), data = grid_dep, color = "blue", size = 1)
+```
+
+From this plot, we can obviously notice that there is a linear relation between carrier delay and departure delay, while the fitted line does not exactly matched the data since the blue line is just a predicted trendline.
 
 
 ## Scott Baker
@@ -135,7 +167,7 @@ There are three improvements I made:
 
 * I conducted a hypothesis test looking at the percentage of Southwest flights (out of the total) that arrive late.
 
-Most of the analysis remains the same as the original lab. However, by changing the three aspects described above, my code is cleaner and the visuals provides more convincing support to the analysis already done. 
+Most of the analysis remains the same as the original lab. However, by changing the three aspects described above, my code is cleaner and the visuals provides more convincing support to the analysis already done.
 
 
 ### Analysis
@@ -147,8 +179,8 @@ stuff <- filter(COflights,ARR_DELAY >= 15, DEST == "DEN") %>% select(CARRIER) %>
 
 stuff$CARRIER <- factor(stuff$CARRIER,levels = stuff$CARRIER[order(stuff$count)])
 
-ggplot(stuff, aes(x = CARRIER, y = count)) + 
-  geom_bar(stat = "identity") + 
+ggplot(stuff, aes(x = CARRIER, y = count)) +
+  geom_bar(stat = "identity") +
   geom_text(aes(label=count),vjust =-0.5) +
   ggtitle("Number of ARR_DELAY >= 15 flights into Denver per Airline") +
   ylab("Number of delayed arrivals")
@@ -165,8 +197,8 @@ stuff2 <- filter(COflights,DEP_DELAY >= 15, ORIGIN == "DEN") %>% select(CARRIER)
 
 stuff2$CARRIER <- factor(stuff2$CARRIER,levels = stuff2$CARRIER[order(stuff2$count)])
 
-ggplot(stuff2, aes(x = CARRIER, y = count)) + 
-  geom_bar(stat = "identity") + 
+ggplot(stuff2, aes(x = CARRIER, y = count)) +
+  geom_bar(stat = "identity") +
   geom_text(aes(label=count),vjust =-0.5) +
   ggtitle("Number of DEP_DELAY >= 15 flights into Denver per Airline") +
   ylab("Number of delayed arrivals")
@@ -191,15 +223,15 @@ arrdepdelay <- arrdepdelay %>% add_predictions(admod)
 ggplot(arrdepdelay) +
   geom_point(mapping= aes(x = ARR_DELAY,y = DEP_DELAY)) +
   geom_abline(slope = admod$coefficients[[2]], intercept = admod$coefficients[[1]], colour = "red")+
-  ggtitle("Arrival Delay vs. Departure Delay with Linear Regression") + 
+  ggtitle("Arrival Delay vs. Departure Delay with Linear Regression") +
   xlab("Arrival Delay") +
   ylab("Departure Delay")
   #geom_text(aes(x=1250, label="regression line" , y=1000), colour="red", angle=35, text=element_text(size=20))
-  
+
 cor(arrdepdelay$ARR_DELAY,arrdepdelay$DEP_DELAY)
 ```
 
-From this we have two results. First, the correlation value between arrival delay (in Denver) and departure delay is .957, which is a strong correlation. Second, the implication of this is that there sometimes might not be anything DIA can do better to ensure more flights are on time--it could all be a product of the departure airport and their inability to get planes off in time. 
+From this we have two results. First, the correlation value between arrival delay (in Denver) and departure delay is .957, which is a strong correlation. Second, the implication of this is that there sometimes might not be anything DIA can do better to ensure more flights are on time--it could all be a product of the departure airport and their inability to get planes off in time.
 
 For Southwest, we can take a look at the Southwest case, to see if they are actually the worst at arriving on time. The null hypothesis is that Southwest is not the worst at arriving on time. For this, we will use a test statistic of the percentage of Southwest flights that are late compared to others. The sample size would be 100 flights.
 
@@ -249,10 +281,10 @@ With a z-score (`r z60`) super close to the mean, we can say that the mean of th
 
 
 # Contributions
-*Lindsay: Created a model to add predictions and determine if there is linear relationship between arrival delays to Denver and aircraft delays. 
+* Lindsay: Created a model to add predictions and determine if there is linear relationship between arrival delays to Denver and aircraft delays.
 
-* Lexie: Created individual plot and decription of graph. Also helped create the conclusion plot with help conclusion paragraph and recommendation ideas.
+* Lexie: Created individual plots and analyzed what information we have learned.
 
-* Li: Creted two plots to see how distance and actual elapsed time affected whether a flight is delayed or on-time. Checking my findings by using calcluating the probability of each event.
+* Li: Initialized the write-up on git and impovred my previous analysis which is how distance and carrier delay affected a flight by using packages: modelr, tidyverse and ggplot2.
 
-* Scott: Improved individual part from lab 6 by adding linear regression, hypothesis tesing, and string factors to make analysis more clear. Also added linear regression to the team question graph. Was responsible for knitting and submitting the document. 
+* Scott: Improved individual part from lab 6 by adding linear regression, hypothesis tesing, and string factors to make analysis more clear. Also added linear regression to the team question graph. Was responsible for knitting and submitting the document.
