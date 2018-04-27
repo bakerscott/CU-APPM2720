@@ -108,31 +108,43 @@ The above graph illustrates the linear model of arrival delay regressed on late 
 Therefore, on time aircrafts, help minimize late arrivals and increase the chance a flight arrives ontime in Denver.
 
 ## Zhenlong Li
-Here's a plot showing that most delayed flights occured where flying distance is between 750 mile to 1000 miles:
-```{r, echo=FALSE}
-filter(COflights,ARR_DELAY >=15)%>%
-  select(DISTANCE)%>%
-  count (DISTANCE) %>%
-  ggplot()+ geom_jitter(mapping = aes(x= DISTANCE, y = n)) + geom_smooth(mapping = aes(x= DISTANCE, y= n), method = 'loess', se = FALSE) + ylab(label= "Number of Delayed Flights")
-dis<-COflights%>% filter(DISTANCE>=750 & DISTANCE<=1000)%>% count()
-all<-COflights%>% count()
-p1 = dis / all
-p1
-```
-And the probability of that flying distance between 750 mile to 1000 miles will have 35% to be delayed.
+How does the flying distacne and carrier delay affect the arrival and departure delay time of the flights to/from Denver?
 
-Here's a plot showing that the actual air time greater than 300 mins will have less on-time flights:
+The question is interesting and vital to our overall question since we can foresee the delay by analyzing the dataset of flights in Colorado so that DIA will reduce the delays and rearrage the schedule if they can.
 ```{r, echo=FALSE}
-filter(COflights,ARR_DELAY <= 14)%>%
-  select(ACTUAL_ELAPSED_TIME)%>%
-  count (ACTUAL_ELAPSED_TIME) %>%
-  ggplot()+ geom_col( mapping = aes(x= ACTUAL_ELAPSED_TIME, y= n), width = 1)+ geom_smooth(mapping = aes(x= ACTUAL_ELAPSED_TIME, y= n), method = 'loess', se = FALSE) +xlab(label="Elapsed Time")+ ylab(label= "Number of On-time Flights")
-time<-COflights%>% filter(ACTUAL_ELAPSED_TIME>=300)%>% count()
-all<-COflights%>% count()
-p2 = time / all
-p2
+
+DENflights_arr <- COflights%>%
+  filter(ORIGIN=="DEN", !is.na(ARR_DELAY), ARR_DELAY >= 15)%>%
+  select(DISTANCE, ARR_DELAY)
+
+DENflights_arr_mod <- lm(DISTANCE ~ ARR_DELAY, data = DENflights_arr, na.action = na.exclude)
+
+grid_arr <- DENflights %>%
+  add_predictions(DENflights_arr_mod)
+
+ggplot(DENflights_arr, aes(DISTANCE)) + geom_jitter(aes(y = ARR_DELAY))+ geom_line(aes(y = pred), data = grid, color="blue")
+
+ggplot(DENflights_arr, aes(DISTANCE)) + geom_point(aes(y = ARR_DELAY)) + geom_point(data = grid_arr, aes(y = pred), colour = "red", size = 1)
 ```
-And the probability of that the actual air time greater than 300 mins will have 0.65% to be on-time.
+
+From the above two plots, we can see a zero-slope linear model with some noises and a model with a categorical distance will predict the mean value for each distance. I improved my previous part by changing the variables on y-axis and modeling a relationship between arrival delay time and flying distance via modelr package.
+
+Next, I will use an obvious linear model to analyze the relationship between carrier delay time and departure delay.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+DENflights_dep <- COflights%>%
+  filter(ORIGIN=="DEN", !is.na(DEP_DELAY), DEP_DELAY >= 15)%>%
+  select(ORIGIN, DEP_DELAY, CARRIER, CARRIER_DELAY)
+
+DENflights_dep_mod <- lm(DEP_DELAY ~ CARRIER_DELAY, data = DENflights_dep, na.action = na.exclude)
+
+grid_dep <- DENflights_dep %>%
+  add_predictions(DENflights_dep_mod)
+
+ggplot(DENflights_dep, aes(CARRIER_DELAY,color = CARRIER))+ geom_jitter(aes(y = DEP_DELAY))+ geom_line(aes(y = pred), data = grid_dep, color = "blue", size = 1)
+```
+
+From this plot, we can obviously notice that there is a linear relation between carrier delay and departure delay, while the fitted line does not exactly matched the data since the blue line is just a predicted trendline.
 
 
 ## Scott Baker
@@ -185,6 +197,6 @@ From this we have two results. First, the correlation value between arrival dela
 
 * Lexie: Created individual plots and analyzed what information we have learned. 
 
-* Li: Creted two plots to see how distance and actual elapsed time affected whether a flight is delayed or on-time. Checking my findings by using calcluating the probability of each event.
+* Li: Initialized the write-up on git and impovred my previous analysis which is how distance and carrier delay affected a flight by using packages: modelr, tidyverse and ggplot2.
 
 * Scott: Besides the normal organization of the git and knitting/submitting the final file, I took care of the recommendation to DIA officials. I also examined airline-by-airline arrival delay.
