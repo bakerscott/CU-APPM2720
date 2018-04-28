@@ -1,0 +1,36 @@
+---
+title: "Lab_15"
+author: "Fantastic Four"
+output: html_document
+---
+
+```{r setup, include=FALSE,message=FALSE,warning=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(lubridate)
+library(forcats)
+library(stringr)
+library(magrittr)
+
+```
+
+
+# Subquestions
+
+## (Scott)
+
+## (Lindsay)
+
+## (Lexie)
+
+## (Li)
+
+
+# Contributions
+* Lindsay: 
+
+* Lexie:
+
+* Li: 
+
+* Scott:
