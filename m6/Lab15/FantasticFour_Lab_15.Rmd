@@ -26,6 +26,24 @@ library(magrittr)
 ## (Li)
 
 
+#Reflections
+Goals from the beginning of the semester:
+*learn how to efficiently use GitHub
+*learn R and be able to apply outside of class
+*gain statistical knowledge
+We feel that we have accomplished these goals which we set at the beginning of the semester. We have had a lot of practice pushing documents using GitKraken, we have also utilized Git to organize the team files. Through the labs we have also learned and implimented many useful functions in R, we have the tools to read files, organize data, plot, create trends, and make functions. Then using our R skills we were able to apply statistical methods such as finding percentiles and probabilities, calculating means and standard deviation, as well as formulating null hypotheses and modeling data.
+
+Our advice to ourselves starting the semester would be to maintain good communication between each other, and to keep the organization of our labs, including dividing up the work. We could have been more proactive in completing our labs and finish them earlier, and we could have tried meeting up outside of class to collobrate more effectively on the labs.
+
+##Scott
+
+##Lindsay
+My goals for six months and five years after graduation have not changed much. I still would like to start my career after graduation and maintain a good job where I can keep learning and developing skills. I enjoyed this class and I gained a basic understanding of data science, I also liked learning R. I am now considering a statistics career path, and after this course I would like to learn more logistics and math to statistical analysis. My advice to myself at the start of this course would be to start the readings early and to complete the exercises as well as doing variations of the problems. I would also advise myself to speak up more frequently when I was confused or had questions on the materials. 
+##Lexie
+
+##Li
+
+
 # Contributions
 * Lindsay: 
 
