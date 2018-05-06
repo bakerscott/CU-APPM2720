@@ -10,8 +10,10 @@ library(tidyverse)
 library(lubridate)
 library(forcats)
 library(stringr)
+library(modelr)
 library(magrittr)
-
+baseball<-read.csv("https://raw.githubusercontent.com/bakerscott/CU-APPM2720/master/m6/Lab15/rawData2010_2013_v2.csv")
+baseballSample<-read.csv("https://raw.githubusercontent.com/bakerscott/CU-APPM2720/master/m6/Lab15/rawData2013_sample_BASEBALL.csv")
 ```
 
 
@@ -20,7 +22,23 @@ library(magrittr)
 ## (Scott)
 
 ## (Lindsay)
+What is the relationship between the pitch and the sequence or amount of events which occur during a play? 
+This is a significant question because analysis of how the pitch sequence affects the play could be useful in a teams strategy to play to their strengths and formulate a more effective plan for each play.
+```{r}
+#WORKS!!!
+n_baseball<-transform(baseball, EVENT_TX=as.character(EVENT_TX), pitchSequence=as.character(pitchSequence))
+n_baseball<-n_baseball%>%
+  mutate(numEvents=nchar(EVENT_TX), pitch=nchar(pitchSequence),diffBase=END_BASES_CD-START_BASES_CD)
 
+n_model<-lm(numEvents~pitch, data=n_baseball)
+
+withModel<-n_baseball%>%
+  add_predictions(n_model)
+
+ggplot(n_baseball, aes(x=pitch))+ geom_point(aes(y=numEvents))+geom_line(aes(y=pred), data=withModel)
+
+```
+In the graph above, the x-axis pitch was determined by the number of characters in the pitch sequence and the numEvents is the number of character in the event which signifies what all occurred during a given play. The plot illustrates that as the pitching sequence increases in length and complexity the resulting events that occur in a play are greatly decreased, while shorter sequences correspond to the occurrence of more events in a play. This plot was constructed through string manipulation then applying a model to create a linear regression between the pitch and number of events.
 ## (Lexie)
 
 ## (Li)
@@ -31,9 +49,9 @@ Goals from the beginning of the semester:
 *learn how to efficiently use GitHub
 *learn R and be able to apply outside of class
 *gain statistical knowledge
-We feel that we have accomplished these goals which we set at the beginning of the semester. We have had a lot of practice pushing documents using GitKraken, we have also utilized Git to organize the team files. Through the labs we have also learned and implimented many useful functions in R, we have the tools to read files, organize data, plot, create trends, and make functions. Then using our R skills we were able to apply statistical methods such as finding percentiles and probabilities, calculating means and standard deviation, as well as formulating null hypotheses and modeling data.
+We feel that we have accomplished these goals which we set at the beginning of the semester. We have had a lot of practice pushing documents using GitKraken, we have also utilized Git to organize the team files. Through the labs we have also learned and implemented many useful functions in R, we have the tools to read files, organize data, plot, create trends, and make functions. Then using our R skills we were able to apply statistical methods such as finding percentiles and probabilities, calculating means and standard deviation, as well as formulating null hypotheses and modeling data.
 
-Our advice to ourselves starting the semester would be to maintain good communication between each other, and to keep the organization of our labs, including dividing up the work. We could have been more proactive in completing our labs and finish them earlier, and we could have tried meeting up outside of class to collobrate more effectively on the labs.
+Our advice to ourselves starting the semester would be to maintain good communication between each other, and to keep the organization of our labs, including dividing up the work. We could have been more proactive in completing our labs and finish them earlier, and we could have tried meeting up outside of class to collaborate more effectively on the labs.
 
 ##Scott
 
@@ -45,7 +63,7 @@ My goals for six months and five years after graduation have not changed much. I
 
 
 # Contributions
-* Lindsay: 
+*Lindsay: Wrote the team reflection on our initial goals and advice to previous selves. Created a plot to investigate the relationship between pitch sequence and play event by applying a linear regression. 
 
 * Lexie:
 
