@@ -41,6 +41,27 @@ ggplot(n_baseball, aes(x=pitch))+ geom_point(aes(y=numEvents))+geom_line(aes(y=p
 In the graph above, the x-axis pitch was determined by the number of characters in the pitch sequence and the numEvents is the number of character in the event which signifies what all occurred during a given play. The plot illustrates that as the pitching sequence increases in length and complexity the resulting events that occur in a play are greatly decreased, while shorter sequences correspond to the occurrence of more events in a play. This plot was constructed through string manipulation then applying a model to create a linear regression between the pitch and number of events.
 ## (Lexie)
 
+Does a high number of hits reflect a high scoring game?
+
+This is important because if a team has more hits than their score of the game then it suggests an area for improvement for the team are strategies for players on the bases. 
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+baseballmod<- lm(HOME_SCORE_CT~ HOME_HITS_CT , data= baseballv1)
+baseballmod
+baseballv1_2 <- baseballv1 %>%
+  data_grid(HOME_HITS_CT) %>%
+  add_predictions(baseballmod)
+
+ggplot(baseballv1, aes(x= HOME_HITS_CT)) +geom_count(aes(y=HOME_SCORE_CT)) + geom_line(data= baseballv1_2, aes(y=pred), size=1, color= "red") + xlab("Hits") +ylab("Score")
+
+baseballv1_2<- baseballv1 %>%
+  add_residuals(baseballmod)
+
+ggplot(baseballv1_2, aes(resid)) + geom_freqpoly(binwidth= 0.5)
+```
+
+To analyze this relationship, I used a linear model for the score as it relates to hits. This model appeared to be very linear, which was as expected. I also analyzed the residuals and the values vary between -2.5 and 5 mostly centered around zero, which tells us that the model created is a accurate representation of the relationship. Overall, the team analyzed in this dataset definitely has room for improvement because the number of hits that strayed above the score is more than what a team should be playing. This plot also shows us that the majority of the scores in their games are around 5, which is also an area the team can improve in. 
+
+
 ## (Li)
 
 
@@ -58,6 +79,7 @@ Our advice to ourselves starting the semester would be to maintain good communic
 ##Lindsay
 My goals for six months and five years after graduation have not changed much. I still would like to start my career after graduation and maintain a good job where I can keep learning and developing skills. I enjoyed this class and I gained a basic understanding of data science, I also liked learning R. I am now considering a statistics career path, and after this course I would like to learn more logistics and math to statistical analysis. My advice to myself at the start of this course would be to start the readings early and to complete the exercises as well as doing variations of the problems. I would also advise myself to speak up more frequently when I was confused or had questions on the materials. 
 ##Lexie
+My five year goals changed at the beginning of the semester when I changed the direction of my major and recently my after graduation plans have changed as well. After graduation I hope to live abroad in Europe for a year since I don't have the opportunity to study abroad. I would like to enjoy my time for a little after I graduate instead of jumping straight into my career.  I have learned about different statistical methods used to evaluate data and how to make plots appealing to look at, which goes a long way. A big part of this course has taught me basic concepts of R, which will pay off in the future. I would tell myself to step forward and take more initiative on speaking up if I don't understand something. I would also tell myself to stop putting off assignments so late in the week and just get them done. I would like to keep my same group because I feel we worked very well together and it made this course more enjoyable. 
 
 ##Li
 
@@ -65,7 +87,7 @@ My goals for six months and five years after graduation have not changed much. I
 # Contributions
 *Lindsay: Wrote the team reflection on our initial goals and advice to previous selves. Created a plot to investigate the relationship between pitch sequence and play event by applying a linear regression. 
 
-* Lexie:
+* Lexie: Created individual plots and subquestion and prodived analysis on the information found. Also created reflection on this past semseter and future goals. 
 
 * Li: 
 
