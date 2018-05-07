@@ -16,12 +16,55 @@ baseball<-read.csv("https://raw.githubusercontent.com/bakerscott/CU-APPM2720/mas
 baseballSample<-read.csv("https://raw.githubusercontent.com/bakerscott/CU-APPM2720/master/m6/Lab15/rawData2013_sample_BASEBALL.csv")
 ```
 
+# What are some trends in Retrosheet Baseball data?
 
-# Subquestions
+## Why choose this question?
+The Fantastic Four R&D team was hired by the MLB to evaluate Retrosheet play-by-play data to find relationships in the data outside of common baseball play analysis. 
 
-## (Scott)
+## What Fantastic Four Did:
+Scott queried a SQL Retrosheet database for the most relevent components of play-by-play data from 2010 to 2013. Then this data was exported via CSV and brought into R for use. Each member of our team analyzed a question and came up with an answer and model to back up their answer. The questions include:
 
-## (Lindsay)
+* Changes in run expectancy as the game goes on
+* Length of pitch sequence and play length
+* Relationship between hits and runs
+
+
+## More Information:
+* To see detailed column information visit: https://github.com/bakerscott/CU-APPM2720/blob/master/m6/Lab15/README.md
+* To see more Sabermetrics visit: https://bakerscott.github.io/CU-Sabermetrics-Final
+
+# Questions:
+
+## Which teams have the greatest change in park-factor run expectancy? (Scott)
+This question requires us to look at the run expectancies for each team (ballpark) broken down by the run expectancies for innings 1-6 and 7-9. 
+
+```{r}
+bA <- baseball %>% select(player,inning,runsOnPlay,homeTeam)  %>% filter(inning < 7) %>% group_by(homeTeam) %>% summarise(runExp = mean(runsOnPlay))
+
+bB <- baseball %>% select(player,inning,runsOnPlay,homeTeam)  %>% filter(inning > 6) %>% group_by(homeTeam) %>% summarise(runExp = mean(runsOnPlay))
+
+bT <- merge(x=bA,y=bB, by="homeTeam")
+colnames(bT)[colnames(bT) == 'runExp.x'] <- 'runExp6'
+colnames(bT)[colnames(bT) == 'runExp.y'] <- 'runExp7'
+
+mD <- lm(runExp7~runExp6,data=bT)
+summary(mD)
+
+ggplot(bT) +
+  geom_point(mapping=aes(x=runExp6,y=runExp7,color=homeTeam))+
+  geom_text(mapping= aes(x=runExp6,y=runExp7,color=homeTeam,label=homeTeam),hjust=0, vjust=0)+
+  geom_smooth(mapping=aes(x=runExp6,y=runExp7),method="lm",se=F) +
+  geom_abline(intercept=0,slope=1,color="red") +
+  ylab("Run Expectancy for innings 7-9+") +
+  xlab("Run Expectancy for innings 1-6") +
+  ggtitle("Change in run expectancy early-to-late in the game")
+
+```
+There are three main findings from looking at this relationship. Just for confirmation, most sabermetricians know that Coors Field (COL) has a higher run expectancy because of the term "park factor." Therefore, it would make sense that Coors Field has the higest run expectancy value for both early-game and late-game. The red line represents the "no-change" line in which there would be no change in run expectancy from early to late-game. The blue line represents a linear model for the change in run expectancy. From this we can say that the general trend is that run expectancy decreases from innings 1-6 to 7-9+. 
+
+
+## Relationship between pitch sequence and length of play description (Lindsay)
+
 What is the relationship between the pitch and the sequence or amount of events which occur during a play? 
 This is a significant question because analysis of how the pitch sequence affects the play could be useful in a teams strategy to play to their strengths and formulate a more effective plan for each play.
 ```{r}
@@ -39,12 +82,14 @@ ggplot(n_baseball, aes(x=pitch))+ geom_point(aes(y=numEvents))+geom_line(aes(y=p
 
 ```
 In the graph above, the x-axis pitch was determined by the number of characters in the pitch sequence and the numEvents is the number of character in the event which signifies what all occurred during a given play. The plot illustrates that as the pitching sequence increases in length and complexity the resulting events that occur in a play are greatly decreased, while shorter sequences correspond to the occurrence of more events in a play. This plot was constructed through string manipulation then applying a model to create a linear regression between the pitch and number of events.
-## (Lexie)
+
+## Hits vs. Score part I (Lexie)
 
 Does a high number of hits reflect a high scoring game?
 
 This is important because if a team has more hits than their score of the game then it suggests an area for improvement for the team are strategies for players on the bases. 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
+baseballv1 <- baseballSample
 baseballmod<- lm(HOME_SCORE_CT~ HOME_HITS_CT , data= baseballv1)
 baseballmod
 baseballv1_2 <- baseballv1 %>%
@@ -62,7 +107,7 @@ ggplot(baseballv1_2, aes(resid)) + geom_freqpoly(binwidth= 0.5)
 To analyze this relationship, I used a linear model for the score as it relates to hits. This model appeared to be very linear, which was as expected. I also analyzed the residuals and the values vary between -2.5 and 5 mostly centered around zero, which tells us that the model created is a accurate representation of the relationship. Overall, the team analyzed in this dataset definitely has room for improvement because the number of hits that strayed above the score is more than what a team should be playing. This plot also shows us that the majority of the scores in their games are around 5, which is also an area the team can improve in. 
 
 
-## (Li)
+## Hits vs Score part II (Li)
 
 What is the relation between hits and score in general?
 
@@ -82,30 +127,38 @@ ggplot(baseball, aes(HITS))+ geom_point(aes(y=RUNS))+ geom_line(aes(y=pred), dat
 There seems to be a linear relationship between hits and runs that has a negative slope. In my opinion, the runs are not only dependent on hits but also dependent on other factors such as how many outs before the play, number of outs the fielding team got on the play and so on.
 
 
-#Reflections
+# Final Semester Reflections
+
 Goals from the beginning of the semester:
 *learn how to efficiently use GitHub
 *learn R and be able to apply outside of class
 *gain statistical knowledge
 We feel that we have accomplished these goals which we set at the beginning of the semester. We have had a lot of practice pushing documents using GitKraken, we have also utilized Git to organize the team files. Through the labs we have also learned and implemented many useful functions in R, we have the tools to read files, organize data, plot, create trends, and make functions. Then using our R skills we were able to apply statistical methods such as finding percentiles and probabilities, calculating means and standard deviation, as well as formulating null hypotheses and modeling data.
 
-Our advice to ourselves starting the semester would be to maintain good communication between each other, and to keep the organization of our labs, including dividing up the work. We could have been more proactive in completing our labs and finish them earlier, and we could have tried meeting up outside of class to collaborate more effectively on the labs.
+Our advice to ourselves starting the semester would be to maintain good communication between each other, and to keep the organization of our labs, including dividing up the work. We could have been more proactive in completing our labs and finish them earlier and we could have tried meeting up outside of class to collaborate more effectively on the labs.
 
 ##Scott
 
+This semester has changed my long-term goals but not my short term goals. Short term, I hope to continue to explore the areas of math that have direct relationships with computer science. Regarding my career, this semester has changed my outlook. I now want to go into data science or related field specifically on the topic of sports analytics. In this course, I have learned more about implementing data science concepts to answer questions. Subsequently, the amount of syntax I have learned in R is less than I expected. However these skills translate to other similar languages, such as python. If I could tell myself something in the beginning of the semester, I would tell myself to keep better track of all the different "implementations" of the skills we used. We covered so many different topics between team application exercises, labs, and readings. It would have been useful for me to keep a composite markdown document (or similar) of all the stuff we accomplished. 
+
 ##Lindsay
+
 My goals for six months and five years after graduation have not changed much. I still would like to start my career after graduation and maintain a good job where I can keep learning and developing skills. I enjoyed this class and I gained a basic understanding of data science, I also liked learning R. I am now considering a statistics career path, and after this course I would like to learn more logistics and math to statistical analysis. My advice to myself at the start of this course would be to start the readings early and to complete the exercises as well as doing variations of the problems. I would also advise myself to speak up more frequently when I was confused or had questions on the materials. 
+
 ##Lexie
+
 My five year goals changed at the beginning of the semester when I changed the direction of my major and recently my after graduation plans have changed as well. After graduation I hope to live abroad in Europe for a year since I don't have the opportunity to study abroad. I would like to enjoy my time for a little after I graduate instead of jumping straight into my career.  I have learned about different statistical methods used to evaluate data and how to make plots appealing to look at, which goes a long way. A big part of this course has taught me basic concepts of R, which will pay off in the future. I would tell myself to step forward and take more initiative on speaking up if I don't understand something. I would also tell myself to stop putting off assignments so late in the week and just get them done. I would like to keep my same group because I feel we worked very well together and it made this course more enjoyable. 
 
 ##Li
+
 My six-month amd 5-year goals did not change at all. During this semester, I learned how to study R individually, collobrate a lab successfully and communicate face-to-face or online properly. If I could give myself advice at the beginning of the semester, I would you tell myself to keep the interest of data science since it will be helpful in the future, stop being silent and solitary and start talking with my lovely teammates instead of asking questions in a low voice privately.
 
 # Contributions
-*Lindsay: Wrote the team reflection on our initial goals and advice to previous selves. Created a plot to investigate the relationship between pitch sequence and play event by applying a linear regression. 
+
+* Lindsay: Wrote the team reflection on our initial goals and advice to previous selves. Created a plot to investigate the relationship between pitch sequence and play event by applying a linear regression. 
 
 * Lexie: Created individual plots and subquestion and prodived analysis on the information found. Also created reflection on this past semseter and future goals. 
 
 * Li: Answered the sub-questions with linear model analysis and plot of the linear model and added my reflection on Lab2.
 
-* Scott:
+* Scott: Came up with the data in .csv format used for analysis. Completed individual sections and introduction section. Knitted and submitted the final document, along with managing the git.  
