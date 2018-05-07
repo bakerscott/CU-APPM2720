@@ -4,7 +4,7 @@
 to look at "transitions" in game state for certain players
 
 ## Data:
-play-by-play data for every play that happened in MLB from 2010-2013, including playoffs
+play-by-play data for every play that happened in MLB from 2010-2013.
 
 ## Columns
 * `GAME_DT` - data of the game in form yyyymmdd (2010 data has form 10mmdd)
