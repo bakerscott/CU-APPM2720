@@ -64,6 +64,23 @@ To analyze this relationship, I used a linear model for the score as it relates 
 
 ## (Li)
 
+What is the relation between hits and score in general?
+
+I would like to discussed further about the relationship between hits and score which is independent of home and away since I thinks there are more factors that can affect the score.
+
+```{r}
+baseball$RUNS =with(baseball, as.numeric(awayScore) + as.numeric(homeScore))
+baseball$HITS =with(baseball, as.numeric(awayHits) + as.numeric(homeHits))
+baseball_mod <- lm(RUNS ~ HITS, data = baseball)
+
+grid_sample <- baseball%>%
+  add_predictions(baseball_mod)
+
+ggplot(baseball, aes(HITS))+ geom_point(aes(y=RUNS))+ geom_line(aes(y=pred), data=grid_sample, color="blue", size=1)
+```
+
+There seems to be a linear relationship between hits and runs that has a negative slope. In my opinion, the runs are not only dependent on hits but also dependent on other factors such as how many outs before the play, number of outs the fielding team got on the play and so on.
+
 
 #Reflections
 Goals from the beginning of the semester:
@@ -82,13 +99,13 @@ My goals for six months and five years after graduation have not changed much. I
 My five year goals changed at the beginning of the semester when I changed the direction of my major and recently my after graduation plans have changed as well. After graduation I hope to live abroad in Europe for a year since I don't have the opportunity to study abroad. I would like to enjoy my time for a little after I graduate instead of jumping straight into my career.  I have learned about different statistical methods used to evaluate data and how to make plots appealing to look at, which goes a long way. A big part of this course has taught me basic concepts of R, which will pay off in the future. I would tell myself to step forward and take more initiative on speaking up if I don't understand something. I would also tell myself to stop putting off assignments so late in the week and just get them done. I would like to keep my same group because I feel we worked very well together and it made this course more enjoyable. 
 
 ##Li
-
+My six-month amd 5-year goals did not change at all. During this semester, I learned how to study R individually, collobrate a lab successfully and communicate face-to-face or online properly. If I could give myself advice at the beginning of the semester, I would you tell myself to keep the interest of data science since it will be helpful in the future, stop being silent and solitary and start talking with my lovely teammates instead of asking questions in a low voice privately.
 
 # Contributions
 *Lindsay: Wrote the team reflection on our initial goals and advice to previous selves. Created a plot to investigate the relationship between pitch sequence and play event by applying a linear regression. 
 
 * Lexie: Created individual plots and subquestion and prodived analysis on the information found. Also created reflection on this past semseter and future goals. 
 
-* Li: 
+* Li: Answered the sub-questions with linear model analysis and plot of the linear model and added my reflection on Lab2.
 
 * Scott:
